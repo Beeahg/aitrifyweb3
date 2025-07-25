@@ -11,7 +11,6 @@ const useMasonry = () => {
     }
   }, []);
 
-  
 
   useEffect(() => {
     const handleMasonry = () => {
