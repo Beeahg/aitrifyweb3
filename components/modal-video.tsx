@@ -64,7 +64,7 @@ export default function ModalChat() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
                 className="flex-1 border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300"
-                placeholder="AItrify mời Gõ câu hỏi của bạn..."
+                placeholder="hoang AItrify mời Gõ câu hỏi của bạn..."
               />
               <button
                 onClick={sendMessage}
