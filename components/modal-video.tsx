@@ -14,6 +14,7 @@ export default function ModalChat() {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+  
   const sendMessage = async () => {
     if (!input.trim()) return;
 
