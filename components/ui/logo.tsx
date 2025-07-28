@@ -1,11 +1,23 @@
+// app/components/Logo.tsx
+
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/public/images/logo.svg";
 
 export default function Logo() {
   return (
-    <Link href="/" className="inline-flex shrink-0" aria-label="Cruip">
-      <Image src={logo} alt="Cruip Logo" width={32} height={32} />
+    <Link
+      href="/"
+      className="inline-flex items-center shrink-0"
+      aria-label="AItrify"
+    >
+      <Image
+        src={logo}
+        alt="AItrify Logo"
+        width={180}   //  có thể tăng lên 220 nếu header còn rộng
+        height={70}   // giữ đúng tỷ lệ gốc hoặc bỏ height để Next tự co
+        priority
+      />
     </Link>
   );
 }
