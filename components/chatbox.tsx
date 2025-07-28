@@ -1,28 +1,30 @@
-// Updated Chatbox.tsx with icon and better design
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-
 
 export default function Chatbox() {
   const [messages, setMessages] = useState<{ sender: string; text: string }[]>([
     { sender: 'ai', text: 'AItrify chào bạn, tôi có thể giúp gì hôm nay?' },
   ]);
   const [input, setInput] = useState('');
+  const [loading, setLoading] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+  }, [messages, loading]);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
+
     const userMessage = { sender: 'user', text: input };
     setMessages((prev) => [...prev, userMessage]);
     setInput('');
-
+    setLoading(true); // bắt đầu loading "..."
+    
     const aiResponse = await mockChatAPI(input);
+    setLoading(false); // tắt loading
     const aiMessage = { sender: 'ai', text: aiResponse };
     setMessages((prev) => [...prev, aiMessage]);
   };
@@ -31,7 +33,7 @@ export default function Chatbox() {
     return new Promise<string>((resolve) => {
       setTimeout(() => {
         resolve(`Trả lời cho: "${userInput}"`);
-      }, 1000);
+      }, 1500);
     });
   };
 
@@ -51,14 +53,33 @@ export default function Chatbox() {
               <Image
                 src="/images/ai-logo-icon.png"
                 alt="AItrify Logo"
-                width={24}
-                height={24}
+                width={40}
+                height={40}
                 className="mr-2 rounded-full"
               />
             )}
             <span className="text-gray-900">{msg.text}</span>
           </div>
         ))}
+
+        {/* Bong bóng "đang gõ..." */}
+        {loading && (
+          <div className="bg-indigo-50 self-start flex items-center gap-2 px-3 py-2 rounded-lg max-w-[60%]">
+            <Image
+              src="/images/ai-logo-icon.png"
+              alt="AItrify Logo"
+              width={40}
+              height={40}
+              className="mr-2 rounded-full"
+            />
+            <div className="flex gap-1">
+              <span className="animate-bounce delay-0 w-2 h-2 bg-gray-500 rounded-full"></span>
+              <span className="animate-bounce delay-150 w-2 h-2 bg-gray-500 rounded-full"></span>
+              <span className="animate-bounce delay-300 w-2 h-2 bg-gray-500 rounded-full"></span>
+            </div>
+          </div>
+        )}
+
         <div ref={chatEndRef} />
       </div>
 
@@ -68,8 +89,8 @@ export default function Chatbox() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-          placeholder="Gõ câu hỏi của bạn..."
-          className="flex-1 border rounded-md px-4 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-indigo-300"
+          placeholder="Gõ câu hỏi của bạn, trợ lý AItrify sẵn sàng phục vụ..."
+          className="flex-1 border rounded-md px-4 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-indigo-300 text-gray-900 placeholder:text-blue-600"
         />
         <button
           onClick={sendMessage}
