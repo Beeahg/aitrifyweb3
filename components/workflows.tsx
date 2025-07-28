@@ -114,8 +114,8 @@ export default function Workflows() {
                     </span>
                   </div>
                   <p className="text-indigo-200/65">
-                    Cho dù bạn mua sản phẩm điều hòa gia dụng với giá trị nhỏ hay hệ sinh thái của tập và chơi golf với chi phí tương xứng, 
-                    AItrify luôn đi cùng bạn với Cam kết vững chắc về "HÀNG CHÍNH HÃNG" và "DỊCH VỤ HẬU MÃI" với bạn. 
+                    Cho dù bạn mua sản phẩm điều hòa gia dụng với giá trị nhỏ với với bất cứ model nào hay sử dụng dịch vụ tập golf, chơi golf, mua sản phẩm golf với chi phí tương xứng, 
+                    AItrify luôn đi cùng bạn với Cam kết vững chắc về "HÀNG CHÍNH HÃNG" để cam kết về chất lượng và xuất xử, "DỊCH VỤ HẬU MÃI" chính hãng để bạn luôn An tâm 
                   </p>
                 </div>
               </div>

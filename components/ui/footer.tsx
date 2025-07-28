@@ -116,7 +116,7 @@ export default function Footer() {
                   className="text-indigo-200/65 transition hover:text-indigo-500"
                   href="#0"
                 >
-                  Dành cho Hãng sản xuất
+                  Dành cho Hãng 
                 </a>
               </li>
             </ul>
@@ -130,7 +130,7 @@ export default function Footer() {
                   className="text-indigo-200/65 transition hover:text-indigo-500"
                   href="#0"
                 >
-                  Thỏa thuận người dùng EUA
+                  Thỏa thuận EUA
                 </a>
               </li>
               <li>
@@ -138,7 +138,7 @@ export default function Footer() {
                   className="text-indigo-200/65 transition hover:text-indigo-500"
                   href="#0"
                 >
-                  Điều khoản dịch vụ ToS 
+                  Điều khoản dịch vụ 
                 </a>
               </li>
               <li>
@@ -212,7 +212,7 @@ export default function Footer() {
                   className="text-indigo-200/65 transition hover:text-indigo-500"
                   href="#0"
                 >
-                  Điều khoản sử dụng
+                  2025
                 </a>
               </p>
             </div>

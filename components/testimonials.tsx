@@ -25,8 +25,8 @@ const testimonials = [
     name: "Điều hòa dân dụng",
     company: "Nagakawa",
     content:
-      "Với 23 năm kinh nghiệm trong lĩnh vực điện lạnh, sản phẩm điều hòa Nagakawa luôn là sự lựa chọn phù hợp nhất với độ bền cao, chất lượng tốt, giá hợp lý đi kèm dịch vụ hậu mãi xuất sắc. Tham khảo: https://nagakawa.com.vn/dieu-hoa-dan-dung",
-    categories: [1, 3, 5],
+      "Với hơn 23 năm kinh nghiệm trong ngành điện lạnh, điều hòa Nagakawa là lựa chọn đáng tin cậy nhờ độ bền cao, chất lượng tốt, giá hợp lý và dịch vụ hậu mãi tận tâm.Tham khảo: www.nagakawa.com.vn",
+    categories: [1, 3],
   },
   {
     img: TestimonialImg02,
@@ -34,8 +34,8 @@ const testimonials = [
     name: "Gậy golf",
     company: "AItrify LISA Golf",
     content:
-      "AItrify có thể tìm kiếm và hỗ trợ thông tin về các loại gậy golf, các khái niệm 'độ cứng của cán gậy golf SHAFT STIFF/X-STIFF', cho dù là người có cú swing nhẹ, hay cần độ chính xác cao",
-    categories: [1, 2, 4],
+      "AItrify giúp bạn tra cứu nhanh các dòng gậy golf cùng khái niệm về độ cứng cán gậy (SHAFT STIFF/X-STIFF), phù hợp với người có cú swing nhẹ hoặc yêu cầu độ chính xác cao",
+    categories: [1, 2],
   },
   {
     img: TestimonialImg02,
@@ -43,8 +43,8 @@ const testimonials = [
     name: "Sân golf",
     company: "AItrify LISA Golf",
     content:
-      "Bạn muốn tìm kiếm các sân golf cho dù 9 hố hay 18 hố theo tiêu chuẩn của bạn, bạn muốn tìm kiếm sân tập golf tại Việt Nam có thêm các công nghệ hỗ trợ tập luyện như SmartBall & Trackman? hãy hỏi AItrify LISAGolf",
-    categories: [1, 2, 5],
+      "AItrify hỗ trợ bạn tìm sân golf 9 hoặc 18 hố theo tiêu chuẩn riêng, hoặc sân tập tại Việt Nam có công nghệ như SmartBall, Trackman để nâng cao trải nghiệm và luyện tập chuyên nghiệp",
+    categories: [1, 2],
   },
   {
     img: TestimonialImg01,
@@ -52,7 +52,7 @@ const testimonials = [
     name: "Gia dụng điện",
     company: "Nagakawa",
     content:
-      "Nagakawa mang tới hàng trăm loại sản phẩm thiết bị gia dụng sử dụng điện từ nồi cơm điện, cây nước nóng lạnh, máy xay sinh tố cho tới máy sấy tóc.Cơ hôi mua với giá siêu rẻ cho nhiều model. Tham khảo: https://shop.nagakawa.com.vn",
+      "Nagakawa cung cấp hàng trăm thiết bị gia dụng điện như nồi cơm, máy xay sinh tố, cây nước nóng lạnh, máy sấy tóc với giá tốt và mẫu mã đa dạng. Tham khảo: www.shop.nagakawa.com.vn",
     categories: [1, 4],
   },
   {
@@ -61,8 +61,8 @@ const testimonials = [
     name: "Thiết bị nhà bếp",
     company: "Nagakawa",
     content:
-      "Nagakawa với niềm tin 'tâm An tại Bếp', cho dù bạn mua chỉ một chiếc bếp điện từ đơn nhỏ gọn hay bếp từ đôi/ba và thậm chí cả máy hút mùi, kỹ thuật viên lắp đặt và bào trì luôn thực hiện với sự Tận tâm cho Bếp, bữa cơm ngon cho bạn",
-    categories: [1, 3, 5],
+      "Với triết lý 'Tâm An tại Bếp', Nagakawa mang đến các dòng bếp từ đơn, đôi, ba và máy hút mùi cùng đội ngũ lắp đặt chuyên nghiệp, tận tâm cho căn bếp ấm cúng của bạn",
+    categories: [1, 4],
   },
   {
     img: TestimonialImg02,
@@ -70,8 +70,8 @@ const testimonials = [
     name: "Thời trang golf",
     company: "AItrify LISA Golf",
     content:
-      "Thời trang khi tập golf hay chơi gof quyết định lớn vào phong cách của bạn ở cả nơi tập golf và cả trên sân chơi golf, AItrify hỗ trợ bạn lựa chọn phong cách thời trang cho phù hợp",
-    categories: [1, 3],
+      "Thời trang khi tập hay thi đấu golf thể hiện phong cách và cá tính. AItrify hỗ trợ bạn chọn lựa trang phục phù hợp, nổi bật ở sân tập cũng như trong các giải đấu đẳng cấp",
+    categories: [1, 2],
   },
 ];
 
@@ -85,7 +85,7 @@ export default function Testimonials() {
         {/* Section header */}
         <div className="mx-auto max-w-3xl pb-12 text-center">
           <h2 className="animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,var(--color-gray-200),var(--color-indigo-200),var(--color-gray-50),var(--color-indigo-300),var(--color-gray-200))] bg-[length:200%_auto] bg-clip-text pb-4 font-nacelle text-3xl font-semibold text-transparent md:text-4xl">
-       Bạn muốn cuộc sống tốt hơn hay đẳng cấp hơn?
+       Bạn mua gì cho cuộc sống tốt hơn?
           </h2>
           <p className="text-lg text-indigo-200/65">
             AItrify tự động hóa hầu hết quy trình từ tìm kiếm, lựa chọn, thanh toán, vận chuyển.

@@ -1,6 +1,6 @@
 export const metadata = {
   title: "AItrify",
-  description: "AItrify Page",
+  description: "Recharging eCommerce with AI",
 };
 
 import PageIllustration from "@/components/page-illustration";
