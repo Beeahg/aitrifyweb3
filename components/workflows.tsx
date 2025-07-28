@@ -17,7 +17,7 @@ export default function Workflows() {
               </span>
             </div>
             <h2 className="animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,var(--color-gray-200),var(--color-indigo-200),var(--color-gray-50),var(--color-indigo-300),var(--color-gray-200))] bg-[length:200%_auto] bg-clip-text pb-4 font-nacelle text-3xl font-semibold text-transparent md:text-4xl">
-              Trí tuệ nhân tạo giúp tìm đúng thứ bạn thật sự cần
+              Trí tuệ nhân tạo AI của AItrify giúp tìm đúng thứ bạn thật sự cần
             </h2>
             <p className="text-lg text-indigo-200/65">
               AItrify tìm kiếm và cung cấp hàng chính hãng, bạn không cần phải nhiều tiền mới có điều hòa tốt, thiết bị gia dụng chuẩn.
@@ -67,8 +67,8 @@ export default function Workflows() {
                     </span>
                   </div>
                   <p className="text-indigo-200/65">
-                    Điều hòa gia dụng giá rẻ, mang tới khả năng tiếp cận cho mọi nhà, mọi người. 
-                    Sản phẩm cho Golfer và dịch vụ cao cấp cho khách hàng giàu có và phong cách.
+                    Điều hòa gia dụng giá rẻ, mang tới khả năng tiếp cận cho mọi nhà, mọi người. Vì bạn xứng đáng được cuộc sống ngày một tiện nghi hơn. 
+                    Sản phẩm cho Golfer và dịch vụ cao cấp cho khách hàng giàu có và phong cách. Vì bạn xứng được được dịch vụ đẳng cấp hơn.
                   </p>
                 </div>
               </div>
@@ -114,8 +114,8 @@ export default function Workflows() {
                     </span>
                   </div>
                   <p className="text-indigo-200/65">
-                    Cho dù bạn mua điều hòa gia dụng với giá trị nhỏ hay sản phẩm dịch golf với chi phí cao, 
-                    sự tồn tại của chúng tôi sẽ chỉ còn khi có Cam kết về "HÀNG CHÍNH HÃNG" và "DỊCH VỤ HẬU MÃI" với bạn. 
+                    Cho dù bạn mua sản phẩm điều hòa gia dụng với giá trị nhỏ hay hệ sinh thái của tập và chơi golf với chi phí tương xứng, 
+                    AItrify luôn đi cùng bạn với Cam kết vững chắc về "HÀNG CHÍNH HÃNG" và "DỊCH VỤ HẬU MÃI" với bạn. 
                   </p>
                 </div>
               </div>
@@ -162,7 +162,7 @@ export default function Workflows() {
                   </div>
                   <p className="text-indigo-200/65">
                     Bạn nhìn thấy hay tìm thấy trên AItrify, sản phẩm đó PHẢI CÓ SẴN (A đại diện cho Available). 
-                    Đó cũng là cam kết các hãng cung cấp sản phẩm dịch vụ khi hợp tác với AItrify để mang tới cho bạn.
+                    Đó cũng là cam kết các hãng cung cấp sản phẩm dịch vụ khi hợp tác với AItrify để mang tới cho bạn, chúng tôi có hệ thống kho lưu trữ đủ hàng của các hãng để không làm bạn thất vọng.
                   </p>
                 </div>
               </div>
