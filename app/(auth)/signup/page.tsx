@@ -30,7 +30,7 @@ export default function SignUp() {
                   id="name"
                   type="text"
                   className="form-input w-full"
-                  placeholder="Your full name"
+                  placeholder="Họ tên đầy đủ của bạn"
                   required
                 />
               </div>
@@ -39,13 +39,13 @@ export default function SignUp() {
                   className="mb-1 block text-sm font-medium text-indigo-200/65"
                   htmlFor="name"
                 >
-                  Tên Công ty <span className="text-red-500">*</span>
+                  Tên Công ty <span className="text-red-500"></span>
                 </label>
                 <input
                   id="company"
                   type="text"
                   className="form-input w-full"
-                  placeholder="Your company name"
+                  placeholder="Tên công ty bạn (không bắt buộc cho Cá nhân)"
                   required
                 />
               </div>
@@ -60,7 +60,7 @@ export default function SignUp() {
                   id="email"
                   type="email"
                   className="form-input w-full"
-                  placeholder="Your work email"
+                  placeholder="Địa chỉ email"
                 />
               </div>
               <div>
@@ -74,7 +74,7 @@ export default function SignUp() {
                   id="password"
                   type="password"
                   className="form-input w-full"
-                  placeholder="Password (at least 10 characters)"
+                  placeholder="Mật khẩu (Ít nhất 8 ký tự với chữ hoa, thường, số, ký tự đặc biệt)"
                 />
               </div>
             </div>

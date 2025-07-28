@@ -38,8 +38,8 @@ const testimonials = [
     categories: [1, 2, 4],
   },
   {
-    img: TestimonialImg03,
-    clientImg: ClientImg03,
+    img: TestimonialImg02,
+    clientImg: ClientImg02,
     name: "Sân golf",
     company: "AItrify LISA Golf",
     content:
@@ -47,8 +47,8 @@ const testimonials = [
     categories: [1, 2, 5],
   },
   {
-    img: TestimonialImg04,
-    clientImg: ClientImg04,
+    img: TestimonialImg01,
+    clientImg: ClientImg01,
     name: "Gia dụng điện",
     company: "Nagakawa",
     content:
@@ -56,8 +56,8 @@ const testimonials = [
     categories: [1, 4],
   },
   {
-    img: TestimonialImg05,
-    clientImg: ClientImg05,
+    img: TestimonialImg01,
+    clientImg: ClientImg01,
     name: "Thiết bị nhà bếp",
     company: "Nagakawa",
     content:
@@ -65,8 +65,8 @@ const testimonials = [
     categories: [1, 3, 5],
   },
   {
-    img: TestimonialImg06,
-    clientImg: ClientImg06,
+    img: TestimonialImg02,
+    clientImg: ClientImg02,
     name: "Thời trang golf",
     company: "AItrify LISA Golf",
     content:
@@ -85,7 +85,7 @@ export default function Testimonials() {
         {/* Section header */}
         <div className="mx-auto max-w-3xl pb-12 text-center">
           <h2 className="animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,var(--color-gray-200),var(--color-indigo-200),var(--color-gray-50),var(--color-indigo-300),var(--color-gray-200))] bg-[length:200%_auto] bg-clip-text pb-4 font-nacelle text-3xl font-semibold text-transparent md:text-4xl">
-       Bạn cần bổ sung gì cho cuộc sống thoải mái hơn, đẳng cấp hơn?
+       Bạn muốn cuộc sống tốt hơn hay đẳng cấp hơn?
           </h2>
           <p className="text-lg text-indigo-200/65">
             AItrify tự động hóa hầu hết quy trình từ tìm kiếm, lựa chọn, thanh toán, vận chuyển.
