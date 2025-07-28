@@ -1,6 +1,6 @@
 export const metadata = {
-  title: "Sign In - Open PRO",
-  description: "Page description",
+  title: "Đăng nhập - AItrify",
+  description: "AItrify Page",
 };
 
 import Link from "next/link";

@@ -9,18 +9,14 @@ import TestimonialImg03 from "@/public/images/testimonial-03.jpg";
 import TestimonialImg04 from "@/public/images/testimonial-04.jpg";
 import TestimonialImg05 from "@/public/images/testimonial-05.jpg";
 import TestimonialImg06 from "@/public/images/testimonial-06.jpg";
-import TestimonialImg07 from "@/public/images/testimonial-07.jpg";
-import TestimonialImg08 from "@/public/images/testimonial-08.jpg";
-import TestimonialImg09 from "@/public/images/testimonial-09.jpg";
+
 import ClientImg01 from "@/public/images/client-logo-01.svg";
 import ClientImg02 from "@/public/images/client-logo-02.svg";
 import ClientImg03 from "@/public/images/client-logo-03.svg";
 import ClientImg04 from "@/public/images/client-logo-04.svg";
 import ClientImg05 from "@/public/images/client-logo-05.svg";
 import ClientImg06 from "@/public/images/client-logo-06.svg";
-import ClientImg07 from "@/public/images/client-logo-07.svg";
-import ClientImg08 from "@/public/images/client-logo-08.svg";
-import ClientImg09 from "@/public/images/client-logo-09.svg";
+
 
 const testimonials = [
   {
@@ -65,8 +61,17 @@ const testimonials = [
     name: "Thiết bị nhà bếp",
     company: "Nagakawa",
     content:
-      "Nagakawa với tâm niệm 'tâm An tại Bếp', cho dù bạn mua chỉ một chiếc bếp từ đơn nhỏ gọn hay bếp từ đôi/ba và thậm chí cả máy hút mùi, kỹ thuật viên lắp đặt và bào trì luôn thực hiện với sự Tận tâm cho Bếp, bữa cơm ngon cho bạn",
+      "Nagakawa với niềm tin 'tâm An tại Bếp', cho dù bạn mua chỉ một chiếc bếp điện từ đơn nhỏ gọn hay bếp từ đôi/ba và thậm chí cả máy hút mùi, kỹ thuật viên lắp đặt và bào trì luôn thực hiện với sự Tận tâm cho Bếp, bữa cơm ngon cho bạn",
     categories: [1, 3, 5],
+  },
+  {
+    img: TestimonialImg06,
+    clientImg: ClientImg06,
+    name: "Thời trang golf",
+    company: "AItrify LISA Golf",
+    content:
+      "Thời trang khi tập golf hay chơi gof quyết định lớn vào phong cách của bạn ở cả nơi tập golf và cả trên sân chơi golf, AItrify hỗ trợ bạn lựa chọn phong cách thời trang cho phù hợp",
+    categories: [1, 3],
   },
 ];
 
@@ -84,7 +89,7 @@ export default function Testimonials() {
           </h2>
           <p className="text-lg text-indigo-200/65">
             AItrify tự động hóa hầu hết quy trình từ tìm kiếm, lựa chọn, thanh toán, vận chuyển.
-            Công nghệ AI giúp bạn tìm ra bên cung cấp giá tốt nhất cho hàng chính hãng, mang tới dịch vụ chính hãng 
+            Công nghệ AI giúp bạn tìm ra bên cung cấp giá tốt nhất cho hàng hóa và dịch vụ chính hãng
           </p>
         </div>
 

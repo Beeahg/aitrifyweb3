@@ -13,7 +13,7 @@ export default function SignUp() {
           {/* Section header */}
           <div className="pb-12 text-center">
             <h1 className="animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,var(--color-gray-200),var(--color-indigo-200),var(--color-gray-50),var(--color-indigo-300),var(--color-gray-200))] bg-[length:200%_auto] bg-clip-text font-nacelle text-3xl font-semibold text-transparent md:text-4xl">
-              Create an account
+              Tạo tài khoản AItrify
             </h1>
           </div>
           {/* Contact form */}
@@ -24,7 +24,7 @@ export default function SignUp() {
                   className="mb-1 block text-sm font-medium text-indigo-200/65"
                   htmlFor="name"
                 >
-                  Name <span className="text-red-500">*</span>
+                  Tên <span className="text-red-500">*</span>
                 </label>
                 <input
                   id="name"
@@ -39,7 +39,7 @@ export default function SignUp() {
                   className="mb-1 block text-sm font-medium text-indigo-200/65"
                   htmlFor="name"
                 >
-                  Company Name <span className="text-red-500">*</span>
+                  Tên Công ty <span className="text-red-500">*</span>
                 </label>
                 <input
                   id="company"
@@ -54,7 +54,7 @@ export default function SignUp() {
                   className="mb-1 block text-sm font-medium text-indigo-200/65"
                   htmlFor="email"
                 >
-                  Work Email <span className="text-red-500">*</span>
+                  Email <span className="text-red-500">*</span>
                 </label>
                 <input
                   id="email"
@@ -68,7 +68,7 @@ export default function SignUp() {
                   className="block text-sm font-medium text-indigo-200/65"
                   htmlFor="password"
                 >
-                  Password <span className="text-red-500">*</span>
+                  Mật khẩu <span className="text-red-500">*</span>
                 </label>
                 <input
                   id="password"
@@ -80,21 +80,21 @@ export default function SignUp() {
             </div>
             <div className="mt-6 space-y-5">
               <button className="btn w-full bg-linear-to-t from-indigo-600 to-indigo-500 bg-[length:100%_100%] bg-[bottom] text-white shadow-[inset_0px_1px_0px_0px_--theme(--color-white/.16)] hover:bg-[length:100%_150%]">
-                Register
+                Đăng ký
               </button>
               <div className="flex items-center gap-3 text-center text-sm italic text-gray-600 before:h-px before:flex-1 before:bg-linear-to-r before:from-transparent before:via-gray-400/25 after:h-px after:flex-1 after:bg-linear-to-r after:from-transparent after:via-gray-400/25">
-                or
+                hoặc
               </div>
               <button className="btn relative w-full bg-linear-to-b from-gray-800 to-gray-800/60 bg-[length:100%_100%] bg-[bottom] text-gray-300 before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_right,var(--color-gray-800),var(--color-gray-700),var(--color-gray-800))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] hover:bg-[length:100%_150%]">
-                Sign In with Google
+                Đăng nhập với Google
               </button>
             </div>
           </form>
           {/* Bottom link */}
           <div className="mt-6 text-center text-sm text-indigo-200/65">
-            Already have an account?{" "}
+            Bạn đã có tài khoản AItrify?{" "}
             <Link className="font-medium text-indigo-500" href="/signin">
-              Sign in
+              Đăng nhập
             </Link>
           </div>
         </div>
