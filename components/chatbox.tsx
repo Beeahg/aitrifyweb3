@@ -1,10 +1,12 @@
+// Updated Chatbox.tsx with icon and better design
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 
 export default function Chatbox() {
   const [messages, setMessages] = useState<{ sender: string; text: string }[]>([
-    { sender: 'ai', text: '🤖 AItrify chào bạn, tôi có thể giúp gì hôm nay?' },
+    { sender: 'ai', text: 'AItrify chào bạn, tôi có thể giúp gì hôm nay?' },
   ]);
   const [input, setInput] = useState('');
   const chatEndRef = useRef<HTMLDivElement>(null);
@@ -15,7 +17,6 @@ export default function Chatbox() {
 
   const sendMessage = async () => {
     if (!input.trim()) return;
-
     const userMessage = { sender: 'user', text: input };
     setMessages((prev) => [...prev, userMessage]);
     setInput('');
@@ -28,13 +29,13 @@ export default function Chatbox() {
   const mockChatAPI = async (userInput: string) => {
     return new Promise<string>((resolve) => {
       setTimeout(() => {
-        resolve(`🤖 Trả lời cho: "${userInput}"`);
+        resolve(`Trả lời cho: "${userInput}"`);
       }, 1000);
     });
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto bg-white rounded-xl shadow-md p-4 flex flex-col gap-4">
+    <div className="w-full max-w-3xl mx-auto rounded-xl border border-gray-200 bg-white/90 backdrop-blur shadow-lg p-4 flex flex-col gap-4">
       <div className="max-h-72 overflow-y-auto space-y-2 mb-2">
         {messages.map((msg, idx) => (
           <div
@@ -42,10 +43,19 @@ export default function Chatbox() {
             className={`rounded-lg px-3 py-2 max-w-[80%] text-sm sm:text-base ${
               msg.sender === 'user'
                 ? 'bg-indigo-100 self-end ml-auto text-right'
-                : 'bg-gray-200 self-start'
+                : 'bg-indigo-50 self-start flex items-center gap-2'
             }`}
           >
-            {msg.text}
+            {msg.sender === 'ai' && (
+              <Image
+                src="/images/ai-logo-icon.png"
+                alt="AItrify Logo"
+                width={24}
+                height={24}
+                className="mr-2 rounded-full"
+              />
+            )}
+            <span>{msg.text}</span>
           </div>
         ))}
         <div ref={chatEndRef} />
