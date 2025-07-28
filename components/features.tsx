@@ -39,7 +39,7 @@ export default function Features() {
           <div className="mx-auto max-w-3xl pb-4 text-center md:pb-12">
             <div className="inline-flex items-center gap-3 pb-3 before:h-px before:w-8 before:bg-linear-to-r before:from-transparent before:to-indigo-200/50 after:h-px after:w-8 after:bg-linear-to-l after:from-transparent after:to-indigo-200/50">
               <span className="inline-flex bg-linear-to-r from-indigo-500 to-indigo-200 bg-clip-text text-transparent">
-                6 Lợi ích
+                AItrify là để
               </span>
             </div>
             <h2 className="animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,var(--color-gray-200),var(--color-indigo-200),var(--color-gray-50),var(--color-indigo-300),var(--color-gray-200))] bg-[length:200%_auto] bg-clip-text pb-4 font-nacelle text-3xl font-semibold text-transparent md:text-4xl">
@@ -47,7 +47,7 @@ export default function Features() {
             </h2>
             <p className="text-lg text-indigo-200/65">
               Dù bạn có ít hay nhiều điều kiện về tài chính, bạn luôn xứng đáng với các tiện nghi, sản phẩm tương xứng với số tiền chi ra. 
-              AItrify khát khao được hiện diện trong đời sống hàng ngày của bạn.
+              AItrify sử dụng tối đa công nghệ trí tuệ nhân tạo AI để hiện diện trong đời sống hàng ngày của bạn để giúp bạn có cuộc sống dễ chịu hơn.
             </p>
           </div>
           {/* Items */}
@@ -69,7 +69,8 @@ export default function Features() {
                 Bạn khá giả nhưng bận rộn?
               </h3>
               <p className="text-indigo-200/65">
-                AItrify muốn giới thiệu bạn về Golf, hơn cả một môn thể thao, đó là đẳng cấp về sự kết nối.
+                AItrify muốn giới thiệu bạn về Golf, hơn cả một môn thể thao, đó là đẳng cấp về sự kết nối. Kết nối cộng đồng cùng sở thích, 
+                kết nối các cơ hội kinh doanh trên sân golf, kết nối phong cách sống, giảm áp lực công việc bộn bề với không khí trên sân golf.
               </p>
             </article>
             <article>
@@ -86,8 +87,8 @@ export default function Features() {
                 Bạn chưa có điều kiện kinh tế?
               </h3>
               <p className="text-indigo-200/65">
-                Bạn có thể đang nấu bằng bếp gas cũ, hoặc chưa dám mơ điều hòa. Nhưng bạn luôn xứng đáng có một cuộc sống tiện nghi hơn, 
-                mà không cần trả giá cao.. AItrify giúp bạn tìm đúng
+                Bạn có thể đang nấu bằng bếp gas cũ, hoặc chưa dám mơ các thiết bị tiện nghi như bình nước nóng, tủ lạnh, máy điều hòa không khí. 
+                Nhưng bạn luôn xứng đáng có một cuộc sống tiện nghi hơn, mà không cần trả chi phí cao. AItrify giúp bạn tìm đúng
               </p>
             </article>
             <article>
@@ -104,11 +105,11 @@ export default function Features() {
                 />
               </svg>
               <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
-                Advanced Search
+                Tăng tốc tìm kiếm
               </h3>
               <p className="text-indigo-200/65">
-                Track progress across custom flows for your team. Find the right
-                balance for the user, privacy and security.
+                Cá nhân hóa thông tin sản phẩm bạn cần để tìm kiếm nhanh nhất và phù hợp nhất. AItrify hơn cả tìm kiếm mà còn là một trợ lý 
+                tư vấn cá nhân của bạn trong việc mua hàng đúng, giá tốt, chính hãng, dịch vụ hậu mãi chuẩn hãng. Cần gì bạn hãy hỏi AItrify
               </p>
             </article>
             <article>
@@ -130,11 +131,11 @@ export default function Features() {
                 <path d="m16.321 2-.5-.866 1.733-1 .5.866A22 22 0 0 1 21 12c0 3.852-1.017 7.636-2.948 10.97l-.502.865-1.73-1.003.501-.865A19.878 19.878 0 0 0 19 12a20 20 0 0 0-2.679-10Z" />
               </svg>
               <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
-                Strategic Initiatives
+                AItrify trợ giúp về Golf
               </h3>
               <p className="text-indigo-200/65">
-                Track progress across custom flows for your team. Find the right
-                balance for the user, privacy and security.
+                Bạn có thể hỏi trợ lý AI "AItrify" về thông tin sản phẩm liên quan tới golf như sân golf, gậy golf, bóng golf, phụ kiện golf.
+                AItrify đang nỗ lực từng ngày mang lại cho bạn các tính năng để hỗ trợ bạn tập chơi golf ngay từ khi bạn chưa biết về golf hay cả khi bạn đã tập golf được một thời gian
               </p>
             </article>
             <article>
@@ -151,11 +152,11 @@ export default function Features() {
                 <path d="m7.454 2.891.891-.454L7.437.655l-.891.454a12 12 0 0 0 0 21.382l.89.454.91-1.781-.892-.455a10 10 0 0 1 0-17.818ZM17.456 1.11l-.891-.454-.909 1.782.891.454a10 10 0 0 1 0 17.819l-.89.454.908 1.781.89-.454a12 12 0 0 0 0-21.382Z" />
               </svg>
               <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
-                Flexible Workflows
+                AItrify trợ giúp về Điều hòa gia dụng
               </h3>
               <p className="text-indigo-200/65">
-                Track progress across custom flows for your team. Find the right
-                balance for the user, privacy and security.
+                AItrify mong muốn cải thiện cuộc sống cho những người thu nhập thấp với các tiện nghi cuộc sống tốt hơn gồm điều hòa, 
+                bình nước nóng, bếp điện từ, nồi cơm, máy xay sinh tố,... với giá cả rất bình dân nhưng vẫn là chính hãng vì hơn cả một sản phẩm, AItrify mong mang lại sự Yên tâm
               </p>
             </article>
             <article>
@@ -172,11 +173,11 @@ export default function Features() {
                 <path d="M19.406 3.844 6.083 20.497.586 15 2 13.586l3.917 3.917L17.844 2.595l1.562 1.25Z" />
               </svg>
               <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
-                Unified Timeline
+                AItrify kết nối
               </h3>
               <p className="text-indigo-200/65">
-                Track progress across custom flows for your team. Find the right
-                balance for the user, privacy and security.
+                AItrify với công nghệ AI sẽ dùng các công nghệ Số hóa mới nhất trong đó công nghệ trí tuệ nhân tạo là nền móng vững chắc
+                để kết nối mọi bên tham gia gồm hãng sản xuất hàng hóa, trung tâm dịch vụ khách hàng, công ty vận chuyển hàng để mang tới trải nghiệm một chạm với AItrify cho bạn
               </p>
             </article>
           </div>
