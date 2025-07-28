@@ -4,6 +4,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 
+
 export default function Chatbox() {
   const [messages, setMessages] = useState<{ sender: string; text: string }[]>([
     { sender: 'ai', text: 'AItrify chào bạn, tôi có thể giúp gì hôm nay?' },
@@ -55,7 +56,7 @@ export default function Chatbox() {
                 className="mr-2 rounded-full"
               />
             )}
-            <span>{msg.text}</span>
+            <span className="text-gray-900">{msg.text}</span>
           </div>
         ))}
         <div ref={chatEndRef} />
