@@ -39,26 +39,16 @@ export default function Features() {
           <div className="mx-auto max-w-3xl pb-4 text-center md:pb-12">
             <div className="inline-flex items-center gap-3 pb-3 before:h-px before:w-8 before:bg-linear-to-r before:from-transparent before:to-indigo-200/50 after:h-px after:w-8 after:bg-linear-to-l after:from-transparent after:to-indigo-200/50">
               <span className="inline-flex bg-linear-to-r from-indigo-500 to-indigo-200 bg-clip-text text-transparent">
-                Advanced Controls
+                6 Lợi ích
               </span>
             </div>
             <h2 className="animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,var(--color-gray-200),var(--color-indigo-200),var(--color-gray-50),var(--color-indigo-300),var(--color-gray-200))] bg-[length:200%_auto] bg-clip-text pb-4 font-nacelle text-3xl font-semibold text-transparent md:text-4xl">
-              Built for modern product teams
+              Cho một cuộc sống tốt hơn mỗi ngày
             </h2>
             <p className="text-lg text-indigo-200/65">
-              Open AI reads and understands your files, and with nothing more
-              than a single line of feedback, so you can go further than the
-              speed of thought.
+              Dù bạn có ít hay nhiều điều kiện về tài chính, bạn luôn xứng đáng với các tiện nghi, sản phẩm tương xứng với số tiền chi ra. 
+              AItrify khát khao được hiện diện trong đời sống hàng ngày của bạn.
             </p>
-          </div>
-          <div className="flex justify-center pb-4 md:pb-12" data-aos="fade-up">
-            <Image
-              className="max-w-none"
-              src={FeaturesImage}
-              width={1104}
-              height={384}
-              alt="Features"
-            />
           </div>
           {/* Items */}
           <div className="mx-auto grid max-w-sm gap-12 sm:max-w-none sm:grid-cols-2 md:gap-x-14 md:gap-y-16 lg:grid-cols-3">
@@ -76,11 +66,10 @@ export default function Features() {
                 />
               </svg>
               <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
-                Project Milestones
+                Bạn khá giả nhưng bận rộn?
               </h3>
               <p className="text-indigo-200/65">
-                Track progress across custom flows for your team. Find the right
-                balance for the user, privacy and security.
+                AItrify muốn giới thiệu bạn về Golf, hơn cả một môn thể thao, đó là đẳng cấp về sự kết nối.
               </p>
             </article>
             <article>
@@ -94,11 +83,11 @@ export default function Features() {
                 <path d="M19 6H0v2h17v8H7v-6H5v8h19v-2h-5V6Z" />
               </svg>
               <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
-                Team Views
+                Bạn chưa có điều kiện kinh tế?
               </h3>
               <p className="text-indigo-200/65">
-                Track progress across custom flows for your team. Find the right
-                balance for the user, privacy and security.
+                Bạn có thể đang nấu bằng bếp gas cũ, hoặc chưa dám mơ điều hòa. Nhưng bạn luôn xứng đáng có một cuộc sống tiện nghi hơn, 
+                mà không cần trả giá cao.. AItrify giúp bạn tìm đúng
               </p>
             </article>
             <article>
