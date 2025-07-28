@@ -21,7 +21,7 @@ export default function Workflows() {
             </h2>
             <p className="text-lg text-indigo-100/90">
               AItrify tìm kiếm và cung cấp hàng chính hãng, bạn không cần phải nhiều tiền mới có điều hòa tốt, thiết bị gia dụng chuẩn.
-              Bạn là người có điều kiện tài chính nhưng áp lực công việc cao, AItrify tư vấn và mang lại sản phẩm và dịch vụ Golf xứng tầm.
+              Bạn là người có điều kiện tài chính với mong muốn mở rộng kết nối kinh doanh, nâng đẳng cấp sống, AItrify tư vấn và mang lại sản phẩm và dịch vụ Golf xứng tầm.
             </p>
           </div>
           {/* Spotlight items */}
