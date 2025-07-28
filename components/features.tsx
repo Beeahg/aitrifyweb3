@@ -105,7 +105,7 @@ export default function Features() {
                 />
               </svg>
               <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
-                Tăng tốc tìm kiếm
+                AItrify Tăng tốc tìm kiếm cho bạn
               </h3>
               <p className="text-indigo-200/65">
                 Cá nhân hóa thông tin sản phẩm bạn cần để tìm kiếm nhanh nhất và phù hợp nhất. AItrify hơn cả tìm kiếm mà còn là một trợ lý 
@@ -173,7 +173,7 @@ export default function Features() {
                 <path d="M19.406 3.844 6.083 20.497.586 15 2 13.586l3.917 3.917L17.844 2.595l1.562 1.25Z" />
               </svg>
               <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
-                AItrify kết nối
+                AItrify Tự động hóa hoàn thành đơn hàng
               </h3>
               <p className="text-indigo-200/65">
                 AItrify với công nghệ AI sẽ dùng các công nghệ Số hóa mới nhất trong đó công nghệ trí tuệ nhân tạo là nền móng vững chắc

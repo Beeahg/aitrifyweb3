@@ -17,12 +17,12 @@ export default function HeroHome() {
             </h1>
             <div className="mx-auto max-w-3xl">
               <p
-                className="mb-8 text-xl text-indigo-200/65"
+                className="mb-8 text-xl text-indigo-100/80"
                 data-aos="fade-up"
                 data-aos-delay={200}
               >
                 AItrify tái định nghĩa Thương mại điện tử "eCommerce", nơi người Việt mua sắm trực tuyến 
-                với sự hỗ trợ của Trí tuệ nhân tạo AI, chúng tôi gọi đó là "AICommerce" 
+                với sự hỗ trợ của Trí tuệ nhân tạo AI, chúng tôi gọi đó là "<strong className="font-bold text-indigo-100">AICommerce</strong>"
 
               </p>
               <div className="mx-auto max-w-xs sm:flex sm:max-w-none sm:justify-center">
