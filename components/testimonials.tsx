@@ -88,7 +88,7 @@ export default function Testimonials() {
        Bạn mua gì cho cuộc sống tốt hơn?
           </h2>
           <p className="text-lg text-indigo-200/65">
-            AItrify tự động hóa hầu hết quy trình từ tìm kiếm, lựa chọn, thanh toán, vận chuyển.<br />
+            AItrify tự động hóa hầu hết quy trình tìm kiếm, lựa chọn, thanh toán, vận chuyển.<br />
             Công nghệ AI giúp bạn tìm ra bên cung cấp giá tốt nhất cho hàng hóa và dịch vụ chính hãng
           </p>
         </div>
