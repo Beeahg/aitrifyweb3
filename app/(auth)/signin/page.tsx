@@ -1,6 +1,6 @@
 export const metadata = {
   title: "Đăng nhập - AItrify",
-  description: "AItrify Page",
+  description: "Recharging eCommerce with AI",
 };
 
 import Link from "next/link";
