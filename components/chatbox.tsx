@@ -90,7 +90,7 @@ export default function Chatbox() {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
           placeholder="Bạn cần mua gì từ AItrify, mời bạn gõ câu hỏi và nhấn nút 'Gửi' hoặc gõ Enter..."
-          className="flex-1 border rounded-md px-4 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-indigo-300 text-gray-900 placeholder:text-blue-400"
+          className="flex-1 border rounded-md px-4 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-indigo-300 text-gray-900 placeholder:text-blue-200"
         />
         <button
           onClick={sendMessage}
