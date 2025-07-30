@@ -6,7 +6,10 @@ import Image from 'next/image';
 const API_URL = "https://ai.aitrify.com/ask";
 const USER_LOGIN = "mock_user"
 
+
+
 export default function Chatbox() {
+  const chatContainerRef = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState<{ sender: string; text: string }[]>([
     { sender: 'ai', text: 'AItrify chào bạn, tôi có thể giúp gì hôm nay?' },
   ]);
@@ -14,9 +17,15 @@ export default function Chatbox() {
   const [loading, setLoading] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
+  // useEffect(() => {
+  //   chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  // }, [messages, loading]);
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
   }, [messages, loading]);
+
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -56,7 +65,7 @@ export default function Chatbox() {
 
   return (
     <div className="w-full max-w-3xl mx-auto rounded-xl border border-gray-200 bg-white/90 backdrop-blur shadow-lg p-4 flex flex-col gap-4">
-      <div className="max-h-72 overflow-y-auto space-y-2 mb-2">
+      <div ref={chatContainerRef} className="max-h-72 overflow-y-auto space-y-2 mb-2">
         {messages.map((msg, idx) => (
           <div
             key={idx}
