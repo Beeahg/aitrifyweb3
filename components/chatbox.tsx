@@ -3,6 +3,9 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 
+const API_URL = "https://ai.aitrify.com/ask";
+const USER_LOGIN = "mock_user"
+
 export default function Chatbox() {
   const [messages, setMessages] = useState<{ sender: string; text: string }[]>([
     { sender: 'ai', text: 'AItrify chào bạn, tôi có thể giúp gì hôm nay?' },
@@ -29,12 +32,26 @@ export default function Chatbox() {
     setMessages((prev) => [...prev, aiMessage]);
   };
 
+  // const mockChatAPI = async (userInput: string) => {
+  //   return new Promise<string>((resolve) => {
+  //     setTimeout(() => {
+  //       resolve(`Trả lời cho: "${userInput}"`);
+  //     }, 1500);
+  //   });
+  // };
   const mockChatAPI = async (userInput: string) => {
-    return new Promise<string>((resolve) => {
-      setTimeout(() => {
-        resolve(`Trả lời cho: "${userInput}"`);
-      }, 1500);
-    });
+    try {
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question: userInput, user_login: USER_LOGIN }),
+      });
+      if (!response.ok) throw new Error('Lỗi server');
+      const data = await response.json();
+      return data.answer || 'Trả lời từ AI: ' + JSON.stringify(data); // Lấy 'answer' từ response, fallback nếu lỗi
+    } catch (error) {
+      return 'Lỗi kết nối server: ' + (error as Error).message;
+    }
   };
 
   return (
