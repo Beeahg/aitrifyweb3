@@ -34,7 +34,7 @@ const testimonials = [
     name: "Gậy golf",
     company: "AItrify LISA Golf",
     content:
-      "Công nghệ AI của AItrify đứng sau Trợ lý LISA giúp bạn tra cứu nhanh các dòng gậy golf cùng khái niệm về độ cứng cán gậy (SHAFT STIFF/X-STIFF), phù hợp với người có cú swing nhẹ hoặc yêu cầu độ chính xác cao",
+      "Công nghệ AI của AItrify hỗ trợ Trợ lý LISA giúp bạn tra cứu nhanh các dòng gậy golf cùng khái niệm về độ cứng cán gậy (SHAFT STIFF/X-STIFF), phù hợp với người có cú swing nhẹ hoặc yêu cầu độ chính xác cao",
     categories: [1, 2],
   },
   {
