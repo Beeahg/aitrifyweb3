@@ -1,4 +1,6 @@
-// app/page.tsx
+// app/(default)/page.tsx
+
+import ClientPage from './ClientPage'; // ⬅️ DÒNG BỊ THIẾU
 
 export const metadata = {
   title: "AItrify",
@@ -10,7 +12,7 @@ export const metadata = {
     siteName: "AItrify",
     images: [
       {
-        url: "/og-image.png", // đảm bảo file này nằm trong thư mục public/
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "AItrify Open Graph Image",
@@ -27,22 +29,6 @@ export const metadata = {
   },
 };
 
-import PageIllustration from "@/components/page-illustration";
-import Hero from "@/components/hero-home";
-import Workflows from "@/components/workflows";
-import Features from "@/components/features";
-import Testimonials from "@/components/testimonials";
-import Cta from "@/components/cta";
-
-export default function Home() {
-  return (
-    <>
-      <PageIllustration />
-      <Hero />
-      <Workflows />
-      <Features />
-      <Testimonials />
-      <Cta />
-    </>
-  );
+export default function HeroHome() {
+  return <ClientPage />;
 }
