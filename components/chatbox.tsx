@@ -104,34 +104,16 @@ export default function Chatbox({ agent }: ChatboxProps) {
                   (agent === 'lisa' ? 'bg-blue-50' : 'bg-green-50')
             }`}
           >
-            {msg.sender === 'ai' ? (
-              <div className="relative w-full pr-24"> {/* pr-24 để chừa không gian cho ảnh bên phải */}
-                <div className="flex items-center gap-2">
-                  <Image
-                    src="/images/ai-logo-icon.png"
-                    alt="AItrify Logo"
-                    width={40}
-                    height={40}
-                    className="mr-2 rounded-full"
-                  />
-                  <span className="text-gray-900">{msg.text}</span>
-                </div>
-
-                {/* Ảnh sản phẩm ở góc trên bên phải */}
-                {idx === 0 && (
-                  <Image
-                    src={agent === 'lisa' ? '/images/lisa-golf.png' : '/images/anna-giadung.png'}
-                    alt={`Ảnh đại diện ${config.name}`}
-                    width={80}
-                    height={80}
-                    className="absolute top-2 right-2 rounded-lg shadow-md border border-gray-200"
-                  />
-                )}
-              </div>
-            ) : (
-              <span className="text-gray-900">{msg.text}</span>
+            {msg.sender === 'ai' && (
+              <Image
+                src="/images/ai-logo-icon.png"
+                alt="AItrify Logo"
+                width={40}
+                height={40}
+                className="mr-2 rounded-full"
+              />
             )}
-
+            <span className="text-gray-900">{msg.text}</span>
           </div>
         ))}
 
