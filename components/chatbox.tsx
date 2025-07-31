@@ -105,8 +105,7 @@ export default function Chatbox({ agent }: ChatboxProps) {
             }`}
           >
             {msg.sender === 'ai' ? (
-              <div className="relative w-full flex items-start">
-                {/* Nội dung AI trả lời */}
+              <div className="relative w-full pr-24"> {/* pr-24 để chừa không gian cho ảnh bên phải */}
                 <div className="flex items-center gap-2">
                   <Image
                     src="/images/ai-logo-icon.png"
@@ -118,14 +117,14 @@ export default function Chatbox({ agent }: ChatboxProps) {
                   <span className="text-gray-900">{msg.text}</span>
                 </div>
 
-                {/* Avatar sản phẩm bên phải (chỉ hiển thị cho idx === 0) */}
+                {/* Ảnh sản phẩm ở góc trên bên phải */}
                 {idx === 0 && (
                   <Image
                     src={agent === 'lisa' ? '/images/lisa-golf.png' : '/images/anna-giadung.png'}
-                    alt={`Avatar ${config.name}`}
-                    width={48}
-                    height={48}
-                    className="absolute top-0 right-0 rounded-md border border-gray-300 shadow"
+                    alt={`Ảnh đại diện ${config.name}`}
+                    width={80}
+                    height={80}
+                    className="absolute top-2 right-2 rounded-lg shadow-md border border-gray-200"
                   />
                 )}
               </div>
