@@ -34,7 +34,7 @@ const testimonials = [
     name: "Gậy golf",
     company: "AItrify LISA Golf",
     content:
-      "AItrify giúp bạn tra cứu nhanh các dòng gậy golf cùng khái niệm về độ cứng cán gậy (SHAFT STIFF/X-STIFF), phù hợp với người có cú swing nhẹ hoặc yêu cầu độ chính xác cao",
+      "Công nghệ AI của AItrify đứng sau Trợ lý LISA giúp bạn tra cứu nhanh các dòng gậy golf cùng khái niệm về độ cứng cán gậy (SHAFT STIFF/X-STIFF), phù hợp với người có cú swing nhẹ hoặc yêu cầu độ chính xác cao",
     categories: [1, 2],
   },
   {
@@ -43,7 +43,7 @@ const testimonials = [
     name: "Sân golf",
     company: "AItrify LISA Golf",
     content:
-      "AItrify hỗ trợ bạn tìm sân golf 9 hoặc 18 hố theo tiêu chuẩn riêng, hoặc sân tập tại Việt Nam có công nghệ như SmartBall, Trackman để nâng cao trải nghiệm và luyện tập chuyên nghiệp",
+      "Trợ lý LISA với công nghệ của AItrify hỗ trợ bạn tìm sân golf 9 hoặc 18 hố theo tiêu chuẩn riêng, hoặc sân tập tại Việt Nam có công nghệ như SmartBall, Trackman để nâng cao trải nghiệm và luyện tập chuyên nghiệp",
     categories: [1, 2],
   },
   {
@@ -70,7 +70,7 @@ const testimonials = [
     name: "Thời trang golf",
     company: "AItrify LISA Golf",
     content:
-      "Thời trang khi tập hay thi đấu golf thể hiện phong cách và cá tính. AItrify hỗ trợ bạn chọn lựa trang phục phù hợp, nổi bật ở sân tập cũng như trong các giải đấu đẳng cấp",
+      "Thời trang khi tập hay thi đấu golf thể hiện phong cách và cá tính. AItrify mang công nghệ AI cho trợ lý LISA hỗ trợ bạn chọn lựa trang phục phù hợp, nổi bật ở sân tập cũng như trong các giải đấu đẳng cấp",
     categories: [1, 2],
   },
 ];
