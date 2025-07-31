@@ -3,29 +3,44 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 
-const API_URL = "https://ai.aitrify.com/ask";
-const USER_LOGIN = "mock_user"
+interface ChatboxProps {
+  agent: string;
+}
 
+const API_URL = 'https://ai.aitrify.com/ask';
+const USER_LOGIN = 'mock_user';
 
+const AGENT_CONFIGS: Record<string, { name: string; greeting: string; color: string }> = {
+  anna: {
+    name: 'ANNA',
+    greeting:
+      'ANNA ở đây để giúp bạn tìm được tiện nghi như điều hòa và thiết bị gia dụng chính hãng nhưng giá rẻ nhất!',
+    color: 'bg-green-50 border-green-300',
+  },
+  lisa: {
+    name: 'LISA',
+    greeting:
+      'Chào Ông/Bà, LISA rất hân hạnh được trợ giúp về Golf, môn thể thao sang trọng với dịch vụ khách hàng xuất sắc dành cho người có điều kiện',
+    color: 'bg-blue-50 border-blue-300',
+  },
+};
 
-export default function Chatbox() {
+export default function Chatbox({ agent }: ChatboxProps) {
+  const config = AGENT_CONFIGS[agent] || AGENT_CONFIGS['anna'];
+
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState<{ sender: string; text: string }[]>([
-    { sender: 'ai', text: 'AItrify chào bạn, tôi có thể giúp gì hôm nay?' },
+    { sender: 'ai', text: config.greeting },
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
-  // useEffect(() => {
-  //   chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  // }, [messages, loading]);
   useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
   }, [messages, loading]);
-
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -33,46 +48,49 @@ export default function Chatbox() {
     const userMessage = { sender: 'user', text: input };
     setMessages((prev) => [...prev, userMessage]);
     setInput('');
-    setLoading(true); // bắt đầu loading "..."
-    
+    setLoading(true);
+
     const aiResponse = await mockChatAPI(input);
-    setLoading(false); // tắt loading
+    setLoading(false);
     const aiMessage = { sender: 'ai', text: aiResponse };
     setMessages((prev) => [...prev, aiMessage]);
   };
 
-  // const mockChatAPI = async (userInput: string) => {
-  //   return new Promise<string>((resolve) => {
-  //     setTimeout(() => {
-  //       resolve(`Trả lời cho: "${userInput}"`);
-  //     }, 1500);
-  //   });
-  // };
   const mockChatAPI = async (userInput: string) => {
     try {
       const response = await fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: userInput, user_login: USER_LOGIN }),
+        body: JSON.stringify({
+          question: userInput,
+          user_login: USER_LOGIN,
+          agent_id: agent,
+        }),
       });
       if (!response.ok) throw new Error('Lỗi server');
       const data = await response.json();
-      return data.answer || 'Trả lời từ AI: ' + JSON.stringify(data); // Lấy 'answer' từ response, fallback nếu lỗi
+      return data.answer || 'Trả lời từ AI: ' + JSON.stringify(data);
     } catch (error) {
       return 'Lỗi kết nối server: ' + (error as Error).message;
     }
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto rounded-xl border border-gray-200 bg-white/90 backdrop-blur shadow-lg p-4 flex flex-col gap-4">
-      <div ref={chatContainerRef} className="max-h-72 overflow-y-auto space-y-2 mb-2">
+    <div
+      className={`w-full max-w-3xl mx-auto rounded-xl border ${config.color} backdrop-blur shadow-lg p-4 flex flex-col gap-4`}
+    >
+      <div
+        ref={chatContainerRef}
+        className="max-h-72 overflow-y-auto space-y-2 mb-2"
+      >
         {messages.map((msg, idx) => (
           <div
             key={idx}
             className={`rounded-lg px-3 py-2 max-w-[80%] text-sm sm:text-base ${
               msg.sender === 'user'
                 ? 'bg-indigo-100 self-end ml-auto text-right'
-                : 'bg-indigo-50 self-start flex items-center gap-2'
+                : 'self-start flex items-center gap-2 ' +
+                  (agent === 'lisa' ? 'bg-blue-50' : 'bg-green-50')
             }`}
           >
             {msg.sender === 'ai' && (
@@ -88,9 +106,12 @@ export default function Chatbox() {
           </div>
         ))}
 
-        {/* Bong bóng "đang gõ..." */}
         {loading && (
-          <div className="bg-indigo-50 self-start flex items-center gap-2 px-3 py-2 rounded-lg max-w-[60%]">
+          <div
+            className={`self-start flex items-center gap-2 px-3 py-2 rounded-lg max-w-[60%] ${
+              agent === 'lisa' ? 'bg-blue-50' : 'bg-green-50'
+            }`}
+          >
             <Image
               src="/images/ai-logo-icon.png"
               alt="AItrify Logo"
@@ -115,8 +136,8 @@ export default function Chatbox() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-          placeholder="Bạn cần mua gì từ AItrify, mời bạn gõ câu hỏi và nhấn nút 'Gửi' hoặc gõ Enter..."
-          className="flex-1 border rounded-md px-4 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-indigo-300 text-gray-900 placeholder:text-blue-200"
+          placeholder={`Bạn muốn hỏi gì ${config.name}?`}
+          className="flex-1 border rounded-md px-4 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-indigo-300 text-gray-900 placeholder:text-blue-300"
         />
         <button
           onClick={sendMessage}
