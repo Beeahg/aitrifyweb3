@@ -92,16 +92,7 @@ export default function Chatbox({ agent }: ChatboxProps) {
   return (
     <div
       className={`w-full max-w-3xl mx-auto rounded-xl border ${config.color} backdrop-blur shadow-lg p-4 flex flex-col gap-4`}
-    > 
-      <div className="flex justify-start">
-        <Image
-          src={agent === 'lisa' ? '/images/lisa-golf.png' : '/images/anna-giadung.png'}
-          alt={`Ảnh đại diện ${config.name}`}
-          width={64}
-          height={64}
-          className="rounded-md mb-2"
-        />
-      </div>
+    >
       <div ref={chatContainerRef} className="max-h-72 overflow-y-auto space-y-2 mb-2">
         {messages.map((msg, idx) => (
           <div
@@ -113,16 +104,34 @@ export default function Chatbox({ agent }: ChatboxProps) {
                   (agent === 'lisa' ? 'bg-blue-50' : 'bg-green-50')
             }`}
           >
-            {msg.sender === 'ai' && (
-              <Image
-                src="/images/ai-logo-icon.png"
-                alt="AItrify Logo"
-                width={40}
-                height={40}
-                className="mr-2 rounded-full"
-              />
+            {msg.sender === 'ai' ? (
+              <div className="relative w-full flex items-start">
+                {/* Nội dung AI trả lời */}
+                <div className="flex items-center gap-2">
+                  <Image
+                    src="/images/ai-logo-icon.png"
+                    alt="AItrify Logo"
+                    width={40}
+                    height={40}
+                    className="mr-2 rounded-full"
+                  />
+                  <span className="text-gray-900">{msg.text}</span>
+                </div>
+
+                {/* Avatar sản phẩm bên phải (chỉ hiển thị cho idx === 0) */}
+                {idx === 0 && (
+                  <Image
+                    src={agent === 'lisa' ? '/images/lisa-golf.png' : '/images/anna-giadung.png'}
+                    alt={`Avatar ${config.name}`}
+                    width={48}
+                    height={48}
+                    className="absolute top-0 right-0 rounded-md border border-gray-300 shadow"
+                  />
+                )}
+              </div>
+            ) : (
+              <span className="text-gray-900">{msg.text}</span>
             )}
-            <span className="text-gray-900">{msg.text}</span>
           </div>
         ))}
 
