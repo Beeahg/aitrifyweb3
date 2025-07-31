@@ -27,33 +27,47 @@ const AGENT_CONFIGS: Record<string, { name: string; greeting: string; color: str
 
 export default function Chatbox({ agent }: ChatboxProps) {
   const config = AGENT_CONFIGS[agent] || AGENT_CONFIGS['anna'];
-
   const chatContainerRef = useRef<HTMLDivElement>(null);
-  const [messages, setMessages] = useState<{ sender: string; text: string }[]>([
-    { sender: 'ai', text: config.greeting },
-  ]);
+  const chatEndRef = useRef<HTMLDivElement>(null);
+
+  const [chatHistories, setChatHistories] = useState<Record<string, { sender: string; text: string }[]>>({
+    anna: [{ sender: 'ai', text: AGENT_CONFIGS.anna.greeting }],
+    lisa: [{ sender: 'ai', text: AGENT_CONFIGS.lisa.greeting }],
+  });
+
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
-  const chatEndRef = useRef<HTMLDivElement>(null);
+
+  const messages = chatHistories[agent] || [];
 
   useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
-  }, [messages, loading]);
+  }, [messages, loading, agent]);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
 
     const userMessage = { sender: 'user', text: input };
-    setMessages((prev) => [...prev, userMessage]);
+
+    // Cập nhật lịch sử chat cho agent hiện tại
+    setChatHistories((prev) => ({
+      ...prev,
+      [agent]: [...(prev[agent] || []), userMessage],
+    }));
     setInput('');
     setLoading(true);
 
     const aiResponse = await mockChatAPI(input);
     setLoading(false);
+
     const aiMessage = { sender: 'ai', text: aiResponse };
-    setMessages((prev) => [...prev, aiMessage]);
+
+    setChatHistories((prev) => ({
+      ...prev,
+      [agent]: [...(prev[agent] || []), userMessage, aiMessage],
+    }));
   };
 
   const mockChatAPI = async (userInput: string) => {
@@ -79,10 +93,7 @@ export default function Chatbox({ agent }: ChatboxProps) {
     <div
       className={`w-full max-w-3xl mx-auto rounded-xl border ${config.color} backdrop-blur shadow-lg p-4 flex flex-col gap-4`}
     >
-      <div
-        ref={chatContainerRef}
-        className="max-h-72 overflow-y-auto space-y-2 mb-2"
-      >
+      <div ref={chatContainerRef} className="max-h-72 overflow-y-auto space-y-2 mb-2">
         {messages.map((msg, idx) => (
           <div
             key={idx}

@@ -1,6 +1,6 @@
 // app/(default)/page.tsx
 
-import ClientPage from './ClientPage'; // ⬅️ DÒNG BỊ THIẾU
+import ClientPage from './ClientPage'; 
 
 export const metadata = {
   title: "AItrify",

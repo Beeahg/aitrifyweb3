@@ -37,7 +37,7 @@ export default function Hero({ agent }: { agent: string }) {
                 <div data-aos="fade-up" data-aos-delay={400}>
                   <button
                     onClick={() => handleAgentSelect('anna')}
-                    className="btn group mb-4 w-full bg-gradient-to-r from-green-400 to-green-600 text-white hover:from-green-500 hover:to-green-700 sm:mb-0 sm:w-auto"
+                    className="btn group mb-4 w-full bg-gradient-to-r from-green-400 to-green-800 text-white hover:from-green-500 hover:to-green-600 sm:mb-0 sm:w-auto"
                   >
                     <span className="relative inline-flex items-center gap-2">
                       {/* Icon điều hòa hoặc gia dụng */}
@@ -50,14 +50,13 @@ export default function Hero({ agent }: { agent: string }) {
                         <path d="M3 6h18v2H3zM3 10h18v2H3zM3 14h10v2H3zM10 18h4v2h-4z" />
                       </svg>
                       ANNA Điều hòa & Gia dụng
-                      <span className="ml-1 text-white/70">-&gt;</span>
                     </span>
                   </button>
                 </div>
                 <div data-aos="fade-up" data-aos-delay={600}>
                   <button
                     onClick={() => handleAgentSelect('lisa')}
-                    className="btn w-full bg-gradient-to-r from-blue-900 to-blue-700 text-white hover:from-blue-800 hover:to-blue-600 sm:ml-4 sm:w-auto"
+                    className="btn w-full bg-gradient-to-r from-blue-400 to-blue-800 text-white hover:from-blue-800 hover:to-blue-600 sm:ml-4 sm:w-auto"
                   >
                     <span className="inline-flex items-center gap-2">
                       {/* Icon gậy golf */}
