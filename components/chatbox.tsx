@@ -41,6 +41,7 @@ export default function Chatbox({ agent }: ChatboxProps) {
   const messages = chatHistories[agent] || [];
 
   useEffect(() => {
+    console.log("💬 Chatbox đang dùng agent:", agent);
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
@@ -78,7 +79,7 @@ export default function Chatbox({ agent }: ChatboxProps) {
         body: JSON.stringify({
           question: userInput,
           user_login: USER_LOGIN,
-          agent_id: agent,
+          agent: agent,
         }),
       });
       if (!response.ok) throw new Error('Lỗi server');
