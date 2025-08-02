@@ -5,6 +5,6 @@ export const metadata = {
   description: "Recharging eCommerce with AI",
 };
 
-export default function HeroHome() {
+export default function DefaultPage() {
   return <ClientPage agent="anna" />;
 }
