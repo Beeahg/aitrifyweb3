@@ -92,7 +92,7 @@ export default function Footer() {
                   className="text-indigo-200/65 transition hover:text-indigo-500"
                   href="#0"
                 >
-                  Bài viết
+                  Công nghệ AItrify
                 </a>
               </li>
               <li>
