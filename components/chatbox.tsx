@@ -67,7 +67,7 @@ export default function Chatbox({ agent }: ChatboxProps) {
 
     setChatHistories((prev) => ({
       ...prev,
-      [agent]: [...(prev[agent] || []), userMessage, aiMessage],
+      [agent]: [...(prev[agent] || []), aiMessage],
     }));
   };
 
