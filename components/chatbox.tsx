@@ -114,7 +114,10 @@ export default function Chatbox({ agent }: ChatboxProps) {
                 className="mr-2 rounded-full"
               />
             )}
-            <span className="text-gray-900">{msg.text}</span>
+            <span
+              className="text-gray-900 whitespace-pre-line"
+              dangerouslySetInnerHTML={{ __html: msg.text.replace(/\n/g, '<br>') }}
+            />
           </div>
         ))}
 
