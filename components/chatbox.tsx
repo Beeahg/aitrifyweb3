@@ -38,6 +38,22 @@ export default function Chatbox({ agent }: ChatboxProps) {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const [chatboxExpanded, setChatboxExpanded] = useState(false);
+
+  // Load trạng thái maximize từ localStorage khi khởi tạo
+  useEffect(() => {
+    const savedExpandState = localStorage.getItem('aitrify_chatbox_expanded');
+    if (savedExpandState === 'true') {
+      setChatboxExpanded(true);
+    }
+  }, []);
+
+  const handleToggleExpand = () => {
+    const newState = !chatboxExpanded;
+    setChatboxExpanded(newState);
+    localStorage.setItem('aitrify_chatbox_expanded', newState.toString());
+  };
+
   const messages = chatHistories[agent] || [];
 
   useEffect(() => {
@@ -92,9 +108,24 @@ export default function Chatbox({ agent }: ChatboxProps) {
 
   return (
     <div
-      className={`w-full max-w-3xl mx-auto rounded-xl border ${config.color} backdrop-blur shadow-lg p-4 flex flex-col gap-4`}
+      className={`relative w-full ${chatboxExpanded ? 'max-w-full' : 'max-w-3xl'} mx-auto rounded-xl border ${config.color} backdrop-blur shadow-lg p-4 flex flex-col gap-4 transition-all duration-300`}
     >
-      <div ref={chatContainerRef} className="max-h-72 overflow-y-auto space-y-2 mb-2">
+      {/* ✅ NÚT MAXIMIZE / MINIMIZE */}
+      <button
+        onClick={handleToggleExpand}
+        className="absolute top-3 right-3 p-1 rounded-full bg-white/80 hover:bg-white/90 shadow-lg border border-gray-300 text-gray-700"
+        title={chatboxExpanded ? 'Thu nhỏ khung chat' : 'Phóng to khung chat'}
+      >
+        <span className="text-lg font-bold">
+          {chatboxExpanded ? '−' : '+'}
+        </span>
+      </button>
+
+      {/* ✅ PHẦN CHAT */}
+      <div
+        ref={chatContainerRef}
+        className={`overflow-y-auto space-y-2 mb-2 ${chatboxExpanded ? 'max-h-[70vh]' : 'max-h-72'}`}
+      >
         {messages.map((msg, idx) => (
           <div
             key={idx}
