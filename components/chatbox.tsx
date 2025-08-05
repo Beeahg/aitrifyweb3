@@ -7,7 +7,7 @@ interface ChatboxProps {
   agent: string;
 }
 
-const API_URL = 'https://ai.aitrify.com/ask';
+const API_URL = 'https://ai.aitrify.com/ask_stream';
 const USER_LOGIN = 'mock_user';
 
 const AGENT_CONFIGS: Record<string, { name: string; greeting: string; color: string }> = {
@@ -48,6 +48,8 @@ export default function Chatbox({ agent }: ChatboxProps) {
     }
   }, []);
 
+
+
   const handleToggleExpand = () => {
     const newState = !chatboxExpanded;
     setChatboxExpanded(newState);
@@ -57,11 +59,12 @@ export default function Chatbox({ agent }: ChatboxProps) {
   const messages = chatHistories[agent] || [];
 
   useEffect(() => {
-    console.log("💬 Chatbox đang dùng agent:", agent);
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
   }, [messages, loading, agent]);
+
+  
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -73,23 +76,21 @@ export default function Chatbox({ agent }: ChatboxProps) {
       ...prev,
       [agent]: [...(prev[agent] || []), userMessage],
     }));
+
     setInput('');
     setLoading(true);
 
-    const aiResponse = await mockChatAPI(input);
+    // ✅ GỌI API STREAM
+    await streamChatAPI(input);
+
     setLoading(false);
 
-    const aiMessage = { sender: 'ai', text: aiResponse };
-
-    setChatHistories((prev) => ({
-      ...prev,
-      [agent]: [...(prev[agent] || []), aiMessage],
-    }));
   };
 
-  const mockChatAPI = async (userInput: string) => {
+
+  const streamChatAPI = async (userInput: string) => {
     try {
-      const response = await fetch(API_URL, {
+      const response = await fetch(`${API_URL}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -98,13 +99,81 @@ export default function Chatbox({ agent }: ChatboxProps) {
           agent: agent,
         }),
       });
-      if (!response.ok) throw new Error('Lỗi server');
-      const data = await response.json();
-      return data.answer || 'Trả lời từ AI: ' + JSON.stringify(data);
+
+      if (!response.ok) throw new Error(`Lỗi server: ${response.status}`);
+      if (!response.body) throw new Error("Không có phản hồi từ server");
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder("utf-8");
+      
+      let partial = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        partial += decoder.decode(value, { stream: true });
+
+        const chunks = partial.split('\n\n');
+        partial = chunks.pop() || '';
+
+        for (const chunk of chunks) {
+          if (chunk.trim().startsWith('data: ')) {
+            const aiText = chunk.slice(6).trim(); // Lấy nội dung chính xác từ 'data: '
+
+            setChatHistories((prev) => {
+              const current = prev[agent] || [];
+              const last = current[current.length - 1];
+
+              // Tùy chọn 1: Nối thành 1 tin nhắn dài
+              if (last && last.sender === 'ai') {
+                const updatedLast = { ...last, text: last.text + '\n' + aiText };
+                return {
+                  ...prev,
+                  [agent]: [...current.slice(0, -1), updatedLast],
+                };
+              }
+              // Tùy chọn 2: Tạo tin nhắn mới cho mỗi chunk (bỏ comment dòng dưới nếu muốn dùng)
+              // return { ...prev, [agent]: [...current, { sender: 'ai', text: aiText }] };
+
+              return {
+                ...prev,
+                [agent]: [...current, { sender: 'ai', text: aiText }],
+              };
+            });
+            console.log("📥 AI chunk:", aiText);
+            await new Promise(resolve => setTimeout(resolve, 60)); // Hiệu ứng gõ
+          }
+        }
+      }
     } catch (error) {
-      return 'Lỗi kết nối server: ' + (error as Error).message;
+      console.error(error);
+      setChatHistories((prev) => ({
+        ...prev,
+        [agent]: [...(prev[agent] || []), { sender: 'ai', text: 'Lỗi khi kết nối AItrify: ' + (error as Error).message }],
+      }));
     }
   };
+
+
+  // const mockChatAPI = async (userInput: string) => {
+  //   try {
+  //     const response = await fetch(API_URL, {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify({
+  //         question: userInput,
+  //         user_login: USER_LOGIN,
+  //         agent: agent,
+  //       }),
+  //     });
+  //     if (!response.ok) throw new Error('Lỗi server');
+  //     const data = await response.json();
+  //     return data.answer || 'Trả lời từ AI: ' + JSON.stringify(data);
+  //   } catch (error) {
+  //     return 'Lỗi kết nối server: ' + (error as Error).message;
+  //   }
+  // };
 
   return (
     <div
