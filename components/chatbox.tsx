@@ -7,7 +7,7 @@ interface ChatboxProps {
   agent: string;
 }
 
-const API_URL = 'https://ai.aitrify.com/ask_stream';
+const API_URL = 'https://ai.aitrify.com/ask';
 const USER_LOGIN = 'mock_user';
 
 const AGENT_CONFIGS: Record<string, { name: string; greeting: string; color: string }> = {
@@ -48,8 +48,6 @@ export default function Chatbox({ agent }: ChatboxProps) {
     }
   }, []);
 
-
-
   const handleToggleExpand = () => {
     const newState = !chatboxExpanded;
     setChatboxExpanded(newState);
@@ -64,7 +62,37 @@ export default function Chatbox({ agent }: ChatboxProps) {
     }
   }, [messages, loading, agent]);
 
-  
+  const typewriterEffect = async (fullText: string) => {
+    return new Promise<void>((resolve) => {
+      let index = 0;
+
+      const interval = setInterval(() => {
+        setChatHistories((prev) => {
+          const current = prev[agent] || [];
+          const last = current[current.length - 1];
+
+          if (!last || last.sender !== 'ai') {
+            return {
+              ...prev,
+              [agent]: [...current, { sender: 'ai', text: fullText.charAt(index) }],
+            };
+          } else {
+            const updatedLast = { ...last, text: last.text + fullText.charAt(index) };
+            return {
+              ...prev,
+              [agent]: [...current.slice(0, -1), updatedLast],
+            };
+          }
+        });
+
+        index++;
+        if (index >= fullText.length) {
+          clearInterval(interval);
+          resolve();
+        }
+      }, 20); // tốc độ đánh máy
+    });
+  };
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -80,17 +108,16 @@ export default function Chatbox({ agent }: ChatboxProps) {
     setInput('');
     setLoading(true);
 
-    // ✅ GỌI API STREAM
-    await streamChatAPI(input);
+    const aiResponse = await mockChatAPI(input);
+
+    await typewriterEffect(aiResponse);
 
     setLoading(false);
-
   };
 
-
-  const streamChatAPI = async (userInput: string) => {
+  const mockChatAPI = async (userInput: string) => {
     try {
-      const response = await fetch(`${API_URL}`, {
+      const response = await fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -100,80 +127,40 @@ export default function Chatbox({ agent }: ChatboxProps) {
         }),
       });
 
-      if (!response.ok) throw new Error(`Lỗi server: ${response.status}`);
-      if (!response.body) throw new Error("Không có phản hồi từ server");
+      if (!response.ok || !response.body) {
+        throw new Error('Không thể kết nối tới máy chủ AI.');
+      }
 
       const reader = response.body.getReader();
-      const decoder = new TextDecoder("utf-8");
-      
+      const decoder = new TextDecoder('utf-8');
+
       let partial = '';
+      let fullText = '';
 
       while (true) {
-        const { done, value } = await reader.read();
+        const { value, done } = await reader.read();
         if (done) break;
 
-        partial += decoder.decode(value, { stream: true });
+        const chunk = decoder.decode(value, { stream: true });
+        partial += chunk;
 
-        const chunks = partial.split('\n\n');
-        partial = chunks.pop() || '';
+        const lines = partial.split('\n\n');
+        partial = lines.pop() || '';
 
-        for (const chunk of chunks) {
-          if (chunk.trim().startsWith('data: ')) {
-            const aiText = chunk.slice(6).trim(); // Lấy nội dung chính xác từ 'data: '
-
-            setChatHistories((prev) => {
-              const current = prev[agent] || [];
-              const last = current[current.length - 1];
-
-              // Tùy chọn 1: Nối thành 1 tin nhắn dài
-              if (last && last.sender === 'ai') {
-                const updatedLast = { ...last, text: last.text + '\n' + aiText };
-                return {
-                  ...prev,
-                  [agent]: [...current.slice(0, -1), updatedLast],
-                };
-              }
-              // Tùy chọn 2: Tạo tin nhắn mới cho mỗi chunk (bỏ comment dòng dưới nếu muốn dùng)
-              // return { ...prev, [agent]: [...current, { sender: 'ai', text: aiText }] };
-
-              return {
-                ...prev,
-                [agent]: [...current, { sender: 'ai', text: aiText }],
-              };
-            });
-            console.log("📥 AI chunk:", aiText);
-            await new Promise(resolve => setTimeout(resolve, 60)); // Hiệu ứng gõ
+        for (const line of lines) {
+          if (line.startsWith('data:')) {
+            const text = line.replace(/^data:\s*/, '');
+            fullText += text;
+            await typewriterEffect(text);
           }
         }
       }
-    } catch (error) {
-      console.error(error);
-      setChatHistories((prev) => ({
-        ...prev,
-        [agent]: [...(prev[agent] || []), { sender: 'ai', text: 'Lỗi khi kết nối AItrify: ' + (error as Error).message }],
-      }));
+
+      return fullText || 'AItrify: Không có nội dung trả về.';
+    } catch (err) {
+      return '❌ Lỗi kết nối server: ' + (err as Error).message;
     }
   };
-
-
-  // const mockChatAPI = async (userInput: string) => {
-  //   try {
-  //     const response = await fetch(API_URL, {
-  //       method: 'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify({
-  //         question: userInput,
-  //         user_login: USER_LOGIN,
-  //         agent: agent,
-  //       }),
-  //     });
-  //     if (!response.ok) throw new Error('Lỗi server');
-  //     const data = await response.json();
-  //     return data.answer || 'Trả lời từ AI: ' + JSON.stringify(data);
-  //   } catch (error) {
-  //     return 'Lỗi kết nối server: ' + (error as Error).message;
-  //   }
-  // };
 
   return (
     <div
