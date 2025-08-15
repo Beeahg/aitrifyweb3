@@ -212,7 +212,7 @@ export default function Footer() {
                   className="text-indigo-200/65 transition hover:text-indigo-500"
                   href="#0"
                 >
-                2025. Bee and Beesota (https://beesota.com/)
+                2025. Beesota6G Alliance (https://beesota.com/)
                 </a>
               </p>
             </div>

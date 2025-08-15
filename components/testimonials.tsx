@@ -25,7 +25,7 @@ const testimonials = [
     name: "Điều hòa dân dụng",
     company: "Nagakawa",
     content:
-      "Với hơn 23 năm kinh nghiệm trong ngành điện lạnh, điều hòa Nagakawa là lựa chọn đáng tin cậy nhờ độ bền cao, chất lượng tốt, giá hợp lý và dịch vụ hậu mãi tận tâm.Tham khảo: www.nagakawa.com.vn",
+      "Với hơn 23 năm kinh nghiệm trong ngành điện lạnh, Nagakawa là lựa chọn đáng tin cậy nhờ độ bền cao, chất lượng tốt, giá hợp lý và dịch vụ hậu mãi tận tâm. Với 1 vạn kỹ thuật viên lành nghề luôn bên cạnh Bạn",
     categories: [1, 3],
   },
   {

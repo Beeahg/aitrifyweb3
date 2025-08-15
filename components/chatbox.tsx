@@ -14,13 +14,13 @@ const AGENT_CONFIGS: Record<string, { name: string; greeting: string; color: str
   anna: {
     name: 'ANNA',
     greeting:
-      'ANNA ở đây để giúp bạn tìm được tiện nghi như điều hòa và thiết bị gia dụng chính hãng kèm dịch vụ chuẩn hãng nhưng giá trong Top rẻ nhất!',
+      'ANNA ở đây để giúp bạn tìm được tiện nghi như điều hòa và thiết bị gia dụng chính hãng kèm dịch vụ chuẩn hãng nhưng giá luôn trong Top Ưu đãi nhất!',
     color: 'bg-green-50 border-green-300',
   },
   lisa: {
     name: 'LISA',
     greeting:
-      'Chào Ông/Bà, LISA rất hân hạnh được trợ giúp về Golf, môn thể thao sang trọng và phóng khoáng đi kèm với dịch vụ khách hàng xuất sắc dành cho người có điều kiện',
+      'Chào Ông/Bà, LISA rất hân hạnh được trợ giúp về Golf, hơn cả một môn thể thao sang trọng, Golf là Đẳng cấp về sự kết nối của những người Thành đạt!',
     color: 'bg-blue-50 border-blue-300',
   },
 };
@@ -110,7 +110,6 @@ export default function Chatbox({ agent }: ChatboxProps) {
 
     const aiResponse = await mockChatAPI(input);
 
-    await typewriterEffect(aiResponse);
 
     setLoading(false);
   };
