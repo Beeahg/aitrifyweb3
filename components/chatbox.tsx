@@ -116,33 +116,35 @@ export default function Chatbox({ agent }: ChatboxProps) {
   };
 
 
-  const typewriterEffectSafe = async (fullText: string) => {
+  const typewriterEffectSafe = async (fullText: string, messageId: string) => {
+    console.count('typewriterEffectSafe called');
     return new Promise<void>((resolve) => {
       const chars = Array.from(fullText);
-      const first = chars[0] ?? '';
-      let i = 1; // bắt đầu từ ký tự thứ 2
 
-      // Seed ký tự đầu tiên ngay lập tức
+      // 1) Seed firstChar ngay lập tức
       setChatHistories(prev => {
         const list = prev[agent] || [];
-        const others = list.filter(m => m.sender !== 'ai');
-        const ai = list.findLast(m => m.sender === 'ai') || { sender: 'ai', text: '' };
-        const seeded = { ...ai, text: (ai.text || '') + first };
-        const next = [...others, seeded];
+        const idx = list.findIndex(m => (m as any).id === messageId);
+        if (idx === -1) return prev;
+
+        const seeded = { ...list[idx], text: (list[idx].text || '') + (chars[0] ?? '') };
+        const next = [...list]; next[idx] = seeded;
         return { ...prev, [agent]: next };
       });
 
+      // 2) Gõ từ ký tự thứ 2 trở đi
+      let i = 1;
       const timer = setInterval(() => {
         setChatHistories(prev => {
           const list = prev[agent] || [];
-          const idx = list.length - 1;
-          const last = list[idx];
-          if (!last || last.sender !== 'ai') return prev;
+          const idx = list.findIndex(m => (m as any).id === messageId);
+          if (idx === -1) return prev;
 
-          const updated = { ...last, text: last.text + (chars[i] ?? '') };
-          const next = [...list];
-          next[idx] = updated;
-          return { ...prev, [agent]: next };
+          const curr = list[idx];
+          const nextText = (curr.text || '') + (chars[i] ?? '');
+          const nextList = [...list];
+          nextList[idx] = { ...curr, text: nextText };
+          return { ...prev, [agent]: nextList };
         });
 
         i++;
@@ -160,48 +162,40 @@ export default function Chatbox({ agent }: ChatboxProps) {
       const response = await fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          question: userInput,
-          user_login: USER_LOGIN,
-          agent: agent,
-        }),
+        body: JSON.stringify({ question: userInput, user_login: USER_LOGIN, agent }),
       });
       if (!response.ok) throw new Error('Không thể kết nối tới máy chủ AI.');
 
-      // 1) Log raw để bạn đối chiếu
       const rawText = await response.text();
       console.log('Raw Response from BE:', rawText);
 
-      // 2) Parse JSON + log
       const data = JSON.parse(rawText);
-      const answer = (data?.answer ?? '').toString();
+      const answer: string = (data?.answer ?? '').toString();
       console.log('Parsed Answer:', answer);
 
-      // 3) Cắt – ghép theo đúng ý bạn: lấy ký tự đầu, ghép lại với phần còn lại
-      //    (dùng Array.from để an toàn Unicode/tiếng Việt)
+      // Cắt theo ý anh để bảo đảm có firstChar + phần còn lại
       const chars = Array.from(answer);
       const firstChar = chars[0] ?? '';
-      const displayText = chars.slice(1).join(''); // "chuỗi thiếu đầu" giả định
+      const displayText = chars.slice(1).join('');
       const fullAnswer = firstChar + displayText;
 
       console.log('First Char:', firstChar);
       console.log('Display Text (thiếu đầu):', displayText);
       console.log('Full Answer:', fullAnswer);
 
-      // 4) Tạo/Reset 1 message AI rỗng (giữ nguyên phong cách bạn đang dùng)
-      setChatHistories((prev) => ({
-        ...prev,
-        [agent]: [
-          ...(prev[agent] || []).filter(msg => msg.sender !== 'ai'),
-          { sender: 'ai', text: '' },
-        ],
-      }));
+      // Append 1 message AI mới (không đụng các message cũ)
+      const messageId = `ai-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+      setChatHistories(prev => {
+        const list = prev[agent] || [];
+        return {
+          ...prev,
+          [agent]: [...list, { id: messageId, sender: 'ai', text: '' }],
+        };
+      });
 
-      // 5) Gõ máy: đẩy sẵn ký tự đầu để KHÔNG BAO GIỜ rụng, rồi gõ phần còn lại
       if (fullAnswer) {
-        await typewriterEffectSafe(fullAnswer);
+        await typewriterEffectSafe(fullAnswer, messageId); // await để không chồng chéo
       }
-
       return fullAnswer || 'AItrify: Không có nội dung trả về.';
     } catch (err) {
       console.error('Error in mockChatAPI:', (err as Error).message);
