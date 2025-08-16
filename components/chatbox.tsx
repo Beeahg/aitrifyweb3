@@ -116,45 +116,46 @@ export default function Chatbox({ agent }: ChatboxProps) {
   };
 
 
-  const typewriterEffectSafe = async (fullText: string, messageId: string) => {
-    console.count('typewriterEffectSafe called');
+  // ⌨️ typewriterRevealPrefix: mỗi tick SET PREFIX, không nối chuỗi
+  const typewriterRevealPrefix = async (fullText: string, messageId: string, agentName: string) => {
+    console.count('typewriterRevealPrefix called');
+
     return new Promise<void>((resolve) => {
       const chars = Array.from(fullText);
+      const total = chars.length;
 
-      // 1) Seed firstChar ngay lập tức
+      // Seed prefix 1 ký tự ngay lập tức
       setChatHistories(prev => {
-        const list = prev[agent] || [];
+        const list = prev[agentName] || [];
         const idx = list.findIndex(m => (m as any).id === messageId);
         if (idx === -1) return prev;
-
-        const seeded = { ...list[idx], text: (list[idx].text || '') + (chars[0] ?? '') };
-        const next = [...list]; next[idx] = seeded;
-        return { ...prev, [agent]: next };
+        const next = [...list];
+        next[idx] = { ...next[idx], text: chars.slice(0, 1).join('') };
+        return { ...prev, [agentName]: next };
       });
 
-      // 2) Gõ từ ký tự thứ 2 trở đi
-      let i = 1;
+      let i = 1; // sẽ hiển thị prefix [0..i]
       const timer = setInterval(() => {
         setChatHistories(prev => {
-          const list = prev[agent] || [];
+          const list = prev[agentName] || [];
           const idx = list.findIndex(m => (m as any).id === messageId);
           if (idx === -1) return prev;
 
-          const curr = list[idx];
-          const nextText = (curr.text || '') + (chars[i] ?? '');
-          const nextList = [...list];
-          nextList[idx] = { ...curr, text: nextText };
-          return { ...prev, [agent]: nextList };
+          const next = [...list];
+          // Hiển thị chính xác prefix, tránh rơi/mất ký tự dù có race
+          next[idx] = { ...next[idx], text: chars.slice(0, i + 1).join('') };
+          return { ...prev, [agentName]: next };
         });
 
         i++;
-        if (i >= chars.length) {
+        if (i >= total) {
           clearInterval(timer);
           resolve();
         }
       }, 20);
     });
   };
+
 
 
   const mockChatAPI = async (userInput: string) => {
@@ -173,7 +174,6 @@ export default function Chatbox({ agent }: ChatboxProps) {
       const answer: string = (data?.answer ?? '').toString();
       console.log('Parsed Answer:', answer);
 
-      // Cắt theo ý anh để bảo đảm có firstChar + phần còn lại
       const chars = Array.from(answer);
       const firstChar = chars[0] ?? '';
       const displayText = chars.slice(1).join('');
@@ -183,18 +183,15 @@ export default function Chatbox({ agent }: ChatboxProps) {
       console.log('Display Text (thiếu đầu):', displayText);
       console.log('Full Answer:', fullAnswer);
 
-      // Append 1 message AI mới (không đụng các message cũ)
+      // Tạo message mới, KHÔNG đụng các message AI trước đó
       const messageId = `ai-${Date.now()}-${Math.random().toString(36).slice(2)}`;
       setChatHistories(prev => {
         const list = prev[agent] || [];
-        return {
-          ...prev,
-          [agent]: [...list, { id: messageId, sender: 'ai', text: '' }],
-        };
+        return { ...prev, [agent]: [...list, { id: messageId, sender: 'ai', text: '' }] };
       });
 
       if (fullAnswer) {
-        await typewriterEffectSafe(fullAnswer, messageId); // await để không chồng chéo
+        await typewriterRevealPrefix(fullAnswer, messageId, agent); // await để không chồng chéo
       }
       return fullAnswer || 'AItrify: Không có nội dung trả về.';
     } catch (err) {
@@ -202,6 +199,7 @@ export default function Chatbox({ agent }: ChatboxProps) {
       return '❌ Lỗi kết nối server: ' + (err as Error).message;
     }
   };
+
 
 
 
