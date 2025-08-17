@@ -25,6 +25,150 @@ const AGENT_CONFIGS: Record<string, { name: string; greeting: string; color: str
   },
 };
 
+// --- Footer static topics (dùng chung cho ANNA & LISA) ---
+const FOOTER_TOPICS: Record<string, { title: string; content: string }> = {
+  'features': {
+    title: 'Tính năng',
+    content:
+      '• Chat AI với kiến thức chuyên biệt ANNA cho Điều hòa gia dụng, LISA cho Golf và những người tập Golf, hỏi đáp tiếng Việt tự nhiên.\n' +
+      '• Tìm kiếm thông tin sản phẩm Điều hòa gia dụng (bếp, máy xay sinh tố, nồi cơm... với giá Top Ưu đãi nhưng vẫn được hưởng dịch vụ chuẩn hãng.\n' +
+      '• Tìm kiếm thông tin sản phẩm cho chơi thể thao Golf, công cụ dụng cụ, thiết bị hỗ trợ chơi Golf, tập Golf, thời trang, phục kiện cho Golf\n' +
+      '• Dữ liệu tách biệt theo loại Sản phẩm hàng hóa và cá nhân hóa; không dùng để huấn luyện mô hình AI công khai (public).'
+  },
+  'integrations': {
+    title: 'Tích hợp',
+    content:
+      '• Kết nối các hệ thống ERP / Thanh toán / Vận chuyển/Kho chứa hàng, xuất hoá đơn điện tử để dần mang lại trải nghiệm tìm kiếm và mua hàng mới\n' +
+      '• AItrify dần bổ sung tích hợp các cổng thanh toán, các hãng sản phẩm uy tín, các trung tâm dịch vụ khách hàng để mang lại không chỉ sản phẩm mà là Dịch vụ khách hàng chuẩn hãng.\n' +
+      '• Tích hợp nhiều nguồn dữ liệu có kiểm chứng, có xác thực, dữ liệu cá nhân hóa được tổng hợp nhờ tích hợp dữ liệu khép kín\n' +
+      '• Hỗ trợ đồng bộ các phần mềm của doanh nghiệp của đối tác nếu có nhu cầu như ERP/CRM, phần mềm kế toán doanh nghiệp; bộ SDK & API sẽ mở dần theo lộ trình.'
+  },
+  'pricing': {
+    title: 'Chi phí & Gói dịch vụ',
+    content:
+      '• Giai đoạn đầu: miễn phí AItrify ANNA/LISA cho người dùng đăng ký/không đăng ký.\n' +
+      '• Cung cấp Điều hòa gia dụng chỉ của hãng Nagakawa, một hãng uy tín lâu đời tại Việt nam với 23 năm kinh nghiệm.\n' +
+	  '• Cung cấp các sản phẩm Golf mà AItrify đã thẩm định là Chính hãng và có hóa đơn, giấy tờ xuất xứ đầy đủ theo đúng pháp luật Việt Nam\n' +
+      '• Thanh toán chuyển khoản/QR; hoá đơn điện tử đầy đủ.\n' +
+      '• Chương trình khuyến mãi và chương trình ưu đãi theo từng thời điểm.'
+  },
+  'brands': {
+    title: 'Hãng sản xuất',
+    content:
+      '• Chỉ nhận hàng CHÍNH HÃNG, có nguồn gốc xuất xứ & hoá đơn hợp lệ.\n' +
+      '• Đối tác/Hãng muốn hợp tác vui lòng liên hệ gửi mail tới: chairm@beeinc.vn.'
+  },
+  'policies': {
+    title: 'Chính sách',
+    content:
+      '• Tổng quan: đổi trả theo chính sách từng thời điểm; bảo hành theo hãng.\n' +
+      '• Vận chuyển/khuyến mại có thể thay đổi theo chiến dịch.\n' +
+      '• Vui lòng xem thêm: Thỏa thuận EUA, Điều khoản dịch vụ, Chính sách bảo mật.'
+  },
+
+  'about': {
+    title: 'Về AItrify',
+    content:
+      'AItrify là nền tảng thương mại điện tử sử dụng hầu hết công nghệ trí tuệ nhân tạo AI để giúp cho hoạt động tìm kiếm mua sắm dễ dàng hơn hàng chính hãng với giá cả thuộc top ưu đãi nhất. ' +
+      'Bạn có thể giao tiếp với các AI chatbox của AItrify được thiết kế với kiến thức chuyên sâu, chuyên biệt với ANNA dành cho sản phẩm điều hòa gia dụng, LISA chuyên biệt dành cho Golf và Golfer ' +
+      'AItrify được xây dựng bởi Liên minh công nghệ Beesota6G gồm các công ty công nghệ mạnh trong các lĩnh vực AI, Blockchain, Robotics, Cloud, I/IoT, ERP (Xem thêm tại https://beesota.com/)'
+  },
+  'vision': {
+    title: 'Tầm nhìn & Sứ mệnh',
+    content:
+      'Tầm nhìn: Đưa AI vào mọi mặt của đời sống tại Việt Nam, không để ai bị bỏ lại phía sau trong làn sóng công nghệ tiên tiến trên toàn thế giới. ' +
+      'Bất kể ai với thu nhập dù có thấp hay cao cũng đều xứng đáng được hưởng sản phẩm dịch vụ chính hãng thông qua sự trợ giúp của AI và các công nghệ tiên tiến khác.'
+  },
+  'technology': {
+    title: 'Công nghệ AItrify',
+    content:
+      'AItrify sử dụng các công nghệ AI mới nhất với LLM, ANN, OpenCV, RAG để nạp tri thức cho AItrify cùng với công nghệ SAITMe (structured) & NoSAITMe (unstructured) ' + 
+      'của Beesota6G (https://beesota.com/) tự phát triển. Công nghệ AI nào mới nhất cũng luôn sớm có mặt trên AItrify, tích hợp với các nguồn dữ liệu khác được xác thực, có dẫn chiếu, ' + 
+      'và cả dữ liệu từ các thiết bị IoT qua công nghệ truyền số liệu tiên tiến nhất cho dữ liệu Số.'
+  },
+  'careers': {
+    title: 'Tuyển dụng',
+    content:
+      'Chúng tôi tìm Đồng đội tham gia vào xây dựng Nền tảng Thương mại điện tử AI.Commerce: người có khả năng kinh doanh cao, người có đam mê về khoa học dữ liệu, người có khả năng phân tích về khoa học xã hội. ' +
+      'Không quan trọng bạn tốt nghiệp trường đại học nào, chỉ cần bạn đóng góp vào vận hành dòng chảy Thông tin để kích thích dòng chảy Hàng hóa qua nền tảng thương mại điện tử ' +
+      'thế hệ mới AItrify với 2 trợ lý AI chuyên biệt đầu tiên ANNA/LISA, bạn đều có thể trở thành đồng đội của chúng tôi. ' +
+      'Đừng ngại ngần, hãy gửi mail tới: chairm@beeinc.vn kèm CV nói về bạn.'
+  },
+  'investors': {
+    title: 'Dành cho Nhà đầu tư',
+    content:
+      'Chúng tôi chào đón các nhà đầu tư có "Khẩu vị" và "Tầm nhìn" trong việc đẩy nhanh dòng chảy Thông tin để kích thích dòng chảy Hàng hóa giúp tăng cao Tốc độ dòng tiền, ' +
+      'để có thể vừa phục vụ được người dân Việt Nam mua hàng/bán hàng CHÍNH HÃNG nhanh nhất với giá Ưu đãi nhất, và vừa có điều kiện để tăng cường Công nghệ cho nền tảng AItrify tốt hơn Mỗi ngày. ' +
+      'Nếu bạn quan tâm đầu tư, chúng tôi vô cùng cảm kích, chỉ cần gửi mail tới chairm@beeinc.vn, hội đồng quan hệ nhà đầu tư IR của chúng tôi sẽ lập tức quan tâm tới đề nghị Đầu tư của Bạn.'
+  },
+  'partners': {
+    title: 'Dành cho Hãng/Đối tác',
+    content:
+      'Với Tầm nhìn và Sứ mệnh chính đó là qua nền tảng thương mại điện tử công nghệ AI (AI.Commerce), để phục vụ bất kể ai với thu nhập dù có thấp hay cao cũng đều xứng đáng được hưởng sản phẩm dịch vụ chính hãng ' +
+      'với Top giá Ưu đãi nhất, thông qua sự trợ giúp của AI và các công nghệ tiên tiến khác. ' +
+      'Chúng tôi chào đón các Hãng sản phẩm có thể cung cấp không chỉ hàng chính hãng tuân thủ theo Pháp luật Việt Nam mà còn đi kèm Dịch vụ sau bán hàng Tận tâm cho khách hàng, cho dù giá trị món hàng thấp hay cao.'
+  },
+  'eua': {
+    title: 'Thoả thuận EUA',
+    content:
+      'Mọi người dùng tham gia hoạt động trên nền tảng thương mại điện tử AI.Commerce AItrify phải tuân theo pháp luật Việt Nam. ' +
+      'Mọi đối tác hay hàng hóa đăng trên AItrify đều phải là hàng hóa Chính hãng, có đầy đủ giấy tờ nguồn gốc xuất xứ, có hóa đơn đầu vào. ' +
+      'Mọi thông tin mà đối tác cung cấp để các trợ lý AI (ANNA/LISA) tư vấn cho người dùng đều phải xác thực, không gây lầm lẫn. ' +
+      'Các hàng hóa cung cấp trên AItrify sẽ phải có hóa đơn, giấy tờ nguồn gốc xuất xứ rõ ràng để AItrify tuân thủ nghĩa vụ thuế và chống hàng giả hàng nhái. ' +
+      'Người dùng được miễn phí hoặc hưởng phí dịch vụ ưu đãi tùy theo từng thời điểm AItrify công bố.'
+  },
+  'terms': {
+    title: 'Điều khoản dịch vụ',
+    content:
+      'Người dùng khi đăng ký thông tin trên AItrify cần chấp nhận điều khoản sử dụng, bao gồm việc ủy quyền cho AItrify truy nhập và xử lý dữ liệu để cải thiện dịch vụ. ' +
+      'Giá cả và ưu đãi có thể thay đổi tùy theo thời điểm và chính sách của hãng/nhãn hàng; AItrify sẽ thông báo cho người dùng hoặc thể hiện trong kết quả tìm kiếm. ' +
+      'Các chính sách đổi trả, vận chuyển miễn phí hay khuyến mại đều được điều chỉnh tùy theo từng giai đoạn và sẽ được AItrify thông báo rõ ràng cho người dùng. ' +
+      'Bằng việc tiếp tục sử dụng dịch vụ, người dùng đồng ý tuân thủ toàn bộ điều khoản này.'
+  },
+  'privacy': {
+    title: 'Chính sách bảo mật',
+    content:
+      'AItrify cam kết bảo vệ thông tin cá nhân và dữ liệu giao dịch của người dùng. Mọi dữ liệu thu thập, lưu trữ và xử lý đều tuân thủ pháp luật Việt Nam. ' +
+      'AItrify không sử dụng dữ liệu người dùng để huấn luyện các mô hình AI công khai. ' +
+      'Dữ liệu chỉ được chia sẻ với đối tác liên quan (thanh toán, vận chuyển) khi cần thiết cho giao dịch. ' +
+      'Người dùng đăng ký có quyền không đồng ý tại thời điểm đăng ký dịch vụ và dịch vụ sẽ được hủy ngay từ khi không đăng ký thành công' +
+      'Người dùng không đăng ký thì chấp nhận mọi Cookies mà chúng tôi lưu trong quá trình các bạn duyệt web tại trang AItrify của chúng tôi'
+  },
+  'guide/getting-started': {
+    title: 'Sử dụng AItrify',
+    content:
+      'Bắt đầu: 1) Truy cập www.aitrify.com, 2) chọn trợ lý AI là ANNA hoặc LISA thông qua nhấn một trong hai nút ' + 
+      'nhãn "ANNA Điều hòa & gia dụng" hoặc nhãn "LISA Golf&Golfer", 3) Gõ câu hỏi vào ô bên dưới rồi nhấn Enter hoặc nhấn nút "Gửi". ' +
+      'Hiện tại, AItrify đang miễn phí cho dù bạn có đăng ký tài khoản hay không.'
+  },
+  'guide/signup': {
+    title: 'Đăng ký AItrify',
+    content:
+      'Hiện tại, AItrify áp dụng đăng ký qua email. Nhấn nút Đăng ký và điền thông tin, nếu là người dùng tổ chức có thể nhập thêm thông tin công ty. ' + 
+      'Người dùng đăng ký có thêm quyền hỏi nhiều câu hỏi hơn so với người dùng không đăng ký, nhận được thông tin chi tiết hơn và các ưu đãi khác tùy theo chính sách từng thời điểm. ' + 
+      'AItrify cũng cho phép đăng ký bằng tài khoản Gmail qua nút "Đăng ký với Gmail" trong quá trình đăng ký.'
+  },
+  'guide/purchase': {
+    title: 'Mua hàng với AItrify',
+    content:
+      'Hiện tại trong thời gian đang miễn phí dịch vụ, sau khi bạn tìm được hàng hóa phù hợp trên www.aitrify.com thì bạn có thể liên hệ tới số hotline: 0823830506 hoặc gửi mail tới chairm@beeinc.vn hoặc ha.mai@beeinc.vn. \n' + 
+      'AItrify chấp nhận thanh toán chuyển khoản ngân hàng, thông qua QR code và sẽ dần bổ sung nhiều hình thức thanh toán thuận tiện hơn. ' + 
+      'Khi thanh toán sẽ có hóa đơn tài chính xuất kèm cho quý khách. Một cách thanh toán áp dụng với mọi loại hàng hóa dịch vụ trên AItrify mà ANNA/LISA tư vấn cung cấp.'
+  },
+  'guide/search': {
+    title: 'Tìm kiếm với AItrify',
+    content:
+      'Bạn quan tâm tới hàng hóa, sản phẩm, dịch vụ gì, chỉ cần đặt từ khóa trong câu hỏi gửi tới ANNA hoặc LISA, các trợ lý sẽ giúp bạn tìm nhanh và chính xác hơn.'
+  },
+  'guide/partner': {
+    title: 'Hợp tác với AItrify',
+    content:
+      'Quý Đối tác hãy gửi mail tới: chairm@beeinc.vn để hội đồng quản lý đối tác của AItrify nghiên cứu chi tiết và phản hồi sớm nhất. ' + 
+      'Thông tin gửi tới có thể là đề xuất hợp tác cụ thể, hoặc hàng hóa chính hãng với đầy đủ nguồn gốc xuất xứ mà bạn muốn cung cấp trên AItrify.'
+  },
+};
+
+
 export default function Chatbox({ agent }: ChatboxProps) {
   const config = AGENT_CONFIGS[agent] || AGENT_CONFIGS['anna'];
   const chatContainerRef = useRef<HTMLDivElement>(null);
@@ -56,44 +200,34 @@ export default function Chatbox({ agent }: ChatboxProps) {
 
   const messages = chatHistories[agent] || [];
 
+  // Footer 
   useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
   }, [messages, loading, agent]);
 
-  // const typewriterEffect = async (fullText: string) => {
-  //   return new Promise<void>((resolve) => {
-  //     let index = 0;
+  // Lắng nghe sự kiện từ Footer
+useEffect(() => {
+  const onFooter = (e: Event) => {
+    const detail = (e as CustomEvent).detail || {};
+    const topicKey = (detail.topic || '').toString();
+    if (!topicKey || !FOOTER_TOPICS[topicKey]) return;
 
-  //     const interval = setInterval(() => {
-  //       setChatHistories((prev) => {
-  //         const current = prev[agent] || [];
-  //         const newMessages = [...current]; // Tạo bản sao để tránh mutate state trực tiếp
+    // 1) cuộn lên đầu & focus vùng chat
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => {
+      chatContainerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 150);
 
-  //         if (index === 0) {
-  //           // Thay message AI hiện tại bằng ký tự đầu tiên
-  //           newMessages[newMessages.length - 1] = { sender: 'ai', text: fullText.charAt(0) };
-  //         } else if (index < fullText.length) {
-  //           // Ghép các ký tự tiếp theo vào message AI cuối cùng
-  //           const lastMessage = newMessages[newMessages.length - 1];
-  //           newMessages[newMessages.length - 1] = { sender: 'ai', text: lastMessage.text + fullText.charAt(index) };
-  //         }
+    // 2) trả lời ngay trong ô chat của agent hiện tại
+    answerFooterTopic(topicKey);
+  };
 
-  //         return {
-  //           ...prev,
-  //           [agent]: newMessages,
-  //         };
-  //       });
+  window.addEventListener('aitrify:footer', onFooter as EventListener);
+  return () => window.removeEventListener('aitrify:footer', onFooter as EventListener);
+}, [agent]);
 
-  //       index++;
-  //       if (index >= fullText.length) {
-  //         clearInterval(interval);
-  //         resolve();
-  //       }
-  //     }, 20); // tốc độ đánh máy
-  //   });
-  // };
   
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -156,6 +290,46 @@ export default function Chatbox({ agent }: ChatboxProps) {
     });
   };
 
+  function linkify(text: string) {
+    // Escape HTML cơ bản
+    let html = text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+
+    // URL: http(s)://... hoặc www...
+    const urlRegex = /(?:https?:\/\/|www\.)[^\s<]+/gi;
+    html = html.replace(urlRegex, (raw) => {
+      const href = raw.startsWith('www.') ? `https://${raw}` : raw;
+      return `<a href="${href}" target="_blank" rel="noopener noreferrer" class="text-indigo-600 underline">${raw}</a>`;
+    });
+
+    // Email
+    const emailRegex = /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi;
+    html = html.replace(
+      emailRegex,
+      (addr) =>
+        `<a href="mailto:${addr}" class="text-indigo-600 underline">${addr}</a>`
+    );
+
+    // Hotline (chữ “hotline”, không phân biệt hoa thường)
+    const hotlineRegex = /\bhotline\b/gi;
+    html = html.replace(
+      hotlineRegex,
+      (match) => `<strong class="text-red-600">${match}</strong>`
+    );
+
+    // Số điện thoại VN cơ bản (10–11 số)
+    const phoneRegex = /\b\d{9,11}\b/g;
+    html = html.replace(
+      phoneRegex,
+      (num) =>
+        `<a href="tel:${num}" class="font-bold text-red-600 underline">${num}</a>`
+    );
+
+    return html;
+  }
+
 
 
   const mockChatAPI = async (userInput: string) => {
@@ -200,57 +374,42 @@ export default function Chatbox({ agent }: ChatboxProps) {
     }
   };
 
+  // Footer gõ theo "từng từ" để an toàn Unicode
+const typeWords = async (full: string) => {
+  const words = full.split(/(\s+)/); // giữ cả khoảng trắng
+  for (const w of words) {
+    await new Promise((r) => {
+      setTimeout(() => {
+        setChatHistories((prev) => {
+          const cur = prev[agent] || [];
+          const last = cur[cur.length - 1];
+          if (!last || last.sender !== 'ai') return prev;
+          const updated = { ...last, text: last.text + w };
+          return { ...prev, [agent]: [...cur.slice(0, -1), updated] };
+        });
+        r(null);
+      }, w.trim() ? 22 : 10);
+    });
+  }
+};
 
+const answerFooterTopic = async (topicKey: string) => {
+  const { title, content } = FOOTER_TOPICS[topicKey];
+  // đẩy như 1 “câu hỏi” hệ thống
+  setChatHistories((prev) => ({
+    ...prev,
+    [agent]: [...(prev[agent] || []), { sender: 'user', text: title }],
+  }));
 
-
-
-  // const mockChatAPI = async (userInput: string) => {
-  //   try {
-  //     const response = await fetch(API_URL, {
-  //       method: 'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify({
-  //         question: userInput,
-  //         user_login: USER_LOGIN,
-  //         agent: agent,
-  //       }),
-  //     });
-  //     if (!response.ok) {
-  //       throw new Error('Không thể kết nối tới máy chủ AI.');
-  //     }
-  //     // Lấy toàn bộ raw text từ response trước khi parse
-  //     const rawText = await response.text();
-  //     console.log('Raw Response from BE:', rawText);
-
-  //     // Parse JSON để lấy nội dung answer đầy đủ
-  //     const data = JSON.parse(rawText);
-  //     const answer = data.answer || '';
-
-  //     // Cắt ký tự đầu và ghép lại theo ý tưởng của bạn
-  //     const firstChar = answer.charAt(0); // Ký tự đầu tiên (full)
-  //     const displayText = answer.slice(1).trim(); // Chuỗi thiếu đầu
-  //     const fullAnswer = firstChar + displayText;
-
-  //     console.log('First Char:', firstChar);
-  //     console.log('Display Text (thiếu đầu):', displayText);
-  //     console.log('Full Answer:', fullAnswer);
-
-  //     // Reset hoặc tạo mới mục AI trong chatHistories trước khi gọi typewriter
-  //     setChatHistories((prev) => ({
-  //       ...prev,
-  //       [agent]: [...(prev[agent] || []).filter(msg => msg.sender !== 'ai'), { sender: 'ai', text: '' }],
-  //     }));
-
-  //     // Gọi typewriter với fullAnswer
-  //     if (fullAnswer) {
-  //       typewriterEffect(fullAnswer);
-  //     }
-  //     return fullAnswer || 'AItrify: Không có nội dung trả về.';
-  //   } catch (err) {
-  //     console.error('Error in mockChatAPI:', (err as Error).message);
-  //     return '❌ Lỗi kết nối server: ' + (err as Error).message;
-  //   }
-  // };
+  // tạo bubble AI rỗng rồi gõ dần
+  setTimeout(() => {
+    setChatHistories((prev) => ({
+      ...prev,
+      [agent]: [...(prev[agent] || []), { sender: 'ai', text: '' }],
+    }));
+    typeWords(content);
+  }, 50);
+};
 
   return (
     <div
@@ -294,7 +453,7 @@ export default function Chatbox({ agent }: ChatboxProps) {
             )}
             <span
               className="text-gray-900"
-              dangerouslySetInnerHTML={{ __html: msg.text.replace(/\n/g, '<br>') }}
+              dangerouslySetInnerHTML={{ __html: linkify(msg.text).replace(/\n/g, "<br>") }}
             />
           </div>
         ))}

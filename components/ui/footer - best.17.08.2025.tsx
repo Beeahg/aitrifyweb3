@@ -3,12 +3,6 @@ import Image from "next/image";
 import FooterIllustration from "@/public/images/footer-illustration.svg";
 
 export default function Footer() {
-  const dispatchFooter = (topic: string) => {
-    if (typeof window !== "undefined") {
-      window.dispatchEvent(new CustomEvent("aitrify:footer", { detail: { topic } }));
-    }
-  };
-
   return (
     <footer>
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
@@ -25,229 +19,204 @@ export default function Footer() {
             alt="Footer illustration"
           />
         </div>
-
         <div className="grid grid-cols-2 justify-between gap-12 py-8 sm:grid-rows-[auto_auto] md:grid-cols-4 md:grid-rows-[auto_auto] md:py-12 lg:grid-cols-[repeat(4,minmax(0,140px))_1fr] lg:grid-rows-1 xl:gap-20">
-
-          {/* 1st block — Sản phẩm & Dịch vụ */}
+          {/* 1st block */}
           <div className="space-y-2">
             <h3 className="text-sm font-medium text-gray-200">Sản phẩm &amp; Dịch vụ</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <button
-                  type="button"
+                <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  onClick={() => dispatchFooter("features")}
+                  href="#0"
                 >
                   Tính năng
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  type="button"
+                <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  onClick={() => dispatchFooter("integrations")}
+                  href="#0"
                 >
                   Tích hợp
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  type="button"
+                <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  onClick={() => dispatchFooter("pricing")}
+                  href="#0"
                 >
                   Chi phí &amp; Gói dịch vụ
-                </button>
+                </a>
               </li>
+              
               <li>
-                <button
-                  type="button"
+                <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  onClick={() => dispatchFooter("brands")}
+                  href="#0"
                 >
                   Hãng sản xuất
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  type="button"
+                <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  onClick={() => dispatchFooter("policies")}
+                  href="#0"
                 >
                   Chính sách
-                </button>
+                </a>
               </li>
             </ul>
           </div>
-
-          {/* 2nd block — Công ty */}
+          {/* 2nd block */}
           <div className="space-y-2">
             <h3 className="text-sm font-medium text-gray-200">Công ty</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <button
-                  type="button"
+                <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  onClick={() => dispatchFooter("about")}
+                  href="#0"
                 >
                   Về AItrify
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  type="button"
+                <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  onClick={() => dispatchFooter("vision")}
+                  href="#0"
                 >
                   Tầm nhìn &amp; Sứ mệnh
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  type="button"
+                <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  onClick={() => dispatchFooter("technology")}
+                  href="#0"
                 >
                   Công nghệ AItrify
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  type="button"
+                <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  onClick={() => dispatchFooter("careers")}
+                  href="#0"
                 >
                   Tuyển dụng
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  type="button"
+                <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  onClick={() => dispatchFooter("investors")}
+                  href="#0"
                 >
                   Dành cho Nhà đầu tư
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  type="button"
+                <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  onClick={() => dispatchFooter("partners")}
+                  href="#0"
                 >
-                  Dành cho Hãng
-                </button>
+                  Dành cho Hãng 
+                </a>
               </li>
             </ul>
           </div>
-
-          {/* 3rd block — Thông tin */}
+          {/* 3rd block */}
           <div className="space-y-2">
             <h3 className="text-sm font-medium text-gray-200">Thông tin</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <button
-                  type="button"
+                <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  onClick={() => dispatchFooter("eua")}
+                  href="#0"
                 >
                   Thỏa thuận EUA
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  type="button"
+                <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  onClick={() => dispatchFooter("terms")}
+                  href="#0"
                 >
-                  Điều khoản dịch vụ
-                </button>
+                  Điều khoản dịch vụ 
+                </a>
               </li>
               <li>
-                <button
-                  type="button"
+                <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  onClick={() => dispatchFooter("privacy")}
+                  href="#0"
                 >
                   Chính sách bảo mật
-                </button>
+                </a>
               </li>
             </ul>
           </div>
-
-          {/* 4th block — Hướng dẫn sử dụng */}
+          {/* 4th block */}
           <div className="space-y-2">
-            <h3 className="text-sm font-medium text-gray-200">Hướng dẫn sử dụng</h3>
+            <h3 className="text-sm font-medium text-gray-200">
+              Hướng dẫn sử dụng
+            </h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <button
-                  type="button"
+                <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  onClick={() => dispatchFooter("guide/getting-started")}
+                  href="#0"
                 >
                   Sử dụng AItrify
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  type="button"
+                <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  onClick={() => dispatchFooter("guide/signup")}
+                  href="#0"
                 >
                   Đăng ký AItrify
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  type="button"
+                <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  onClick={() => dispatchFooter("guide/purchase")}
+                  href="#0"
                 >
                   Mua hàng với AItrify
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  type="button"
+                <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  onClick={() => dispatchFooter("guide/search")}
+                  href="#0"
                 >
                   Tìm kiếm với AItrify
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  type="button"
+                <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  onClick={() => dispatchFooter("guide/partner")}
+                  href="#0"
                 >
                   Hợp tác với AItrify
-                </button>
+                </a>
               </li>
             </ul>
           </div>
-
-          {/* 5th block — Logo & info */}
+          {/* 5th block */}
           <div className="col-span-2 md:col-span-4 lg:col-span-1 lg:text-right">
             <div className="mb-3">
               <Logo />
             </div>
             <div className="text-sm">
               <p className="mb-3 text-indigo-200/65">
-                ©aitrify.com
+              ©aitrify.com
                 <span className="text-gray-700"> · </span>
                 <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  href="https://beesota.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="#0"
                 >
-                  2025. Beesota6G Alliance
+                2025. Beesota6G Alliance (https://beesota.com/)
                 </a>
               </p>
             </div>
           </div>
-
         </div>
       </div>
     </footer>

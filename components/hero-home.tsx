@@ -1,15 +1,40 @@
 'use client';
 
-import { useState } from "react"; // quản lý selectedAgent
-import VideoThumb from "@/public/images/hero-image-01.jpg";
-import Chatbox from "@/components/chatbox";
+import { useEffect, useRef, useState } from 'react';
+import Chatbox from '@/components/chatbox';
+
+type Agent = 'anna' | 'lisa';
 
 export default function Hero({ agent }: { agent: string }) {
-  const [selectedAgent, setSelectedAgent] = useState<'anna' | 'lisa'>(agent === 'lisa' ? 'lisa' : 'anna');
+  // agent từ props -> chuẩn hoá thành 'anna' | 'lisa'
+  const initial: Agent = agent === 'lisa' ? 'lisa' : 'anna';
+  const [selectedAgent, setSelectedAgent] = useState<Agent>(initial);
 
-  const handleAgentSelect = (agent: 'anna' | 'lisa') => {
-    setSelectedAgent(agent);
+  // ref để cuộn tới vùng chat
+  const chatRef = useRef<HTMLDivElement>(null);
+
+  // Bấm nút ANNA/LISA ở hero
+  const handleAgentSelect = (ag: Agent) => {
+    setSelectedAgent(ag);
+    // cuộn tới khung chat
+    setTimeout(() => {
+      chatRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 0);
   };
+
+  // Nhận tín hiệu từ footer: window.dispatchEvent(new CustomEvent('aitrify:pick-agent', { detail: { agent: 'anna' | 'lisa' } }))
+  useEffect(() => {
+    const onPick = (e: Event) => {
+      const ag = ((e as CustomEvent).detail?.agent || 'anna') as Agent;
+      setSelectedAgent(ag);
+      setTimeout(() => {
+        chatRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 30);
+    };
+    window.addEventListener('aitrify:pick-agent', onPick as EventListener);
+    return () =>
+      window.removeEventListener('aitrify:pick-agent', onPick as EventListener);
+  }, []);
 
   return (
     <section>
@@ -24,15 +49,19 @@ export default function Hero({ agent }: { agent: string }) {
             >
               AItrify - Recharging eCommerce with A.I
             </h1>
+
             <div className="mx-auto max-w-3xl">
               <p
                 className="mb-8 text-xl text-indigo-100/80"
                 data-aos="fade-up"
                 data-aos-delay={200}
               >
-                AItrify tái định nghĩa Thương mại điện tử "eCommerce", nơi dành cho người Việt mua sắm trực tuyến
-                với sự hỗ trợ của Trí tuệ nhân tạo AI, chúng tôi gọi đó là <strong className="font-bold text-indigo-100">AI.Commerce</strong>
+                AItrify tái định nghĩa Thương mại điện tử "eCommerce", nơi dành cho
+                người Việt mua sắm trực tuyến với sự hỗ trợ của Trí tuệ nhân tạo AI,
+                chúng tôi gọi đó là{' '}
+                <strong className="font-bold text-indigo-100">AI.Commerce</strong>
               </p>
+
               <div className="mx-auto max-w-xs sm:flex sm:max-w-none sm:justify-center">
                 <div data-aos="fade-up" data-aos-delay={400}>
                   <button
@@ -49,10 +78,11 @@ export default function Hero({ agent }: { agent: string }) {
                       >
                         <path d="M3 6h18v2H3zM3 10h18v2H3zM3 14h10v2H3zM10 18h4v2h-4z" />
                       </svg>
-                      ANNA Điều hòa & Gia dụng
+                      ANNA Điều hòa &amp; Gia dụng
                     </span>
                   </button>
                 </div>
+
                 <div data-aos="fade-up" data-aos-delay={600}>
                   <button
                     onClick={() => handleAgentSelect('lisa')}
@@ -66,17 +96,20 @@ export default function Hero({ agent }: { agent: string }) {
                         viewBox="0 0 24 24"
                         fill="currentColor"
                       >
-                        <path d="M13 2v8.76l6.09-2.44A1 1 0 0 1 21 9.24V11a1 1 0 0 1-.67.94l-7 2.8V20a1 1 0 0 1-2 0v-5.19l-3.44 1.38a1 1 0 0 1-.76-1.86L11 12.24V2a1 1 0 0 1 2 0z" />
+                        <path d="M13 2v8.76l6.09-2.44A1 1 0 0 1 21 9.24V11a1 1 0 0 1-.67.94l-7 2.8V20a1 1 0 0 1-2 0v-5.19l-3.44 1.38a1 1 0  1-.76-1.86L11 12.24V2a1 1 0 0 1 2 0z" />
                       </svg>
-                      LISA Golf & Golfer
+                      LISA Golf &amp; Golfer
                     </span>
                   </button>
                 </div>
               </div>
             </div>
           </div>
-          {/* Chatbox component with selectedAgent passed */}
-          <Chatbox agent={selectedAgent} />
+
+          {/* Chatbox */}
+          <div ref={chatRef}>
+            <Chatbox agent={selectedAgent} />
+          </div>
         </div>
       </div>
     </section>
