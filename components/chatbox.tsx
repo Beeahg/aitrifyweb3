@@ -178,6 +178,7 @@ const FOOTER_TOPICS: Record<string, { title: string; content: string }> = {
       'Quý khách vui lòng liên hệ theo hotline và email tại mục "Mua hàng tại AItrify" để nhận thông tin chính thống và chính xác nhất. Trong mọi trường hợp khác, công ty sở hữu AItrify được miễn trừ hoàn toàn trách nhiệm pháp lý đối với các thông tin không chính xác.\n\n' +
       'AItrify được miễn trừ trách nhiệm pháp lý liên quan đến thông tin trong giấy tờ xuất xứ, hóa đơn và nghĩa vụ thuế do nhãn hàng cung cấp.\n\n' +
       'Bằng việc nhập thông tin tìm kiếm, sử dụng và/hoặc đăng ký AItrify, người dùng đồng ý rằng AItrify được miễn trừ toàn bộ trách nhiệm pháp lý đối với các thông tin người dùng nhập vào cũng như thông tin phản hồi từ hệ thống. Người dùng đồng ý để AItrify lưu trữ thông tin nhập liệu và thông tin đăng ký tài khoản.\n\n' +
+      'Một số thủ tục cấp phép từ các cơ quan chức năng  trong đó có yêu cầu nội dung website www.aitrify.com phải lên nội dung để thẩm định, AItrify được miễn trừ trách nhiệm đối với các thông tin cũ dành cho mục đích này và cập nhật các thông tin tiếp theo theo kế hoạch của đơn vị chủ quản AItrify \n'+
       'AItrify cũng được miễn trừ trách nhiệm trong các trường hợp bất khả kháng như thiên tai, sự cố kỹ thuật ngoài tầm kiểm soát, hoặc sự gián đoạn dịch vụ do nguyên nhân khách quan khác.'
   },
 };
