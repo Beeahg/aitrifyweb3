@@ -31,27 +31,30 @@ const FOOTER_TOPICS: Record<string, { title: string; content: string }> = {
   'features': {
     title: 'Tính năng',
     content:
-      '• Chat AI với kiến thức chuyên biệt ANNA cho Điều hòa gia dụng, LISA cho Golf và những người tập Golf, hỏi đáp tiếng Việt tự nhiên.\n' +
-      '• Tìm kiếm thông tin sản phẩm Điều hòa gia dụng (bếp, máy xay sinh tố, nồi cơm... với giá Top Ưu đãi nhưng vẫn được hưởng dịch vụ chuẩn hãng.\n' +
-      '• Tìm kiếm thông tin sản phẩm cho chơi thể thao Golf, công cụ dụng cụ, thiết bị hỗ trợ chơi Golf, tập Golf, thời trang, phục kiện cho Golf\n' +
-      '• Dữ liệu tách biệt theo loại Sản phẩm hàng hóa và cá nhân hóa; không dùng để huấn luyện mô hình AI công khai (public).'
+      'AItrify đang cập nhật từng ngày cho việc "nạp" kiến thức Chuyên sâu về hàng hóa phục vụ người dùng ngày một tốt hơn:\n' +
+      ' • Chat AI với kiến thức chuyên biệt ANNA cho Điều hòa gia dụng, LISA cho Golf và những người tập Golf, hỏi đáp tiếng Việt tự nhiên.\n' +
+      ' • Tìm kiếm thông tin sản phẩm Điều hòa gia dụng (bếp, máy xay sinh tố, nồi cơm... với giá Top Ưu đãi nhưng vẫn được hưởng dịch vụ chuẩn hãng.\n' +
+      ' • Tìm kiếm thông tin sản phẩm cho chơi thể thao Golf, công cụ dụng cụ, thiết bị hỗ trợ chơi Golf, tập Golf, thời trang, phục kiện cho Golf\n' +
+      ' • Dữ liệu tách biệt theo loại Sản phẩm hàng hóa và cá nhân hóa; không dùng để huấn luyện mô hình AI công khai (public).'
   },
   'integrations': {
     title: 'Tích hợp',
     content:
-      '• Kết nối các hệ thống ERP / Thanh toán / Vận chuyển/Kho chứa hàng, xuất hoá đơn điện tử để dần mang lại trải nghiệm tìm kiếm và mua hàng mới\n' +
-      '• AItrify dần bổ sung tích hợp các cổng thanh toán, các hãng sản phẩm uy tín, các trung tâm dịch vụ khách hàng để mang lại không chỉ sản phẩm mà là Dịch vụ khách hàng chuẩn hãng.\n' +
-      '• Tích hợp nhiều nguồn dữ liệu có kiểm chứng, có xác thực, dữ liệu cá nhân hóa được tổng hợp nhờ tích hợp dữ liệu khép kín\n' +
-      '• Hỗ trợ đồng bộ các phần mềm của doanh nghiệp của đối tác nếu có nhu cầu như ERP/CRM, phần mềm kế toán doanh nghiệp; bộ SDK & API sẽ mở dần theo lộ trình.'
+      'AItrify đang cập nhật từng ngày cho các tích hợp nhiều tính năng phục vụ người dùng ngày một tốt hơn:\n' +
+      ' • Kết nối các hệ thống ERP / Thanh toán / Vận chuyển/Kho chứa hàng, xuất hoá đơn điện tử để dần mang lại trải nghiệm tìm kiếm và mua hàng mới\n' +
+      ' • AItrify dần bổ sung tích hợp các cổng thanh toán, các hãng sản phẩm uy tín, các trung tâm dịch vụ khách hàng để mang lại không chỉ sản phẩm mà là Dịch vụ khách hàng chuẩn hãng.\n' +
+      ' • Tích hợp nhiều nguồn dữ liệu có kiểm chứng, có xác thực, dữ liệu cá nhân hóa được tổng hợp nhờ tích hợp dữ liệu khép kín\n' +
+      ' • Hỗ trợ đồng bộ các phần mềm của doanh nghiệp của đối tác nếu có nhu cầu như ERP/CRM, phần mềm kế toán doanh nghiệp; bộ SDK & API sẽ mở dần theo lộ trình.'
   },
   'pricing': {
     title: 'Chi phí & Gói dịch vụ',
     content:
-      '• Giai đoạn đầu: miễn phí AItrify ANNA/LISA cho người dùng đăng ký/không đăng ký.\n' +
-      '• Cung cấp Điều hòa gia dụng chỉ của hãng Nagakawa, một hãng uy tín lâu đời tại Việt nam với 23 năm kinh nghiệm.\n' +
-	  '• Cung cấp các sản phẩm Golf mà AItrify đã thẩm định là Chính hãng và có hóa đơn, giấy tờ xuất xứ đầy đủ theo đúng pháp luật Việt Nam\n' +
-      '• Thanh toán chuyển khoản/QR; hoá đơn điện tử đầy đủ.\n' +
-      '• Chương trình khuyến mãi và chương trình ưu đãi theo từng thời điểm.'
+      'AItrify đang triển khai dần các các tùy chọn để người dùng thấy xứng đáng với chi phí bỏ ra:\n' +
+      ' • Giai đoạn đầu: miễn phí AItrify ANNA/LISA cho người dùng đăng ký/không đăng ký.\n' +
+      ' • Cung cấp Điều hòa gia dụng chỉ của hãng Nagakawa, một hãng uy tín lâu đời tại Việt nam với 23 năm kinh nghiệm.\n' +
+	    ' • Cung cấp các sản phẩm Golf mà AItrify đã thẩm định là Chính hãng và có hóa đơn, giấy tờ xuất xứ đầy đủ theo đúng pháp luật Việt Nam\n' +
+      ' • Thanh toán chuyển khoản/QR; hoá đơn điện tử đầy đủ.\n' +
+      ' • Chương trình khuyến mãi và chương trình ưu đãi theo từng thời điểm.'
   },
   'brands': {
     title: 'Hãng sản xuất',
@@ -70,8 +73,8 @@ const FOOTER_TOPICS: Record<string, { title: string; content: string }> = {
   'about': {
     title: 'Về AItrify',
     content:
-      'AItrify là nền tảng thương mại điện tử sử dụng hầu hết công nghệ trí tuệ nhân tạo AI để giúp cho hoạt động tìm kiếm mua sắm dễ dàng hơn hàng chính hãng với giá cả thuộc top ưu đãi nhất. ' +
-      'Bạn có thể giao tiếp với các AI chatbox của AItrify được thiết kế với kiến thức chuyên sâu, chuyên biệt với ANNA dành cho sản phẩm điều hòa gia dụng, LISA chuyên biệt dành cho Golf và Golfer ' +
+      'Ra mắt bản thử nghiệm đầu tiên vào ngày 02/09/2025, AItrify được thiết kế định hướng là nền tảng thương mại điện tử sử dụng hầu hết công nghệ trí tuệ nhân tạo AI để giúp cho hoạt động tìm kiếm mua sắm dễ dàng hơn hàng chính hãng với giá cả thuộc top ưu đãi nhất. ' +
+      'Bạn có thể giao tiếp với các trợ lý AI của AItrify được thiết kế và đào tạo với kiến thức chuyên sâu, chuyên biệt với ANNA dành cho sản phẩm điều hòa gia dụng, LISA chuyên biệt dành cho Golf và Golfer ' +
       'AItrify được xây dựng bởi Liên minh công nghệ Beesota6G gồm các công ty công nghệ mạnh trong các lĩnh vực AI, Blockchain, Robotics, Cloud, I/IoT, ERP (Xem thêm tại https://beesota.com/)'
   },
   'vision': {
@@ -139,20 +142,21 @@ const FOOTER_TOPICS: Record<string, { title: string; content: string }> = {
     title: 'Sử dụng AItrify',
     content:
       'Bắt đầu: 1) Truy cập www.aitrify.com, 2) chọn trợ lý AI là ANNA hoặc LISA thông qua nhấn một trong hai nút ' + 
-      'nhãn "ANNA Điều hòa & gia dụng" hoặc nhãn "LISA Golf&Golfer", 3) Gõ câu hỏi vào ô bên dưới rồi nhấn Enter hoặc nhấn nút "Gửi". ' +
-      'Hiện tại, AItrify đang miễn phí cho dù bạn có đăng ký tài khoản hay không.'
+      'nhãn "ANNA Điều hòa & gia dụng" hoặc nhãn "LISA Golf&Golfer", 3) Nhấn nút "Mua hàng tại AItrify" để được hướng dẫn về mua hàng hóa chính hàng trên AItrify. Gõ câu hỏi vào ô bên dưới rồi nhấn Enter hoặc nhấn nút "Gửi". ' +
+      'Hiện tại, AItrify đang miễn phí tìm kiếm hay trả lời cho dù bạn có đăng ký tài khoản hay không.'
   },
   'guide/signup': {
     title: 'Đăng ký AItrify',
     content:
-      'Hiện tại, AItrify áp dụng đăng ký qua email. Nhấn nút Đăng ký và điền thông tin, nếu là người dùng tổ chức có thể nhập thêm thông tin công ty. ' + 
+      'Hiện tại, AItrify chuẩn bị bước đấu áp dụng đăng ký qua email. Khi có tính năng này bạn chỉ cần Nhấn nút Đăng ký và điền thông tin, nếu là người dùng tổ chức có thể nhập thêm thông tin công ty. ' + 
       'Người dùng đăng ký có thêm quyền hỏi nhiều câu hỏi hơn so với người dùng không đăng ký, nhận được thông tin chi tiết hơn và các ưu đãi khác tùy theo chính sách từng thời điểm. ' + 
       'AItrify cũng cho phép đăng ký bằng tài khoản Gmail qua nút "Đăng ký với Gmail" trong quá trình đăng ký.'
   },
   'guide/purchase': {
     title: 'Mua hàng với AItrify',
     content:
-      'Hiện tại trong thời gian đang miễn phí dịch vụ, sau khi bạn tìm được hàng hóa phù hợp trên www.aitrify.com thì bạn có thể liên hệ tới số hotline: 0823830506 hoặc gửi mail tới chairm@beeinc.vn hoặc ha.mai@beeinc.vn. \n' + 
+      'Về dịch vụ: Hiện tại trong thời gian đang miễn phí dịch vụ AItrify tuy nhiên có thể có hạn chế về lượt hỏi AItrify hoặc yêu cầu đăng ký, mong bạn thông cảm nếu có bất cứ bất tiện nào.  \n' + 
+      'Về mua hàng hóa tìm kiếm được trên AItrify hiện tại sẽ theo cách thức sau khi bạn tìm được hàng hóa phù hợp trên www.aitrify.com thì bạn có thể liên hệ tới số hotline: 0823830506 hoặc gửi mail tới chairm@beeinc.vn hoặc ha.mai@beeinc.vn. \n' + 
       'AItrify chấp nhận thanh toán chuyển khoản ngân hàng, thông qua QR code và sẽ dần bổ sung nhiều hình thức thanh toán thuận tiện hơn. ' + 
       'Khi thanh toán sẽ có hóa đơn tài chính xuất kèm cho quý khách. Một cách thanh toán áp dụng với mọi loại hàng hóa dịch vụ trên AItrify mà ANNA/LISA tư vấn cung cấp.'
   },
@@ -166,6 +170,15 @@ const FOOTER_TOPICS: Record<string, { title: string; content: string }> = {
     content:
       'Quý Đối tác hãy gửi mail tới: chairm@beeinc.vn để hội đồng quản lý đối tác của AItrify nghiên cứu chi tiết và phản hồi sớm nhất. ' + 
       'Thông tin gửi tới có thể là đề xuất hợp tác cụ thể, hoặc hàng hóa chính hãng với đầy đủ nguồn gốc xuất xứ mà bạn muốn cung cấp trên AItrify.'
+  },
+  'disclaimer': {
+    title: 'Tuyên bố miễn trừ',
+    content:
+      'AItrify được xây dựng trên cơ sở dữ liệu chính thống từ các hãng sản xuất và nhãn hàng. Tuy nhiên, các thông tin liên quan đến giá cả tại thời điểm mua hàng, mẫu mã, chương trình khuyến mại và các thông tin khác chưa được huấn luyện cập nhật trong hệ thống chỉ mang tính tham khảo.\n' +
+      'Quý khách vui lòng liên hệ theo hotline và email tại mục "Mua hàng tại AItrify" để nhận thông tin chính thống và chính xác nhất. Trong mọi trường hợp khác, công ty sở hữu AItrify được miễn trừ hoàn toàn trách nhiệm pháp lý đối với các thông tin không chính xác.\n\n' +
+      'AItrify được miễn trừ trách nhiệm pháp lý liên quan đến thông tin trong giấy tờ xuất xứ, hóa đơn và nghĩa vụ thuế do nhãn hàng cung cấp.\n\n' +
+      'Bằng việc nhập thông tin tìm kiếm, sử dụng và/hoặc đăng ký AItrify, người dùng đồng ý rằng AItrify được miễn trừ toàn bộ trách nhiệm pháp lý đối với các thông tin người dùng nhập vào cũng như thông tin phản hồi từ hệ thống. Người dùng đồng ý để AItrify lưu trữ thông tin nhập liệu và thông tin đăng ký tài khoản.\n\n' +
+      'AItrify cũng được miễn trừ trách nhiệm trong các trường hợp bất khả kháng như thiên tai, sự cố kỹ thuật ngoài tầm kiểm soát, hoặc sự gián đoạn dịch vụ do nguyên nhân khách quan khác.'
   },
 };
 
