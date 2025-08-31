@@ -7,8 +7,7 @@ interface ChatboxProps {
   agent: string;
 }
 
-// const API_URL = 'https://ai.aitrify.com/ask';
-const API_URL = 'https://aitrify-api-921228610982.asia-southeast1.run.app/ask';
+const API_URL = 'https://ai.aitrify.com/ask';
 const USER_LOGIN = 'mock_user';
 
 const AGENT_CONFIGS: Record<string, { name: string; greeting: string; color: string }> = {
