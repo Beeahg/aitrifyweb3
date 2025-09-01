@@ -156,8 +156,8 @@ const FOOTER_TOPICS: Record<string, { title: string; content: string }> = {
   'guide/purchase': {
     title: 'Mua hàng với AItrify',
     content:
-      'Về mua hàng hóa: sau khi bạn tìm được hàng hóa phù hợp trên www.aitrify.com qua sự trợ giúp của trợ lý AI (ANNA/LISA) thì bạn có thể liên hệ tới số hotline: 0823830506 hoặc gửi mail tới chairm@beeinc.vn hoặc ha.mai@beeinc.vn. \n\n' + 
-      'Số hotline: 0823830506 phục vụ cả ngày thứ 7, chủ nhật và các ngày lễ, nếu quý khách gọi hotline: 0823830506 không thấy trả lời thì xin gửi email phản ánh giúp tới địa chỉ chairm@beeinc.vn hoặc ha.mai@beeinc.vn, chúng tôi sẽ xử lý ngay nhân viên trực hotline. \n\n' + 
+      'Về mua hàng hóa: sau khi bạn tìm được hàng hóa phù hợp trên www.aitrify.com qua sự trợ giúp của trợ lý AI (ANNA/LISA) thì bạn có thể liên hệ tới số hotline: 0823830506 hoặc gửi mail tới chairm@beeinc.vn. \n\n' + 
+      'Số hotline: 0823830506 phục vụ cả ngày thứ 7, chủ nhật và các ngày lễ, nếu quý khách gọi hotline: 0823830506 không thấy nhấc máy thì xin vui lòng gửi email phản ánh giúp tới địa chỉ chairm@beeinc.vn, chúng tôi sẽ xử lý ngay nhân viên trực hotline. \n\n' + 
       'AItrify chấp nhận thanh toán chuyển khoản ngân hàng, thông qua QR code và sẽ dần bổ sung nhiều hình thức thanh toán thuận tiện hơn. \n\n' + 
       'Khi thanh toán sẽ có hóa đơn tài chính xuất kèm cho quý khách. Một cách thanh toán áp dụng với mọi loại hàng hóa dịch vụ trên AItrify mà ANNA/LISA tư vấn cung cấp.\n\n' +
       'Về phí dịch vụ: với phí AItrify, hiện tại trong thời gian đang miễn phí tuy nhiên có thể hệ thống sẽ hạn chế về lượt hỏi AItrify, hạn chế thông tin AItrify có thể cung cấp hoặc có yêu cầu đăng ký, mong bạn thông cảm nếu có bất cứ bất tiện nào.'
@@ -177,7 +177,7 @@ const FOOTER_TOPICS: Record<string, { title: string; content: string }> = {
     title: 'Tuyên bố miễn trừ',
     content:
       'AItrify được xây dựng trên cơ sở dữ liệu chính thống từ các hãng sản xuất và nhãn hàng. Tuy nhiên, các thông tin liên quan đến giá cả tại thời điểm mua hàng, mẫu mã, chương trình khuyến mại và các thông tin khác chưa được huấn luyện cập nhật trong hệ thống chỉ mang tính tham khảo.\n\n' +
-      'Quý khách vui lòng liên hệ theo hotline và email tại mục "Mua hàng tại AItrify" để nhận thông tin chính thống và chính xác nhất. Trong mọi trường hợp khác, công ty sở hữu AItrify được miễn trừ hoàn toàn trách nhiệm pháp lý đối với các thông tin không chính xác.\n\n' +
+      'Quý khách vui lòng liên hệ theo hotline: 0823830506 hoặc email giúp tới địa chỉ chairm@beeinc.vn để nhận thông tin chính thống và chính xác nhất tại thời điểm quý khách liên hệ. Trong mọi trường hợp khác, công ty sở hữu AItrify được miễn trừ hoàn toàn trách nhiệm pháp lý đối với các thông tin không chính xác.\n\n' +
       'AItrify được miễn trừ trách nhiệm pháp lý liên quan đến thông tin trong giấy tờ xuất xứ, hóa đơn và nghĩa vụ thuế do nhãn hàng cung cấp.\n\n' +
       'Bằng việc nhập thông tin tìm kiếm, sử dụng và/hoặc đăng ký AItrify, người dùng đồng ý rằng AItrify được miễn trừ toàn bộ trách nhiệm pháp lý đối với các thông tin người dùng nhập vào cũng như thông tin phản hồi từ hệ thống. Người dùng đồng ý để AItrify lưu trữ thông tin nhập liệu và thông tin đăng ký tài khoản.\n\n' +
       'Một số thủ tục cấp phép từ các cơ quan chức năng  trong đó có yêu cầu nội dung website www.aitrify.com phải lên nội dung để thẩm định, AItrify được miễn trừ trách nhiệm đối với các thông tin cũ dành cho mục đích này và cập nhật các thông tin tiếp theo theo kế hoạch của đơn vị chủ quản AItrify \n\n'+
