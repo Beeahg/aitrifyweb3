@@ -26,7 +26,7 @@ export default function Footer() {
           />
         </div>
 
-        <div className="grid grid-cols-2 justify-between gap-12 py-8 sm:grid-rows-[auto_auto] md:grid-cols-4 md:grid-rows-[auto_auto] md:py-12 lg:grid-cols-[repeat(4,minmax(0,140px))_1fr] lg:grid-rows-1 xl:gap-20">
+        <div className="grid grid-cols-2 gap-12 justify-start text-left py-8 sm:grid-rows-[auto_auto] md:grid-cols-4 md:grid-rows-[auto_auto] md:py-12 lg:grid-cols-[repeat(4,minmax(0,140px))_1fr] lg:grid-rows-1 xl:gap-20">
 
           {/* 1st block — Sản phẩm & Dịch vụ */}
           <div className="space-y-2">
@@ -237,7 +237,7 @@ export default function Footer() {
           </div>
 
           {/* 5th block — Logo & info */}
-          <div className="col-span-2 md:col-span-4 lg:col-span-1 lg:text-right">
+          <div className="col-span-2 md:col-span-4 lg:col-span-1 text-left lg:text-right">
             <div className="mb-3">
               <Logo />
             </div>

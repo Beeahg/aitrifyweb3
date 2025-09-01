@@ -155,10 +155,11 @@ const FOOTER_TOPICS: Record<string, { title: string; content: string }> = {
   'guide/purchase': {
     title: 'Mua hàng với AItrify',
     content:
-      'Về dịch vụ: Hiện tại trong thời gian đang miễn phí dịch vụ AItrify tuy nhiên có thể có hạn chế về lượt hỏi AItrify hoặc yêu cầu đăng ký, mong bạn thông cảm nếu có bất cứ bất tiện nào.  \n' + 
-      'Về mua hàng hóa tìm kiếm được trên AItrify hiện tại sẽ theo cách thức sau khi bạn tìm được hàng hóa phù hợp trên www.aitrify.com thì bạn có thể liên hệ tới số hotline: 0823830506 hoặc gửi mail tới chairm@beeinc.vn hoặc ha.mai@beeinc.vn. \n' + 
-      'AItrify chấp nhận thanh toán chuyển khoản ngân hàng, thông qua QR code và sẽ dần bổ sung nhiều hình thức thanh toán thuận tiện hơn. ' + 
-      'Khi thanh toán sẽ có hóa đơn tài chính xuất kèm cho quý khách. Một cách thanh toán áp dụng với mọi loại hàng hóa dịch vụ trên AItrify mà ANNA/LISA tư vấn cung cấp.'
+      'Về mua hàng hóa: sau khi bạn tìm được hàng hóa phù hợp trên www.aitrify.com qua sự trợ giúp của trợ lý AI (ANNA/LISA) thì bạn có thể liên hệ tới số hotline: 0823830506 hoặc gửi mail tới chairm@beeinc.vn hoặc ha.mai@beeinc.vn. \n\n' + 
+      'Số hotline phục vụ cả ngày thứ 7, chủ nhật và các ngày lễ, nếu quý khách gọi hotline không thấy trả lời thì xin gửi email phản ánh giúp tới địa chỉ chairm@beeinc.vn hoặc ha.mai@beeinc.vn, chúng tôi sẽ xử lý ngay nhân viên trực hotline. \n\n' + 
+      'AItrify chấp nhận thanh toán chuyển khoản ngân hàng, thông qua QR code và sẽ dần bổ sung nhiều hình thức thanh toán thuận tiện hơn. \n\n' + 
+      'Khi thanh toán sẽ có hóa đơn tài chính xuất kèm cho quý khách. Một cách thanh toán áp dụng với mọi loại hàng hóa dịch vụ trên AItrify mà ANNA/LISA tư vấn cung cấp.\n\n' +
+      'Về phí dịch vụ: với phí AItrify, hiện tại trong thời gian đang miễn phí tuy nhiên có thể hệ thống sẽ hạn chế về lượt hỏi AItrify, hạn chế thông tin AItrify có thể cung cấp hoặc có yêu cầu đăng ký, mong bạn thông cảm nếu có bất cứ bất tiện nào.'
   },
   'guide/search': {
     title: 'Tìm kiếm với AItrify',

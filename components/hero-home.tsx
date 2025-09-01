@@ -109,7 +109,7 @@ export default function Hero({ agent }: { agent: string }) {
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M7 4h-2l-3 7v2h2l1 9h14l1-9h2v-2l-3-7h-2l-1 2h-8l-1-2zm2.5 2h5l1 2h-7l1-2zm9 4l1.5 3h-15l1.5-3h12zm-2.5 9c.83 0 1.5-.67 1.5-1.5S16.83 16 16 16s-1.5.67-1.5 1.5S15.17 19 16 19zm-8 0c.83 0 1.5-.67 1.5-1.5S8.83 16 8 16s-1.5.67-1.5 1.5S7.17 19 8 19z" />
                       </svg>
-                      Mua hàng tại AItrify
+                      Mua hàng với AItrify
                     </span>
                   </button>
                 </div>
