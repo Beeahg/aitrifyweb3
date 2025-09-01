@@ -73,7 +73,7 @@ const FOOTER_TOPICS: Record<string, { title: string; content: string }> = {
   'about': {
     title: 'Về AItrify',
     content:
-      'Ra mắt bản thử nghiệm đầu tiên vào ngày 02/09/2025, AItrify được thiết kế định hướng là nền tảng thương mại điện tử sử dụng hầu hết công nghệ trí tuệ nhân tạo AI để giúp cho hoạt động tìm kiếm mua sắm dễ dàng hơn hàng chính hãng với giá cả thuộc top ưu đãi nhất. ' +
+      'Ra đời vào ngày 02/09/2025 tại www.aitrify.com AItrify được thiết kế định hướng là nền tảng thương mại điện tử sử dụng hầu hết công nghệ trí tuệ nhân tạo AI để giúp cho hoạt động tìm kiếm mua sắm dễ dàng hơn hàng chính hãng với giá cả thuộc top ưu đãi nhất. ' +
       'Bạn có thể giao tiếp với các trợ lý AI của AItrify được thiết kế và đào tạo với kiến thức chuyên sâu, chuyên biệt với ANNA dành cho sản phẩm điều hòa gia dụng, LISA chuyên biệt dành cho Golf và Golfer ' +
       'AItrify được xây dựng bởi Liên minh công nghệ Beesota6G gồm các công ty công nghệ mạnh trong các lĩnh vực AI, Blockchain, Robotics, Cloud, I/IoT, ERP (Xem thêm tại https://beesota.com/)'
   },
@@ -86,9 +86,10 @@ const FOOTER_TOPICS: Record<string, { title: string; content: string }> = {
   'technology': {
     title: 'Công nghệ AItrify',
     content:
-      'AItrify sử dụng các công nghệ AI mới nhất với LLM, ANN, OpenCV, RAG để nạp tri thức cho AItrify cùng với công nghệ SAITMe (structured) & NoSAITMe (unstructured) ' + 
+      'Khởi nguồn tên AItrify mang ý nghĩa của 3 từ khóa gồm "AI" + "tri" + "fy" với ý nghĩa "AI hóa" để gia tốc mọi hoạt động thương mại trên không gian Số lên tối thiểu từ ba lần trở lên. \n' +
+      'AItrify sử dụng các công nghệ AI mới nhất với  nhiều mô hình LLM tiên tiến mã nguồn mở, các công nghệ ANN&Vectoring, OpenCV, RAG, AI Gateway, công nghệ database dành riêng cho dữ liệu AI, để nạp, truy xuất, truy hồi dữ liệu từ tri thức của AItrify cùng với công nghệ SAITMe (structured) & NoSAITMe (unstructured) ' + 
       'của Beesota6G (https://beesota.com/) tự phát triển. Công nghệ AI nào mới nhất cũng luôn sớm có mặt trên AItrify, tích hợp với các nguồn dữ liệu khác được xác thực, có dẫn chiếu, ' + 
-      'và cả dữ liệu từ các thiết bị IoT qua công nghệ truyền số liệu tiên tiến nhất cho dữ liệu Số.'
+      'và cả dữ liệu từ các thiết bị IoT qua công nghệ truyền số liệu tiên tiến nhất cho dữ liệu Số với số lượng thông tin, tri thức lớn nhất nhưng lại với chi phí OPEX trong top rẻ nhất'
   },
   'careers': {
     title: 'Tuyển dụng',
