@@ -89,7 +89,8 @@ const FOOTER_TOPICS: Record<string, { title: string; content: string }> = {
       'Khởi nguồn tên AItrify mang ý nghĩa của 3 từ khóa gồm "AI" + "tri" + "fy" với ý nghĩa "AI hóa" để gia tốc mọi hoạt động thương mại trên không gian Số lên tối thiểu từ ba lần trở lên. \n' +
       'AItrify sử dụng các công nghệ AI mới nhất với  nhiều mô hình LLM tiên tiến mã nguồn mở, các công nghệ ANN&Vectoring, OpenCV, RAG, AI Gateway, công nghệ database dành riêng cho dữ liệu AI, để nạp, truy xuất, truy hồi dữ liệu từ tri thức của AItrify cùng với công nghệ SAITMe (structured) & NoSAITMe (unstructured) ' + 
       'của Beesota6G (https://beesota.com/) tự phát triển. Công nghệ AI nào mới nhất cũng luôn sớm có mặt trên AItrify, tích hợp với các nguồn dữ liệu khác được xác thực, có dẫn chiếu, ' + 
-      'và cả dữ liệu từ các thiết bị IoT qua công nghệ truyền số liệu tiên tiến nhất cho dữ liệu Số với số lượng thông tin, tri thức lớn nhất nhưng lại với chi phí OPEX trong top rẻ nhất'
+      'và cả dữ liệu từ các thiết bị IoT qua công nghệ truyền số liệu tiên tiến nhất cho dữ liệu Số với số lượng thông tin, tri thức lớn nhất nhưng lại với chi phí OPEX trong top rẻ nhất' +
+      'Công nghệ chúng tôi sẽ hướng tới có thể đạt tinh thần chữ "tri" trong AI"tri"fy với: sau ba (3) tháng, hiệu năng hệ thống AItrify tăng gấp ba (3) với chi phí vận hành hệ thống OPEX cho AItrify giảm còn một một phần ba (3)'
   },
   'careers': {
     title: 'Tuyển dụng',
