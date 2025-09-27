@@ -16,7 +16,7 @@ const AGENT_CONFIGS: Record<string, { name: string; greeting: string; color: str
     name: 'ANNA',
     greeting:
       'ANNA ở đây để giúp bạn tìm được tiện nghi như điều hòa và thiết bị gia dụng chính hãng kèm dịch vụ chuẩn hãng nhưng giá luôn trong Top Ưu đãi nhất!',
-    color: 'bg-green-50 border-green-300',
+    color: 'bg-red-50 border-red-300', // đổi sang đỏ nhạt cho đồng bộ nút
   },
   lisa: {
     name: 'LISA',
@@ -24,7 +24,14 @@ const AGENT_CONFIGS: Record<string, { name: string; greeting: string; color: str
       'Chào Ông/Bà, LISA rất hân hạnh được trợ giúp về Golf, hơn cả một môn thể thao sang trọng, Golf là Đẳng cấp về sự kết nối của những người Thành đạt!',
     color: 'bg-blue-50 border-blue-300',
   },
+  ugreen: {
+    name: 'UGREEN',
+    greeting:
+      'Chào anh/chị, UGREEN là trợ lý của mọi người Việt về kiến thức dành cho cuộc sống Xanh, sản xuất Xanh, công nghệ Xanh tập trung vào giảm phát thải các bon (CO2), UGREEN sẽ trả lời các câu hỏi về xe máy điện, xe đạp điện, trạm đổi pin xe máy điện, quy đổi các nguồn phát thải sang tỉ lệ giảm phát thải CO2, UGREEN đang được phát triển với các công nghệ AI, IoT, Blockchain và lưới điện thông minh Smart Grid, tập trung vào chia sẻ Xanh P2P',
+    color: 'bg-green-50 border-green-300', // màu xanh cũ của ANNA
+  },
 };
+
 
 // --- Footer static topics (dùng chung cho ANNA & LISA) ---
 const FOOTER_TOPICS: Record<string, { title: string; content: string }> = {
@@ -194,7 +201,9 @@ export default function Chatbox({ agent }: ChatboxProps) {
   const [chatHistories, setChatHistories] = useState<Record<string, { sender: string; text: string }[]>>({
     anna: [{ sender: 'ai', text: AGENT_CONFIGS.anna.greeting }],
     lisa: [{ sender: 'ai', text: AGENT_CONFIGS.lisa.greeting }],
+    ugreen: [{ sender: 'ai', text: AGENT_CONFIGS.ugreen.greeting }],
   });
+
 
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);

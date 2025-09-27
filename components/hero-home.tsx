@@ -3,26 +3,21 @@
 import { useEffect, useRef, useState } from 'react';
 import Chatbox from '@/components/chatbox';
 
-type Agent = 'anna' | 'lisa';
+type Agent = 'anna' | 'lisa' | 'ugreen';
 
 export default function Hero({ agent }: { agent: string }) {
-  // agent từ props -> chuẩn hoá thành 'anna' | 'lisa'
-  const initial: Agent = agent === 'lisa' ? 'lisa' : 'anna';
+  const initial: Agent = agent === 'lisa' ? 'lisa' : agent === 'ugreen' ? 'ugreen' : 'anna';
   const [selectedAgent, setSelectedAgent] = useState<Agent>(initial);
 
-  // ref để cuộn tới vùng chat
   const chatRef = useRef<HTMLDivElement>(null);
 
-  // Bấm nút ANNA/LISA ở hero
   const handleAgentSelect = (ag: Agent) => {
     setSelectedAgent(ag);
-    // cuộn tới khung chat
     setTimeout(() => {
       chatRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 0);
   };
 
-  // Nhận tín hiệu từ footer: window.dispatchEvent(new CustomEvent('aitrify:pick-agent', { detail: { agent: 'anna' | 'lisa' } }))
   useEffect(() => {
     const onPick = (e: Event) => {
       const ag = ((e as CustomEvent).detail?.agent || 'anna') as Agent;
@@ -32,16 +27,13 @@ export default function Hero({ agent }: { agent: string }) {
       }, 30);
     };
     window.addEventListener('aitrify:pick-agent', onPick as EventListener);
-    return () =>
-      window.removeEventListener('aitrify:pick-agent', onPick as EventListener);
+    return () => window.removeEventListener('aitrify:pick-agent', onPick as EventListener);
   }, []);
 
   return (
     <section>
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        {/* Hero content */}
         <div className="py-12 md:py-20">
-          {/* Section header */}
           <div className="pb-12 text-center md:pb-20">
             <h1
               className="animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,var(--color-gray-200),var(--color-indigo-200),var(--color-gray-50),var(--color-indigo-300),var(--color-gray-200))] bg-[length:200%_auto] bg-clip-text pb-5 font-nacelle text-4xl font-semibold text-transparent md:text-5xl"
@@ -51,23 +43,18 @@ export default function Hero({ agent }: { agent: string }) {
             </h1>
 
             <div className="mx-auto max-w-3xl">
-              <p
-                className="mb-8 text-xl text-indigo-100/80"
-                data-aos="fade-up"
-                data-aos-delay={200}
-              >
-                AItrify tái định nghĩa Thương mại điện tử "eCommerce", nơi dành cho
-                người Việt mua sắm trực tuyến với sự hỗ trợ của Trí tuệ nhân tạo AI,
-                chúng tôi gọi đó là{' '}
+              <p className="mb-8 text-xl text-indigo-100/80" data-aos="fade-up" data-aos-delay={200}>
+                AItrify tái định nghĩa Thương mại điện tử "eCommerce", nơi dành cho người Việt mua
+                sắm trực tuyến với sự hỗ trợ của Trí tuệ nhân tạo AI, chúng tôi gọi đó là{' '}
                 <strong className="font-bold text-indigo-100">AI.Commerce</strong>
               </p>
 
               <div className="mx-auto flex w-full max-w-3xl flex-col gap-3 sm:flex-row">
-                {/* Nút ANNA */}
+                {/* Nút ANNA (đỏ Nagakawa) */}
                 <div className="flex-1" data-aos="fade-up" data-aos-delay={400}>
                   <button
                     onClick={() => handleAgentSelect('anna')}
-                    className="btn w-full bg-gradient-to-r from-green-400 to-green-800 text-white hover:from-green-500 hover:to-green-600"
+                    className="btn w-full bg-gradient-to-r from-red-600 to-red-800 text-white hover:from-red-700 hover:to-red-900"
                   >
                     <span className="flex items-center justify-center gap-2">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
@@ -78,7 +65,7 @@ export default function Hero({ agent }: { agent: string }) {
                   </button>
                 </div>
 
-                {/* Nút LISA */}
+                {/* Nút LISA (xanh dương giữ nguyên) */}
                 <div className="flex-1" data-aos="fade-up" data-aos-delay={600}>
                   <button
                     onClick={() => handleAgentSelect('lisa')}
@@ -93,7 +80,23 @@ export default function Hero({ agent }: { agent: string }) {
                   </button>
                 </div>
 
-                {/* Nút Mua hàng tại AItrify */}
+                {/* Nút UGREEN (xanh lá gradient) */}
+                <div className="flex-1" data-aos="fade-up" data-aos-delay={650}>
+                  <button
+                    onClick={() => handleAgentSelect('ugreen')}
+                    className="btn w-full bg-gradient-to-r from-green-400 to-green-800 text-white hover:from-green-500 hover:to-green-600"
+                  >
+                    <span className="flex items-center justify-center gap-2">
+                      {/* ✅ Icon lá xanh */}
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C8 2 4 6 4 10c0 3.31 2.69 6 6 6h1v2H9v2h6v-2h-2v-2h1c3.31 0 6-2.69 6-6 0-4-4-8-8-8zM7 10c0-2.76 2.24-5 5-5s5 2.24 5 5-2.24 5-5 5-5-2.24-5-5z"/>
+                      </svg>
+                      UGREEN Xanh
+                    </span>
+                  </button>
+                </div>
+
+                {/* Nút Mua hàng */}
                 <div className="flex-1" data-aos="fade-up" data-aos-delay={800}>
                   <button
                     onClick={() =>
