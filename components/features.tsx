@@ -131,7 +131,7 @@ export default function Features() {
                 <path d="m16.321 2-.5-.866 1.733-1 .5.866A22 22 0 0 1 21 12c0 3.852-1.017 7.636-2.948 10.97l-.502.865-1.73-1.003.501-.865A19.878 19.878 0 0 0 19 12a20 20 0 0 0-2.679-10Z" />
               </svg>
               <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
-                AItrify trợ giúp về Golf
+                AItrify LISA – Trợ lý cho người chơi Golf
               </h3>
               <p className="text-indigo-200/65">
                 Bạn có thể hỏi trợ lý AI "AItrify" về thông tin sản phẩm liên quan tới golf như sân golf, gậy golf, bóng golf, phụ kiện golf.
@@ -152,7 +152,7 @@ export default function Features() {
                 <path d="m7.454 2.891.891-.454L7.437.655l-.891.454a12 12 0 0 0 0 21.382l.89.454.91-1.781-.892-.455a10 10 0 0 1 0-17.818ZM17.456 1.11l-.891-.454-.909 1.782.891.454a10 10 0 0 1 0 17.819l-.89.454.908 1.781.89-.454a12 12 0 0 0 0-21.382Z" />
               </svg>
               <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
-                AItrify trợ giúp về Điều hòa gia dụng
+                AItrify ANNA – Trợ lý cho Điều hòa gia dụng
               </h3>
               <p className="text-indigo-200/65">
                 AItrify mong muốn cải thiện cuộc sống cho những người thu nhập thấp với các tiện nghi cuộc sống tốt hơn gồm điều hòa, 
@@ -173,11 +173,11 @@ export default function Features() {
                 <path d="M19.406 3.844 6.083 20.497.586 15 2 13.586l3.917 3.917L17.844 2.595l1.562 1.25Z" />
               </svg>
               <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
-                AItrify Tự động hóa hoàn thành đơn hàng
+                AItrify UGREEN – Trợ lý cho Cuộc sống Xanh
               </h3>
               <p className="text-indigo-200/65">
-                AItrify với công nghệ AI sẽ dùng các công nghệ Số hóa mới nhất trong đó công nghệ trí tuệ nhân tạo là nền móng vững chắc
-                để kết nối mọi bên tham gia gồm hãng sản xuất hàng hóa, trung tâm dịch vụ khách hàng, công ty vận chuyển hàng để mang tới trải nghiệm một chạm với AItrify cho bạn
+                AItrify UGREEN là trợ lý AI cho cuộc sống Xanh, cung cấp thông tin về xe điện, trạm đổi pin xe điện,
+                kiến thức về phát thải CO2. UGREEN sử AI, IoT, Digital Twin, Blockchain để hướng tới lưới điện thông minh trong sản xuất, tiêu dùng bền vững, chia sẻ năng lượng và giảm phát thải.
               </p>
             </article>
           </div>
