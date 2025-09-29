@@ -45,7 +45,7 @@ export default function Footer() {
                   className="text-indigo-200/65 transition hover:text-indigo-500"
                   href="#0"
                 >
-                  Chi phí &amp; Gói dịch vụ
+                  Gói dịch vụ
                 </a>
               </li>
               
@@ -84,7 +84,7 @@ export default function Footer() {
                   className="text-indigo-200/65 transition hover:text-indigo-500"
                   href="#0"
                 >
-                  Tầm nhìn &amp; Sứ mệnh
+                  Tầm nhìn AItrify
                 </a>
               </li>
               <li>
@@ -108,7 +108,7 @@ export default function Footer() {
                   className="text-indigo-200/65 transition hover:text-indigo-500"
                   href="#0"
                 >
-                  Dành cho Nhà đầu tư
+                  Nhà đầu tư
                 </a>
               </li>
               <li>
