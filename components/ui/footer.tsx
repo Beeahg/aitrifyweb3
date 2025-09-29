@@ -247,11 +247,11 @@ export default function Footer() {
                 <span className="text-gray-700"> · </span>
                 <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  href="https://beesota.com/"
+                  href="https://www.aitrify.com/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  2025. Beesota6G Alliance
+                  2025. BEESOTA6G Technologies Alliance
                 </a>
               </p>
             </div>

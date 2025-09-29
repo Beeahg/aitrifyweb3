@@ -70,7 +70,7 @@ export default function Footer() {
           {/* 2nd block */}
           <div className="space-y-2">
             <h3 className="text-sm font-medium text-gray-200">Công ty</h3>
-            <ul className="space-y-2 text-sm">
+            <ul className="space-y-2 text-sm list-none pl-0">
               <li>
                 <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
@@ -212,7 +212,7 @@ export default function Footer() {
                   className="text-indigo-200/65 transition hover:text-indigo-500"
                   href="#0"
                 >
-                2025. Beesota6G Alliance (https://beesota.com/)
+                2025. BEESOTA6G Alliance (https://www.aitrify.com/)
                 </a>
               </p>
             </div>

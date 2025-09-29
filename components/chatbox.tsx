@@ -82,7 +82,7 @@ const FOOTER_TOPICS: Record<string, { title: string; content: string }> = {
     content:
       'Ra đời vào ngày 02/09/2025 tại www.aitrify.com AItrify được thiết kế định hướng là nền tảng thương mại điện tử sử dụng hầu hết công nghệ trí tuệ nhân tạo AI để giúp cho hoạt động tìm kiếm mua sắm dễ dàng hơn hàng chính hãng với giá cả thuộc top ưu đãi nhất. ' +
       'Bạn có thể giao tiếp với các trợ lý AI của AItrify được thiết kế và đào tạo với kiến thức chuyên sâu, chuyên biệt với ANNA dành cho sản phẩm điều hòa gia dụng, LISA chuyên biệt dành cho Golf và Golfer ' +
-      'AItrify được xây dựng bởi Liên minh công nghệ Beesota6G gồm các công ty công nghệ mạnh trong các lĩnh vực AI, Blockchain, Robotics, Cloud, I/IoT, ERP (Xem thêm tại https://beesota.com/)'
+      'AItrify được xây dựng bởi Liên minh công nghệ BEESOTA6G gồm các công ty công nghệ mạnh trong các lĩnh vực AI, Blockchain, Robotics, Cloud, I/IoT, ERP với các chuẩn gồm 4G GSM, 5G LTE-A, oneM2M, ERC-20 đi cùng với các mã nguồn mở rất mạnh gồm Linux, oneM2M, Open-RAN, Odoo, LLaMa'
   },
   'vision': {
     title: 'Tầm nhìn & Sứ mệnh',
@@ -94,7 +94,7 @@ const FOOTER_TOPICS: Record<string, { title: string; content: string }> = {
     title: 'Công nghệ AItrify',
     content:
       'Khởi nguồn tên AItrify mang ý nghĩa của 3 từ khóa gồm "AI" + "tri" + "fy" với ý nghĩa "AI hóa" để gia tốc mọi hoạt động thương mại trên không gian Số lên tối thiểu từ ba lần trở lên. \n' +
-      'AItrify sử dụng các công nghệ AI mới nhất với  nhiều mô hình LLM tiên tiến mã nguồn mở, các công nghệ ANN&Vectoring, OpenCV, RAG, AI Gateway, công nghệ database dành riêng cho dữ liệu AI, để nạp, truy xuất, truy hồi dữ liệu từ tri thức của AItrify cùng với công nghệ SAITMe (structured) & NoSAITMe (unstructured) của Beesota6G (https://beesota.com/) tự phát triển. \n' + 
+      'AItrify sử dụng các công nghệ AI mới nhất với  nhiều mô hình LLM tiên tiến mã nguồn mở, các công nghệ ANN&Vectoring, OpenCV, RAG, AI Gateway, công nghệ database dành riêng cho dữ liệu AI, để nạp, truy xuất, truy hồi dữ liệu từ tri thức của AItrify cùng với công nghệ SAITMe (structured) & NoSAITMe (unstructured) của Liên mình các công ty công nghệ BEESOTA6G tham gia xây dựng AItrify tự phát triển. \n' + 
       'Công nghệ AI nào mới nhất cũng luôn sớm có mặt trên AItrify, tích hợp với các nguồn dữ liệu khác được xác thực, có dẫn chiếu và cả nguồn dữ liệu từ các thiết bị M2M, IoT qua công nghệ truyền số liệu cho dù là cũ hay mới cho dữ liệu Số với số lượng thông tin, tri thức lớn nhất nhưng lại với chi phí OPEX trong top rẻ nhất \n' +
       'Công nghệ chúng tôi sẽ hướng tới có thể đạt được chữ "tri" trong AI"tri"fy với: sau ba (3) tháng, hiệu năng hệ thống AItrify tăng gấp ba (3) với chi phí vận hành hệ thống OPEX cho AItrify giảm còn một một phần ba (3).'
   },
