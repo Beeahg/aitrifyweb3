@@ -56,7 +56,7 @@ export default function Footer() {
                   className="text-indigo-200/65 transition hover:text-indigo-500"
                   onClick={() => dispatchFooter("pricing")}
                 >
-                  Chi phí &amp; Gói dịch vụ
+                  Gói dịch vụ
                 </button>
               </li>
               <li>
@@ -99,7 +99,7 @@ export default function Footer() {
                   className="text-indigo-200/65 transition hover:text-indigo-500"
                   onClick={() => dispatchFooter("vision")}
                 >
-                  Tầm nhìn &amp; Sứ mệnh
+                  Tầm nhìn AItrify 
                 </button>
               </li>
               <li>
@@ -126,7 +126,7 @@ export default function Footer() {
                   className="text-indigo-200/65 transition hover:text-indigo-500"
                   onClick={() => dispatchFooter("investors")}
                 >
-                  Dành cho Nhà đầu tư
+                  Nhà đầu tư
                 </button>
               </li>
               <li>

@@ -83,7 +83,7 @@ const FOOTER_TOPICS: Record<string, { title: string; content: string }> = {
     title: 'Công nghệ AItrify',
     content:
       'AItrify sử dụng các công nghệ AI mới nhất với LLM, ANN, OpenCV, RAG để nạp tri thức cho AItrify cùng với công nghệ SAITMe (structured) & NoSAITMe (unstructured) ' + 
-      'của Beesota6G (https://beesota.com/) tự phát triển. Công nghệ AI nào mới nhất cũng luôn sớm có mặt trên AItrify, tích hợp với các nguồn dữ liệu khác được xác thực, có dẫn chiếu, ' + 
+      'của BEESOTA6G tự phát triển. Công nghệ AI nào mới nhất cũng luôn sớm có mặt trên AItrify, tích hợp với các nguồn dữ liệu khác được xác thực, có dẫn chiếu, ' + 
       'và cả dữ liệu từ các thiết bị IoT qua công nghệ truyền số liệu tiên tiến nhất cho dữ liệu Số.'
   },
   'careers': {

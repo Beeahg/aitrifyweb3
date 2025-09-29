@@ -81,7 +81,7 @@ const FOOTER_TOPICS: Record<string, { title: string; content: string }> = {
     title: 'Về AItrify',
     content:
       'Ra đời vào ngày 02/09/2025 tại www.aitrify.com AItrify được thiết kế định hướng là nền tảng thương mại điện tử sử dụng hầu hết công nghệ trí tuệ nhân tạo AI để giúp cho hoạt động tìm kiếm mua sắm dễ dàng hơn hàng chính hãng với giá cả thuộc top ưu đãi nhất. ' +
-      'Bạn có thể giao tiếp với các trợ lý AI của AItrify được thiết kế và đào tạo với kiến thức chuyên sâu, chuyên biệt với ANNA dành cho sản phẩm điều hòa gia dụng, LISA chuyên biệt dành cho Golf và Golfer ' +
+      'Bạn có thể giao tiếp với các trợ lý AI của AItrify được thiết kế và đào tạo với kiến thức chuyên sâu, chuyên biệt với ANNA dành cho sản phẩm điều hòa gia dụng, LISA chuyên biệt dành cho Golf và Golfer \n\n' +
       'Riêng trợ lý AI tên UGREEN được tạo ra để không chỉ tìm kiếm các hàng hóa liên quan tới công cuộc Xanh hóa của Việt Nam như xe đạp điện, xe máy điện, tủ đổi pin,... mà còn để sắp tới giới thiệu tới Trạm Tiện Ích Xanh UGREEN trên nền tảng Xanh Số Grenify với Thanh toán và chia sẻ hàng hóa qua mạng lưới ngang hàng dễ dàng  '+
       'AItrify được xây dựng bởi Liên minh công nghệ BEESOTA6G gồm các công ty công nghệ mạnh trong các lĩnh vực AI, Blockchain, Robotics, Cloud, I/IoT, ERP với các chuẩn gồm 4G GSM, 5G LTE-A, oneM2M, ERC-20 đi cùng với các mã nguồn mở rất mạnh gồm Linux, oneM2M, Open-RAN, Odoo, LLaMa'
   },
