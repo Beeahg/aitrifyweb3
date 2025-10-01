@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import BlurredShape from '@/public/images/blurred-shape.svg';
 
-type Agent = 'anna' | 'lisa';
+type Agent = 'anna' | 'lisa' | 'ugreen';
 
 export default function Cta() {
   const pickAgent = (agent: Agent) => {
@@ -41,19 +41,14 @@ export default function Cta() {
             </h2>
 
             <div className="mx-auto max-w-xs sm:flex sm:max-w-none sm:justify-center">
-              {/* Hàng dân dụng -> ANNA */}
+              {/* Hàng Gia dụng -> ANNA */}
               <div data-aos="fade-up" data-aos-delay={400}>
                 <button
                   type="button"
                   onClick={() => pickAgent('anna')}
-                  className="btn group mb-4 w-full bg-linear-to-t from-indigo-600 to-indigo-500 bg-[length:100%_100%] bg-[bottom] text-white shadow-[inset_0px_1px_0px_0px_--theme(--color-white/.16)] hover:bg-[length:100%_150%] sm:mb-0 sm:w-auto"
+                  className="btn relative w-full bg-linear-to-t from-red-600 to-red-500 bg-[length:100%_100%] bg-[bottom] text-white shadow-[inset_0px_1px_0px_0px_--theme(--color-white/.16)] hover:bg-[length:100%_150%] sm:mb-0 sm:w-auto"
                 >
-                  <span className="relative inline-flex items-center">
-                    Hàng dân dụng
-                    <span className="ml-1 tracking-normal text-white/50 transition-transform group-hover:translate-x-0.5">
-                      -&gt;
-                    </span>
-                  </span>
+                  Hàng Gia dụng →
                 </button>
               </div>
 
@@ -62,11 +57,26 @@ export default function Cta() {
                 <button
                   type="button"
                   onClick={() => pickAgent('lisa')}
-                  className="btn relative w-full bg-linear-to-b from-gray-800 to-gray-800/60 bg-[length:100%_100%] bg-[bottom] text-gray-300 before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_right,var(--color-gray-800),var(--color-gray-700),var(--color-gray-800))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] hover:bg-[length:100%_150%] sm:ml-4 sm:w-auto"
+                  className="btn relative w-full bg-linear-to-b from-blue-600 to-blue-500/60 bg-[length:100%_100%] bg-[bottom] text-gray-300 before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] hover:bg-[length:100%_150%] sm:ml-4 sm:w-auto"
                 >
                   Hàng cho Golfer
                 </button>
               </div>
+
+              {/* Hàng hóa Xanh -> UGREEN */}
+              <div data-aos="fade-up" data-aos-delay={800}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    pickAgent('ugreen');
+                    document.getElementById('ugreen-greeting')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="btn relative w-full bg-linear-to-b from-green-600 to-green-500 bg-[length:100%_100%] bg-[bottom] text-white hover:bg-[length:100%_150%] sm:ml-4 sm:w-auto"
+                >
+                  Hàng hóa Xanh
+                </button>
+              </div>
+
             </div>
           </div>
         </div>

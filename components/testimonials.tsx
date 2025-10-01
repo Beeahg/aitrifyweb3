@@ -38,6 +38,15 @@ const testimonials = [
     categories: [1, 2],
   },
   {
+    img: TestimonialImg03,
+    clientImg: ClientImg04, // logo UGREEN của bạn
+    name: "Xe điện & Trạm sạc",
+    company: "AItrify UGREEN",
+    content:
+      "Giúp bạn chọn xe đạp điện, xe máy điện và tìm trạm đổi pin tiện lợi kèm tiện ích tại Trạm Tiện ích Xanh UGREEN. Hãy lựa chọn giải pháp di chuyển Xanh, tiết kiệm chi phí nhiên liệu thông qua sử dụng xe điện.",
+    categories: [1, 5],
+  },
+  {
     img: TestimonialImg02,
     clientImg: ClientImg02,
     name: "Sân golf",
@@ -46,6 +55,7 @@ const testimonials = [
       "Trợ lý LISA với công nghệ của AItrify hỗ trợ bạn tìm sân golf 9 hoặc 18 hố theo tiêu chuẩn riêng, hoặc sân tập tại Việt Nam có công nghệ như SmartBall, Trackman để nâng cao trải nghiệm và luyện tập chuyên nghiệp",
     categories: [1, 2],
   },
+  
   {
     img: TestimonialImg01,
     clientImg: ClientImg01,
@@ -56,6 +66,15 @@ const testimonials = [
     categories: [1, 4],
   },
   {
+    img: TestimonialImg03,
+    clientImg: ClientImg04, // logo UGREEN của bạn
+    name: "Giám phát thải CO2",
+    company: "AItrify UGREEN",
+    content:
+      "UGREEN giúp Doanh nghiệp thông tin theo tiêu chuẩn quốc tế về các công nghệ và ứng dụng Xanh, cung cấp thiết bị AIoT và phần mềm, hỗ trợ Doanh nghiệp vạch ra lộ trình Xanh bền vững.",
+    categories: [1, 5],
+  },
+  {
     img: TestimonialImg01,
     clientImg: ClientImg01,
     name: "Thiết bị nhà bếp",
@@ -63,6 +82,15 @@ const testimonials = [
     content:
       "Với triết lý 'Tâm An tại Bếp', Nagakawa mang đến các dòng bếp từ đơn, đôi, ba và máy hút mùi cùng đội ngũ lắp đặt chuyên nghiệp, tận tâm cho căn bếp ấm cúng của bạn",
     categories: [1, 4],
+  },
+  {
+    img: TestimonialImg03,
+    clientImg: ClientImg04, // logo UGREEN của bạn
+    name: "Lưới điện thông minh",
+    company: "AItrify UGREEN",
+    content:
+      "Chúng tôi đang phát triển Trạm tiện ích xanh UGREEN (Green Utilities/You Green) Station, cung cấp tính năng mua hàng tiện lợi kết hợp năng lượng Xanh, chia sẻ năng lượng ngang hàng, thanh toán không dùng tiền mặt.",
+    categories: [1, 5],
   },
   {
     img: TestimonialImg02,
@@ -160,6 +188,29 @@ export default function Testimonials() {
                   <path d="M3.757 3.758a6 6 0 0 1 8.485 8.485 5.992 5.992 0 0 1-5.301 1.664 1 1 0 1 0-.351 1.969 8 8 0 1 0-4.247-2.218 1 1 0 0 0 1.415-.001L9.12 8.294v1.827a1 1 0 1 0 2 0v-4.2a.997.997 0 0 0-1-1.042H5.879a1 1 0 1 0 0 2h1.829l-4.599 4.598a6 6 0 0 1 .648-7.719Z" />
                 </svg>
                 <span>Thiết bị gia dụng</span>
+              </button>
+              {/* Button #5 */}
+              <button
+                className={`flex h-8 flex-1 items-center gap-2.5 whitespace-nowrap rounded-full px-3 text-sm font-medium transition-colors focus-visible:outline-hidden focus-visible:ring-3 focus-visible:ring-indigo-200 ${
+                  category === 5
+                    ? "relative bg-linear-to-b from-gray-900 via-gray-800/60 to-gray-900 before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_bottom,--theme(--color-indigo-500/0),--theme(--color-indigo-500/.5))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)]"
+                    : "opacity-65 transition-opacity hover:opacity-90"
+                }`}
+                aria-pressed={category === 5}
+                onClick={() => setCategory(5)}
+              >
+                <svg
+                  className={`fill-current ${
+                    category === 5 ? "text-indigo-500" : "text-gray-600"
+                  }`}
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height={16}
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 14.93V19h-2v-2.07A8.001 8.001 0 014.07 13H2v-2h2.07A8.001 8.001 0 0111 4.07V2h2v2.07A8.001 8.001 0 0119.93 11H22v2h-2.07A8.001 8.001 0 0113 16.93z" />
+                </svg>
+                <span>Cuộc sống XANH</span>
               </button>
             </div>
           </div>
