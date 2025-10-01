@@ -71,7 +71,7 @@ const testimonials = [
     name: "Giám phát thải CO2",
     company: "AItrify UGREEN",
     content:
-      "UGREEN giúp Doanh nghiệp thông tin theo tiêu chuẩn quốc tế về các công nghệ và ứng dụng Xanh, cung cấp thiết bị AIoT và phần mềm, hỗ trợ Doanh nghiệp vạch ra lộ trình Xanh bền vững.",
+      "UGREEN giúp Doanh nghiệp tìm thông tin theo tiêu chuẩn quốc tế các công nghệ và ứng dụng Xanh, cung cấp thiết bị AIoT và phần mềm, hỗ trợ Doanh nghiệp vạch ra lộ trình Xanh bền vững.",
     categories: [1, 5],
   },
   {
