@@ -46,7 +46,7 @@ export default function Cta() {
                 <button
                   type="button"
                   onClick={() => pickAgent('anna')}
-                  className="btn relative w-full bg-linear-to-t from-red-600 to-red-500 bg-[length:100%_100%] bg-[bottom] text-white shadow-[inset_0px_1px_0px_0px_--theme(--color-white/.16)] hover:bg-[length:100%_150%] sm:mb-0 sm:w-auto"
+                  className="btn relative w-full mb-4 sm:mb-0 bg-linear-to-t from-red-600 to-red-500 bg-[length:100%_100%] bg-[bottom] text-white shadow-[inset_0px_1px_0px_0px_--theme(--color-white/.16)] hover:bg-[length:100%_150%] sm:mb-0 sm:w-auto"
                 >
                   Hàng Gia dụng →
                 </button>
@@ -57,7 +57,7 @@ export default function Cta() {
                 <button
                   type="button"
                   onClick={() => pickAgent('lisa')}
-                  className="btn relative w-full bg-linear-to-b from-blue-600 to-blue-500/60 bg-[length:100%_100%] bg-[bottom] text-gray-300 before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] hover:bg-[length:100%_150%] sm:ml-4 sm:w-auto"
+                  className="btn relative w-full mb-4 sm:mb-0 bg-linear-to-b from-blue-600 to-blue-500/60 bg-[length:100%_100%] bg-[bottom] text-gray-300 before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] hover:bg-[length:100%_150%] sm:ml-4 sm:w-auto"
                 >
                   Hàng cho Golfer
                 </button>
@@ -71,7 +71,7 @@ export default function Cta() {
                     pickAgent('ugreen');
                     document.getElementById('ugreen-greeting')?.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="btn relative w-full bg-linear-to-b from-green-600 to-green-500 bg-[length:100%_100%] bg-[bottom] text-white hover:bg-[length:100%_150%] sm:ml-4 sm:w-auto"
+                  className="btn relative w-full mb-4 sm:mb-0 bg-linear-to-b from-green-600 to-green-500 bg-[length:100%_100%] bg-[bottom] text-white hover:bg-[length:100%_150%] sm:ml-4 sm:w-auto"
                 >
                   Hàng hóa Xanh
                 </button>
