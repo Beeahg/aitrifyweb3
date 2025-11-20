@@ -21,7 +21,7 @@ const AGENT_CONFIGS: Record<string, { name: string; greeting: string; color: str
   lisa: {
     name: 'LISA',
     greeting:
-      'Chào Ông/Bà, LISA rất hân hạnh được trợ giúp về Golf, hơn cả một môn thể thao sang trọng, Golf là Đẳng cấp về sự kết nối của những người Thành đạt!',
+      'Chào Ông/Bà, LISA rất hân hạnh được trợ giúp về bộ môn Golf, hơn cả một môn thể thao sang trọng, Golf là Đẳng cấp về sự kết nối của những người Thành đạt!',
     color: 'bg-blue-50 border-blue-300',
   },
   ugreen: {
