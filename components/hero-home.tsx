@@ -45,8 +45,8 @@ export default function Hero({ agent }: { agent: string }) {
             <div className="mx-auto max-w-3xl">
               <p className="mb-8 text-xl text-indigo-100/80" data-aos="fade-up" data-aos-delay={200}>
                 AItrify xây dựng nền tảng AI đa tác tử dành cho Doanh nghiệp, nơi Trí tuệ nhân tạo
-                không chỉ hiểu câu hỏi mà còn hiểu dữ liệu và nghiệp vụ nội bộ doanh nghiệp của bạn, chúng tôi gọi bạn là MAE: {' '}
-                <strong className="font-bold text-indigo-100">Multi-Agent AI Enterprise</strong>
+                không chỉ hiểu câu hỏi mà còn hiểu dữ liệu và nghiệp vụ nội bộ Công ty của bạn, Doanh nghiệp của bạn đã là AA: {' '}
+                <strong className="font-bold text-indigo-100">AI Agentic Enterprise</strong>
               </p>
 
               <div className="mx-auto flex w-full max-w-3xl flex-col gap-3 sm:flex-row">
