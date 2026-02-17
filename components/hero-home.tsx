@@ -39,14 +39,14 @@ export default function Hero({ agent }: { agent: string }) {
               className="animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,var(--color-gray-200),var(--color-indigo-200),var(--color-gray-50),var(--color-indigo-300),var(--color-gray-200))] bg-[length:200%_auto] bg-clip-text pb-5 font-nacelle text-4xl font-semibold text-transparent md:text-5xl"
               data-aos="fade-up"
             >
-              AItrify - Recharging eCommerce with A.I
+              AItrify – Universal Multi-Agent AI Platform for Enterprise
             </h1>
 
             <div className="mx-auto max-w-3xl">
               <p className="mb-8 text-xl text-indigo-100/80" data-aos="fade-up" data-aos-delay={200}>
-                AItrify tái định nghĩa Thương mại điện tử "eCommerce", nơi dành cho người Việt mua
-                sắm trực tuyến với sự hỗ trợ của Trí tuệ nhân tạo AI, chúng tôi gọi đó là{' '}
-                <strong className="font-bold text-indigo-100">AI.Commerce</strong>
+                AItrify xây dựng nền tảng AI đa tác tử dành cho Doanh nghiệp, nơi Trí tuệ nhân tạo
+                không chỉ hiểu câu hỏi mà còn hiểu dữ liệu và nghiệp vụ nội bộ doanh nghiệp của bạn, chúng tôi gọi bạn là MAE: {' '}
+                <strong className="font-bold text-indigo-100">Multi-Agent AI Enterprise</strong>
               </p>
 
               <div className="mx-auto flex w-full max-w-3xl flex-col gap-3 sm:flex-row">
