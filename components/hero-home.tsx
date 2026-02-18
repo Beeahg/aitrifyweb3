@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Chatbox from '@/components/chatbox';
+import PublicMetrics from '@/components/public-metrics';
 
 type Agent = 'anna' | 'lisa' | 'ugreen';
 
@@ -44,12 +45,15 @@ export default function Hero({ agent }: { agent: string }) {
 
             <div className="mx-auto max-w-3xl">
               <p className="mb-8 text-xl text-indigo-100/80" data-aos="fade-up" data-aos-delay={200}>
-                AItrify xây dựng nền tảng AI đa tác tử dành cho Doanh nghiệp, nơi Trí tuệ nhân tạo
-                không chỉ hiểu câu hỏi mà còn hiểu dữ liệu và nghiệp vụ nội bộ Công ty của bạn, Doanh nghiệp của bạn đã là AA: {' '}
+                AItrify xây dựng nền tảng AI đa tác tử chỉ dành cho Doanh nghiệp, nơi Trí tuệ nhân tạo
+                không chỉ hiểu câu hỏi mà quan trọng hơn là hiểu Quy trình nghiệp vụ nội bộ Công ty của bạn. Với AItrify, Doanh nghiệp của bạn đã là AA: {' '}
                 <strong className="font-bold text-indigo-100">AI Agentic Enterprise</strong>
               </p>
+            </div>
 
-              <div className="mx-auto flex w-full max-w-3xl flex-col gap-3 sm:flex-row">
+            <PublicMetrics />
+
+            <div className="mx-auto flex w-full max-w-3xl flex-col gap-3 sm:flex-row">
                 {/* Nút ANNA (đỏ Nagakawa) */}
                 <div className="flex-1" data-aos="fade-up" data-aos-delay={400}>
                   <button
@@ -117,7 +121,6 @@ export default function Hero({ agent }: { agent: string }) {
                   </button>
                 </div>
               </div>
-            </div>
           </div>
 
           {/* Chatbox */}
