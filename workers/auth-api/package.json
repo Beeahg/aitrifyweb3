@@ -1,0 +1,16 @@
+{
+  "name": "aitrify-auth-api",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev --local",
+    "deploy": "wrangler deploy",
+    "db:init": "wrangler d1 execute aitrify-db --file=../../sql/schema.sql",
+    "db:init:local": "wrangler d1 execute aitrify-db --local --file=../../sql/schema.sql"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250214.0",
+    "typescript": "^5.7.3",
+    "wrangler": "^3.109.0"
+  }
+}

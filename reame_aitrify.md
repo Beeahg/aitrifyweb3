@@ -19,3 +19,7 @@ npm run build	Build bản production (sinh ra .next)
 npm run start	Chạy bản production từ build (ít dùng khi làm việc với Cloudflare Pages)
 
 
+# vào chế độ Claude code
+hoangna@DESKTOP-ID4I08G:/mnt/d/WorkingAitrifyWeb3$ claude
+
+hoangna@DESKTOP-ID4I08G:/mnt/d/WorkingAitrifyWeb3$ claude --version

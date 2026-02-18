@@ -1,0 +1,21 @@
+name            = "aitrify-auth-api"
+main            = "src/index.ts"
+compatibility_date = "2025-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+[[d1_databases]]
+binding     = "DB"
+database_name = "aitrify-db"
+database_id = "05f18bbb-b4c0-4c09-ba39-be6060242e16"
+
+[vars]
+FRONTEND_URL  = "https://aitrify.com"
+FROM_EMAIL    = "no-reply@mail.aitrify.com"
+
+# Secrets (set via CLI, never commit these):
+#   wrangler secret put RESEND_API_KEY
+#   wrangler secret put JWT_SECRET
+#   wrangler secret put TURNSTILE_SECRET_KEY
+
+[env.development]
+vars = { FRONTEND_URL = "http://localhost:3000" }
