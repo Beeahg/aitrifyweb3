@@ -126,8 +126,13 @@ async function createJWT(
   const now = Math.floor(Date.now() / 1000);
   const fullPayload = { ...payload, iat: now, exp: now + expiresInSeconds };
   const enc = new TextEncoder();
-  const b64url = (s: string) =>
-    btoa(s).replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_");
+  // btoa() chỉ xử lý Latin-1 — encode UTF-8 bytes trước để hỗ trợ tiếng Việt
+  const b64url = (s: string) => {
+    const bytes = enc.encode(s);
+    let bin = "";
+    for (const b of bytes) bin += String.fromCharCode(b);
+    return btoa(bin).replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_");
+  };
   const header = b64url(JSON.stringify({ alg: "HS256", typ: "JWT" }));
   const body = b64url(JSON.stringify(fullPayload));
   const signingInput = `${header}.${body}`;
