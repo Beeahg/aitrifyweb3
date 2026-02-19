@@ -612,17 +612,24 @@ async function sendAgentApproveEmail(env: Env, to: string, name: string, instanc
 // HTTP helpers
 // ---------------------------------------------------------------------------
 function allowedOrigins(env: Env): string[] {
-  return [env.FRONTEND_URL, "https://www.aitrify.com", "http://localhost:3000", "http://127.0.0.1:3000"];
+  return [
+    "https://aitrify.com",
+    "https://www.aitrify.com",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    ...(env.FRONTEND_URL ? [env.FRONTEND_URL] : []),
+  ];
 }
 
 function corsHeaders(origin: string | null, env: Env): Record<string, string> {
   const allowed = allowedOrigins(env);
-  const ao = origin && allowed.includes(origin) ? origin : allowed[0];
+  const ao = origin && allowed.includes(origin) ? origin : "https://aitrify.com";
   return {
     "Access-Control-Allow-Origin": ao,
     "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type, Authorization",
     "Access-Control-Max-Age": "86400",
+    "Vary": "Origin",
   };
 }
 
