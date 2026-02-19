@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Logo from "./logo";
 
 interface JWTClaims {
@@ -27,6 +28,7 @@ function decodeToken(token: string): JWTClaims | null {
 }
 
 export default function Header() {
+  const pathname = usePathname();
   const [user, setUser] = useState<JWTClaims | null>(null);
   const [ready, setReady] = useState(false);
 
@@ -52,9 +54,9 @@ export default function Header() {
             <Logo />
           </div>
 
-          {/* Nav right */}
+          {/* Nav right — ẩn hoàn toàn trên trang /admin (có nav riêng) */}
           <ul className="flex flex-1 items-center justify-end gap-3">
-            {!ready ? null : user ? (
+            {pathname === "/admin" ? null : !ready ? null : user ? (
               <>
                 {/* User info */}
                 <li className="flex items-center gap-2">
