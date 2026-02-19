@@ -1,12 +1,24 @@
 /**
  * AItrify Auth API — Cloudflare Worker
- * Endpoints:
- *   POST /auth/register                    — đăng ký tài khoản doanh nghiệp
- *   GET  /auth/verify                      — xác minh email qua token
- *   POST /auth/login                       — đăng nhập, trả JWT
- *   GET  /admin/enterprises?status=...     — danh sách tài khoản (admin)
- *   POST /admin/enterprises/:id/approve    — duyệt tài khoản (admin)
- *   POST /admin/enterprises/:id/reject     — từ chối tài khoản (admin)
+ *
+ * Public:
+ *   POST /auth/register                        — đăng ký tài khoản doanh nghiệp
+ *   GET  /auth/verify                          — xác minh email qua token
+ *   POST /auth/login                           — đăng nhập, trả JWT
+ *   GET  /agents                               — danh sách loại agent (public)
+ *
+ * User (JWT Bearer):
+ *   GET  /user/profile                         — thông tin tài khoản
+ *   GET  /user/agents                          — danh sách agent instances của user
+ *   POST /user/agents/request                  — yêu cầu sử dụng agent
+ *
+ * Admin (ADMIN_SECRET Bearer):
+ *   GET  /admin/enterprises?status=...         — danh sách tài khoản doanh nghiệp
+ *   POST /admin/enterprises/:id/approve        — duyệt tài khoản
+ *   POST /admin/enterprises/:id/reject         — từ chối tài khoản
+ *   GET  /admin/agent-requests?status=...      — danh sách yêu cầu agent
+ *   POST /admin/agent-requests/:id/approve     — duyệt yêu cầu agent
+ *   POST /admin/agent-requests/:id/reject      — từ chối yêu cầu agent
  */
 
 export interface Env {
@@ -132,6 +144,40 @@ async function createJWT(
     .replace(/\+/g, "-")
     .replace(/\//g, "_");
   return `${signingInput}.${sigB64}`;
+}
+
+/** Verify JWT HS256, trả claims nếu hợp lệ, null nếu invalid/expired */
+async function verifyJWT(token: string, secret: string): Promise<Record<string, unknown> | null> {
+  try {
+    const parts = token.split(".");
+    if (parts.length !== 3) return null;
+    const [header, payload, sig] = parts;
+    const enc = new TextEncoder();
+    const key = await crypto.subtle.importKey(
+      "raw", enc.encode(secret),
+      { name: "HMAC", hash: "SHA-256" },
+      false, ["verify"]
+    );
+    const sigBytes = Uint8Array.from(
+      atob(sig.replace(/-/g, "+").replace(/_/g, "/")),
+      (c) => c.charCodeAt(0)
+    );
+    const valid = await crypto.subtle.verify("HMAC", key, sigBytes, enc.encode(`${header}.${payload}`));
+    if (!valid) return null;
+    const claims = JSON.parse(atob(payload.replace(/-/g, "+").replace(/_/g, "/"))) as Record<string, unknown>;
+    const now = Math.floor(Date.now() / 1000);
+    if (typeof claims.exp === "number" && claims.exp < now) return null;
+    return claims;
+  } catch {
+    return null;
+  }
+}
+
+/** Trích xuất và verify JWT từ Authorization header */
+async function getAuthUser(request: Request, env: Env): Promise<Record<string, unknown> | null> {
+  const auth = request.headers.get("Authorization");
+  if (!auth?.startsWith("Bearer ")) return null;
+  return verifyJWT(auth.slice(7), env.JWT_SECRET);
 }
 
 /** Sinh token ngẫu nhiên 32 bytes hex */
@@ -712,6 +758,167 @@ async function handleLogin(request: Request, env: Env, cors: Record<string, stri
 }
 
 // ---------------------------------------------------------------------------
+// Agent & User handlers
+// ---------------------------------------------------------------------------
+
+/** GET /agents — danh sách agent types đang active (public) */
+async function handleGetAgentTypes(env: Env, cors: Record<string, string>): Promise<Response> {
+  const result = await env.DB.prepare(
+    "SELECT id, name, description, industry FROM agent_types WHERE status = 'active' ORDER BY name"
+  ).all<{ id: string; name: string; description: string; industry: string }>();
+  return json({ success: true, agents: result.results }, 200, cors);
+}
+
+/** GET /user/profile — thông tin doanh nghiệp của user hiện tại */
+async function handleUserProfile(request: Request, env: Env, cors: Record<string, string>): Promise<Response> {
+  const user = await getAuthUser(request, env);
+  if (!user) return json({ success: false, error: "Unauthorized." }, 401, cors);
+
+  const record = await env.DB.prepare(
+    "SELECT id, name, company, email, email_domain, status, created_at FROM enterprises WHERE id = ?"
+  ).bind(user.sub).first<{ id: string; name: string; company: string; email: string; email_domain: string; status: string; created_at: number }>();
+
+  if (!record) return json({ success: false, error: "Không tìm thấy tài khoản." }, 404, cors);
+  return json({ success: true, profile: record }, 200, cors);
+}
+
+/** GET /user/agents — danh sách agent instances của user */
+async function handleUserAgents(request: Request, env: Env, cors: Record<string, string>): Promise<Response> {
+  const user = await getAuthUser(request, env);
+  if (!user) return json({ success: false, error: "Unauthorized." }, 401, cors);
+
+  const result = await env.DB.prepare(`
+    SELECT ai.id, ai.instance_name, ai.status, ai.requested_at, ai.approved_at,
+           at.name AS agent_type_name, at.description, at.industry
+    FROM agent_instances ai
+    JOIN agent_types at ON at.id = ai.agent_type_id
+    WHERE ai.enterprise_id = ?
+    ORDER BY ai.requested_at DESC
+  `).bind(user.sub).all<{
+    id: string; instance_name: string; status: string;
+    requested_at: number; approved_at: number | null;
+    agent_type_name: string; description: string; industry: string;
+  }>();
+
+  return json({ success: true, agents: result.results }, 200, cors);
+}
+
+/** POST /user/agents/request — request thêm agent mới */
+async function handleUserRequestAgent(request: Request, env: Env, cors: Record<string, string>): Promise<Response> {
+  const user = await getAuthUser(request, env);
+  if (!user) return json({ success: false, error: "Unauthorized." }, 401, cors);
+
+  let body: { agent_type_id?: string; instance_name?: string };
+  try { body = await request.json(); } catch {
+    return json({ success: false, error: "Request body không hợp lệ." }, 400, cors);
+  }
+
+  const { agent_type_id, instance_name } = body;
+  if (!agent_type_id?.trim() || !instance_name?.trim()) {
+    return json({ success: false, error: "Vui lòng chọn loại agent và nhập tên." }, 400, cors);
+  }
+
+  // Verify enterprise is active
+  const enterprise = await env.DB.prepare(
+    "SELECT status FROM enterprises WHERE id = ?"
+  ).bind(user.sub).first<{ status: string }>();
+  if (!enterprise || enterprise.status !== "active") {
+    return json({ success: false, error: "Tài khoản chưa được kích hoạt." }, 403, cors);
+  }
+
+  // Verify agent type exists
+  const agentType = await env.DB.prepare(
+    "SELECT id FROM agent_types WHERE id = ? AND status = 'active'"
+  ).bind(agent_type_id.trim()).first<{ id: string }>();
+  if (!agentType) {
+    return json({ success: false, error: "Loại agent không tồn tại." }, 404, cors);
+  }
+
+  // Check duplicate pending/active instance
+  const existing = await env.DB.prepare(
+    "SELECT id FROM agent_instances WHERE enterprise_id = ? AND agent_type_id = ? AND status IN ('pending','active')"
+  ).bind(user.sub, agent_type_id.trim()).first<{ id: string }>();
+  if (existing) {
+    return json({ success: false, error: "Bạn đã có request đang chờ duyệt hoặc agent này đã active.", code: "DUPLICATE" }, 409, cors);
+  }
+
+  const id = crypto.randomUUID();
+  await env.DB.prepare(
+    "INSERT INTO agent_instances (id, enterprise_id, agent_type_id, instance_name) VALUES (?, ?, ?, ?)"
+  ).bind(id, user.sub as string, agent_type_id.trim(), instance_name.trim()).run();
+
+  return json({ success: true, message: "Yêu cầu đã được gửi. AItrify sẽ xét duyệt trong 1–2 ngày làm việc.", id }, 200, cors);
+}
+
+// ---------------------------------------------------------------------------
+// Admin — Agent Requests handlers
+// ---------------------------------------------------------------------------
+
+interface AgentRequestRow {
+  id: string; instance_name: string; status: string;
+  requested_at: number; approved_at: number | null; approved_by: string | null;
+  enterprise_name: string; company: string; enterprise_email: string;
+  agent_type_name: string; industry: string;
+}
+
+async function handleAdminAgentRequests(request: Request, env: Env, cors: Record<string, string>): Promise<Response> {
+  if (!requireAdmin(request, env)) return json({ success: false, error: "Unauthorized." }, 401, cors);
+
+  const url = new URL(request.url);
+  const status = url.searchParams.get("status");
+
+  let stmt: D1PreparedStatement;
+  const baseQuery = `
+    SELECT ai.id, ai.instance_name, ai.status, ai.requested_at, ai.approved_at, ai.approved_by,
+           e.name AS enterprise_name, e.company, e.email AS enterprise_email,
+           at.name AS agent_type_name, at.industry
+    FROM agent_instances ai
+    JOIN enterprises e ON e.id = ai.enterprise_id
+    JOIN agent_types at ON at.id = ai.agent_type_id
+  `;
+  if (status && status !== "all") {
+    stmt = env.DB.prepare(baseQuery + " WHERE ai.status = ? ORDER BY ai.requested_at DESC").bind(status);
+  } else {
+    stmt = env.DB.prepare(baseQuery + " ORDER BY ai.requested_at DESC");
+  }
+
+  const result = await stmt.all<AgentRequestRow>();
+  return json({ success: true, requests: result.results, total: result.results.length }, 200, cors);
+}
+
+async function handleAdminApproveAgent(id: string, request: Request, env: Env, cors: Record<string, string>): Promise<Response> {
+  if (!requireAdmin(request, env)) return json({ success: false, error: "Unauthorized." }, 401, cors);
+
+  const record = await env.DB.prepare(
+    "SELECT id, status FROM agent_instances WHERE id = ?"
+  ).bind(id).first<{ id: string; status: string }>();
+  if (!record) return json({ success: false, error: "Không tìm thấy request." }, 404, cors);
+  if (record.status === "active") return json({ success: false, error: "Request này đã được duyệt." }, 409, cors);
+
+  await env.DB.prepare(
+    "UPDATE agent_instances SET status = 'active', approved_at = unixepoch(), approved_by = 'admin' WHERE id = ?"
+  ).bind(id).run();
+
+  return json({ success: true, message: "Agent request đã được duyệt." }, 200, cors);
+}
+
+async function handleAdminRejectAgent(id: string, request: Request, env: Env, cors: Record<string, string>): Promise<Response> {
+  if (!requireAdmin(request, env)) return json({ success: false, error: "Unauthorized." }, 401, cors);
+
+  const record = await env.DB.prepare(
+    "SELECT id, status FROM agent_instances WHERE id = ?"
+  ).bind(id).first<{ id: string; status: string }>();
+  if (!record) return json({ success: false, error: "Không tìm thấy request." }, 404, cors);
+  if (record.status === "rejected") return json({ success: false, error: "Request này đã bị từ chối." }, 409, cors);
+
+  await env.DB.prepare(
+    "UPDATE agent_instances SET status = 'rejected', approved_by = 'admin' WHERE id = ?"
+  ).bind(id).run();
+
+  return json({ success: true, message: "Agent request đã bị từ chối." }, 200, cors);
+}
+
+// ---------------------------------------------------------------------------
 // Admin helpers + handlers
 // ---------------------------------------------------------------------------
 
@@ -839,6 +1046,33 @@ export default {
       }
       if (url.pathname === "/auth/login" && request.method === "POST") {
         return handleLogin(request, env, cors);
+      }
+
+      // Public agent types
+      if (url.pathname === "/agents" && request.method === "GET") {
+        return handleGetAgentTypes(env, cors);
+      }
+
+      // User routes (JWT required)
+      if (url.pathname === "/user/profile" && request.method === "GET") {
+        return handleUserProfile(request, env, cors);
+      }
+      if (url.pathname === "/user/agents" && request.method === "GET") {
+        return handleUserAgents(request, env, cors);
+      }
+      if (url.pathname === "/user/agents/request" && request.method === "POST") {
+        return handleUserRequestAgent(request, env, cors);
+      }
+
+      // Admin — agent requests
+      if (url.pathname === "/admin/agent-requests" && request.method === "GET") {
+        return handleAdminAgentRequests(request, env, cors);
+      }
+      const agentReqMatch = url.pathname.match(/^\/admin\/agent-requests\/([^/]+)\/(approve|reject)$/);
+      if (agentReqMatch && request.method === "POST") {
+        const [, id, action] = agentReqMatch;
+        if (action === "approve") return handleAdminApproveAgent(id, request, env, cors);
+        if (action === "reject")  return handleAdminRejectAgent(id, request, env, cors);
       }
 
       // Admin routes

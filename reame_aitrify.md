@@ -1,5 +1,7 @@
 PS D:\WorkingAitrifyWeb3> wsl
 
+cd /mnt/d/WorkingAitrifyWeb3
+
 beesota@GDCN:/mnt/d/WorkingAitrifyWeb3$ 
 npm run build
 git add .
