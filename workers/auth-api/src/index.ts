@@ -1,9 +1,12 @@
 /**
  * AItrify Auth API — Cloudflare Worker
  * Endpoints:
- *   POST /auth/register  — đăng ký tài khoản doanh nghiệp
- *   GET  /auth/verify    — xác minh email qua token
- *   POST /auth/login     — đăng nhập, trả JWT
+ *   POST /auth/register                    — đăng ký tài khoản doanh nghiệp
+ *   GET  /auth/verify                      — xác minh email qua token
+ *   POST /auth/login                       — đăng nhập, trả JWT
+ *   GET  /admin/enterprises?status=...     — danh sách tài khoản (admin)
+ *   POST /admin/enterprises/:id/approve    — duyệt tài khoản (admin)
+ *   POST /admin/enterprises/:id/reject     — từ chối tài khoản (admin)
  */
 
 export interface Env {
@@ -13,6 +16,7 @@ export interface Env {
   TURNSTILE_SECRET_KEY: string;
   FRONTEND_URL: string;
   FROM_EMAIL: string;
+  ADMIN_SECRET: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -298,10 +302,179 @@ async function sendVerificationEmail(
 }
 
 // ---------------------------------------------------------------------------
+// Email templates — Approve / Reject
+// ---------------------------------------------------------------------------
+function buildApproveEmail(name: string, loginUrl: string): string {
+  return `<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tài khoản AItrify đã được kích hoạt</title>
+</head>
+<body style="margin:0;padding:0;background:#030712;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+  <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:#030712;">
+    <tr>
+      <td align="center" style="padding:40px 16px;">
+        <table role="presentation" cellpadding="0" cellspacing="0" width="600" style="max-width:600px;width:100%;">
+          <tr>
+            <td align="center" style="padding:0 0 32px;">
+              <table role="presentation" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="background:linear-gradient(135deg,#6366f1,#4f46e5);border-radius:12px;padding:10px 20px;">
+                    <span style="font-size:22px;font-weight:700;color:#ffffff;letter-spacing:-0.5px;">⚡ AItrify</span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="background:#0f172a;border:1px solid #1e293b;border-radius:16px;padding:48px 40px;">
+              <div style="display:inline-block;background:#16a34a1a;border:1px solid #16a34a33;border-radius:8px;padding:8px 16px;margin-bottom:24px;">
+                <span style="font-size:13px;font-weight:600;color:#4ade80;">✓ Tài khoản đã được kích hoạt</span>
+              </div>
+              <h1 style="margin:0 0 16px;font-size:28px;font-weight:700;color:#f1f5f9;letter-spacing:-0.5px;">
+                Chúc mừng, ${escapeHtml(name)}!
+              </h1>
+              <p style="margin:0 0 24px;font-size:15px;color:#94a3b8;line-height:1.7;">
+                Tài khoản doanh nghiệp AItrify của bạn đã được <strong style="color:#4ade80;">xét duyệt và kích hoạt thành công</strong>.
+                Bạn có thể đăng nhập ngay để bắt đầu sử dụng nền tảng AI của chúng tôi.
+              </p>
+              <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="margin:32px 0;">
+                <tr>
+                  <td align="center">
+                    <a href="${loginUrl}"
+                       style="display:inline-block;background:linear-gradient(135deg,#6366f1,#4f46e5);color:#ffffff;text-decoration:none;font-size:16px;font-weight:600;padding:14px 40px;border-radius:10px;">
+                      Đăng nhập AItrify
+                    </a>
+                  </td>
+                </tr>
+              </table>
+              <hr style="border:none;border-top:1px solid #1e293b;margin:32px 0;" />
+              <p style="margin:0;font-size:13px;color:#475569;line-height:1.7;">
+                Cần hỗ trợ? Liên hệ <a href="mailto:support@aitrify.com" style="color:#6366f1;text-decoration:none;">support@aitrify.com</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding:32px 0 0;">
+              <p style="margin:0 0 8px;font-size:13px;color:#334155;">© ${new Date().getFullYear()} AItrify. All rights reserved.</p>
+              <p style="margin:0;font-size:12px;color:#1e293b;">Email này được gửi tự động — vui lòng không reply.</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`;
+}
+
+function buildRejectEmail(name: string, reason?: string): string {
+  const reasonBlock = reason
+    ? `<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="margin:24px 0;">
+         <tr>
+           <td style="background:#0a0f1e;border:1px solid #1e293b;border-left:3px solid #6366f1;border-radius:8px;padding:16px 20px;">
+             <p style="margin:0 0 4px;font-size:12px;font-weight:600;color:#6366f1;text-transform:uppercase;letter-spacing:1px;">Lý do</p>
+             <p style="margin:0;font-size:14px;color:#94a3b8;line-height:1.6;">${escapeHtml(reason)}</p>
+           </td>
+         </tr>
+       </table>`
+    : "";
+
+  return `<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tài khoản AItrify chưa được duyệt</title>
+</head>
+<body style="margin:0;padding:0;background:#030712;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+  <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:#030712;">
+    <tr>
+      <td align="center" style="padding:40px 16px;">
+        <table role="presentation" cellpadding="0" cellspacing="0" width="600" style="max-width:600px;width:100%;">
+          <tr>
+            <td align="center" style="padding:0 0 32px;">
+              <table role="presentation" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="background:linear-gradient(135deg,#6366f1,#4f46e5);border-radius:12px;padding:10px 20px;">
+                    <span style="font-size:22px;font-weight:700;color:#ffffff;letter-spacing:-0.5px;">⚡ AItrify</span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="background:#0f172a;border:1px solid #1e293b;border-radius:16px;padding:48px 40px;">
+              <h1 style="margin:0 0 16px;font-size:28px;font-weight:700;color:#f1f5f9;letter-spacing:-0.5px;">
+                Xin chào ${escapeHtml(name)},
+              </h1>
+              <p style="margin:0 0 16px;font-size:15px;color:#94a3b8;line-height:1.7;">
+                Sau khi xem xét, đội ngũ AItrify rất tiếc thông báo rằng tài khoản doanh nghiệp của bạn
+                <strong style="color:#f87171;">chưa đáp ứng đủ điều kiện</strong> để được kích hoạt tại thời điểm này.
+              </p>
+              ${reasonBlock}
+              <p style="margin:0 0 24px;font-size:15px;color:#94a3b8;line-height:1.7;">
+                Nếu bạn có câu hỏi hoặc muốn cung cấp thêm thông tin, hãy liên hệ trực tiếp với chúng tôi.
+                Chúng tôi sẵn lòng xem xét lại nếu có thông tin bổ sung phù hợp.
+              </p>
+              <hr style="border:none;border-top:1px solid #1e293b;margin:32px 0;" />
+              <p style="margin:0;font-size:13px;color:#475569;line-height:1.7;">
+                Liên hệ: <a href="mailto:support@aitrify.com" style="color:#6366f1;text-decoration:none;">support@aitrify.com</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding:32px 0 0;">
+              <p style="margin:0 0 8px;font-size:13px;color:#334155;">© ${new Date().getFullYear()} AItrify. All rights reserved.</p>
+              <p style="margin:0;font-size:12px;color:#1e293b;">Email này được gửi tự động — vui lòng không reply.</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`;
+}
+
+async function sendApproveEmail(env: Env, to: string, name: string): Promise<void> {
+  const loginUrl = `${env.FRONTEND_URL}/signin`;
+  const html = buildApproveEmail(name, loginUrl);
+  const res = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      from: `AItrify <${env.FROM_EMAIL}>`,
+      to: [to],
+      subject: "🎉 Tài khoản AItrify của bạn đã được kích hoạt!",
+      html,
+    }),
+  });
+  if (!res.ok) throw new Error(`Resend error: ${await res.text()}`);
+}
+
+async function sendRejectEmail(env: Env, to: string, name: string, reason?: string): Promise<void> {
+  const html = buildRejectEmail(name, reason);
+  const res = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      from: `AItrify <${env.FROM_EMAIL}>`,
+      to: [to],
+      subject: "Thông báo về tài khoản AItrify của bạn",
+      html,
+    }),
+  });
+  if (!res.ok) throw new Error(`Resend error: ${await res.text()}`);
+}
+
+// ---------------------------------------------------------------------------
 // HTTP helpers
 // ---------------------------------------------------------------------------
 function allowedOrigins(env: Env): string[] {
-  return [env.FRONTEND_URL, "http://localhost:3000", "http://127.0.0.1:3000"];
+  return [env.FRONTEND_URL, "https://www.aitrify.com", "http://localhost:3000", "http://127.0.0.1:3000"];
 }
 
 function corsHeaders(origin: string | null, env: Env): Record<string, string> {
@@ -539,6 +712,110 @@ async function handleLogin(request: Request, env: Env, cors: Record<string, stri
 }
 
 // ---------------------------------------------------------------------------
+// Admin helpers + handlers
+// ---------------------------------------------------------------------------
+
+function requireAdmin(request: Request, env: Env): boolean {
+  const auth = request.headers.get("Authorization");
+  if (!auth?.startsWith("Bearer ")) return false;
+  return auth.slice(7) === env.ADMIN_SECRET;
+}
+
+interface EnterpriseRow {
+  id: string;
+  name: string;
+  company: string;
+  email: string;
+  email_domain: string;
+  status: string;
+  created_at: number;
+}
+
+async function handleAdminList(request: Request, env: Env, cors: Record<string, string>): Promise<Response> {
+  if (!requireAdmin(request, env)) {
+    return json({ success: false, error: "Unauthorized." }, 401, cors);
+  }
+
+  const url = new URL(request.url);
+  const status = url.searchParams.get("status");
+
+  let stmt: D1PreparedStatement;
+  if (status && status !== "all") {
+    stmt = env.DB.prepare(
+      "SELECT id, name, company, email, email_domain, status, created_at FROM enterprises WHERE status = ? ORDER BY created_at DESC"
+    ).bind(status);
+  } else {
+    stmt = env.DB.prepare(
+      "SELECT id, name, company, email, email_domain, status, created_at FROM enterprises ORDER BY created_at DESC"
+    );
+  }
+
+  const result = await stmt.all<EnterpriseRow>();
+  return json({ success: true, enterprises: result.results, total: result.results.length }, 200, cors);
+}
+
+async function handleAdminApprove(id: string, request: Request, env: Env, cors: Record<string, string>): Promise<Response> {
+  if (!requireAdmin(request, env)) {
+    return json({ success: false, error: "Unauthorized." }, 401, cors);
+  }
+
+  const record = await env.DB.prepare(
+    "SELECT id, name, email, status FROM enterprises WHERE id = ?"
+  ).bind(id).first<{ id: string; name: string; email: string; status: string }>();
+
+  if (!record) {
+    return json({ success: false, error: "Không tìm thấy tài khoản." }, 404, cors);
+  }
+  if (record.status === "active") {
+    return json({ success: false, error: "Tài khoản này đã được duyệt." }, 409, cors);
+  }
+
+  await env.DB.prepare(
+    "UPDATE enterprises SET status = 'active', updated_at = unixepoch() WHERE id = ?"
+  ).bind(id).run();
+
+  try {
+    await sendApproveEmail(env, record.email, record.name);
+  } catch (err) {
+    console.error("Approve email failed:", err);
+  }
+
+  return json({ success: true, message: `Tài khoản ${record.email} đã được duyệt.` }, 200, cors);
+}
+
+async function handleAdminReject(id: string, request: Request, env: Env, cors: Record<string, string>): Promise<Response> {
+  if (!requireAdmin(request, env)) {
+    return json({ success: false, error: "Unauthorized." }, 401, cors);
+  }
+
+  let body: { reason?: string } = {};
+  try { body = await request.json(); } catch { /* reason is optional */ }
+
+  const record = await env.DB.prepare(
+    "SELECT id, name, email, status FROM enterprises WHERE id = ?"
+  ).bind(id).first<{ id: string; name: string; email: string; status: string }>();
+
+  if (!record) {
+    return json({ success: false, error: "Không tìm thấy tài khoản." }, 404, cors);
+  }
+  if (record.status === "rejected") {
+    return json({ success: false, error: "Tài khoản này đã bị từ chối." }, 409, cors);
+  }
+
+  await env.DB.prepare(
+    "UPDATE enterprises SET status = 'rejected', updated_at = unixepoch() WHERE id = ?"
+  ).bind(id).run();
+
+  try {
+    await sendRejectEmail(env, record.email, record.name, body.reason);
+  } catch (err) {
+    console.error("Reject email failed:", err);
+  }
+
+  return json({ success: true, message: `Tài khoản ${record.email} đã bị từ chối.` }, 200, cors);
+}
+
+// ---------------------------------------------------------------------------
 // Main entry
 // ---------------------------------------------------------------------------
 export default {
@@ -562,6 +839,17 @@ export default {
       }
       if (url.pathname === "/auth/login" && request.method === "POST") {
         return handleLogin(request, env, cors);
+      }
+
+      // Admin routes
+      if (url.pathname === "/admin/enterprises" && request.method === "GET") {
+        return handleAdminList(request, env, cors);
+      }
+      const adminMatch = url.pathname.match(/^\/admin\/enterprises\/([^/]+)\/(approve|reject)$/);
+      if (adminMatch && request.method === "POST") {
+        const [, id, action] = adminMatch;
+        if (action === "approve") return handleAdminApprove(id, request, env, cors);
+        if (action === "reject")  return handleAdminReject(id, request, env, cors);
       }
 
       return json({ error: "Not found" }, 404, cors);
