@@ -486,7 +486,7 @@ function buildRejectEmail(name: string, reason?: string): string {
 }
 
 async function sendApproveEmail(env: Env, to: string, name: string): Promise<void> {
-  const loginUrl = `${env.FRONTEND_URL}/signin`;
+  const loginUrl = `${env.FRONTEND_URL}/login`;
   const html = buildApproveEmail(name, loginUrl);
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
@@ -510,6 +510,98 @@ async function sendRejectEmail(env: Env, to: string, name: string, reason?: stri
       from: `AItrify <${env.FROM_EMAIL}>`,
       to: [to],
       subject: "Thông báo về tài khoản AItrify của bạn",
+      html,
+    }),
+  });
+  if (!res.ok) throw new Error(`Resend error: ${await res.text()}`);
+}
+
+function buildAgentApproveEmail(name: string, instanceName: string, agentType: string, dashboardUrl: string): string {
+  return `<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Agent đã được kích hoạt</title>
+</head>
+<body style="margin:0;padding:0;background:#030712;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+  <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:#030712;">
+    <tr>
+      <td align="center" style="padding:40px 16px;">
+        <table role="presentation" cellpadding="0" cellspacing="0" width="600" style="max-width:600px;width:100%;">
+          <tr>
+            <td align="center" style="padding:0 0 32px;">
+              <table role="presentation" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="background:linear-gradient(135deg,#6366f1,#4f46e5);border-radius:12px;padding:10px 20px;">
+                    <span style="font-size:22px;font-weight:700;color:#ffffff;letter-spacing:-0.5px;">⚡ AItrify</span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="background:#0f172a;border:1px solid #1e293b;border-radius:16px;padding:48px 40px;">
+              <div style="display:inline-block;background:#16a34a1a;border:1px solid #16a34a33;border-radius:8px;padding:8px 16px;margin-bottom:24px;">
+                <span style="font-size:13px;font-weight:600;color:#4ade80;">✓ AI Agent đã được kích hoạt</span>
+              </div>
+              <h1 style="margin:0 0 16px;font-size:28px;font-weight:700;color:#f1f5f9;letter-spacing:-0.5px;">
+                Xin chào ${escapeHtml(name)}!
+              </h1>
+              <p style="margin:0 0 24px;font-size:15px;color:#94a3b8;line-height:1.7;">
+                AI Agent <strong style="color:#f1f5f9;">${escapeHtml(instanceName)}</strong> (loại <strong style="color:#a5b4fc;">${escapeHtml(agentType)}</strong>)
+                của doanh nghiệp bạn đã được <strong style="color:#4ade80;">xét duyệt và kích hoạt thành công</strong>.
+                Bạn có thể vào dashboard để quản lý agent ngay bây giờ.
+              </p>
+              <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="margin:0 0 32px;">
+                <tr>
+                  <td style="background:#0a0f1e;border:1px solid #1e293b;border-left:3px solid #6366f1;border-radius:8px;padding:16px 20px;">
+                    <p style="margin:0 0 4px;font-size:12px;font-weight:600;color:#6366f1;text-transform:uppercase;letter-spacing:1px;">Thông tin Agent</p>
+                    <p style="margin:0 0 4px;font-size:14px;color:#f1f5f9;"><strong>Tên:</strong> <span style="color:#a5b4fc;">${escapeHtml(instanceName)}</span></p>
+                    <p style="margin:0;font-size:14px;color:#f1f5f9;"><strong>Loại:</strong> <span style="color:#a5b4fc;">${escapeHtml(agentType)}</span></p>
+                  </td>
+                </tr>
+              </table>
+              <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="margin:0 0 32px;">
+                <tr>
+                  <td align="center">
+                    <a href="${dashboardUrl}"
+                       style="display:inline-block;background:linear-gradient(135deg,#6366f1,#4f46e5);color:#ffffff;text-decoration:none;font-size:16px;font-weight:600;padding:14px 40px;border-radius:10px;">
+                      Vào Dashboard
+                    </a>
+                  </td>
+                </tr>
+              </table>
+              <hr style="border:none;border-top:1px solid #1e293b;margin:32px 0;" />
+              <p style="margin:0;font-size:13px;color:#475569;line-height:1.7;">
+                Cần hỗ trợ? Liên hệ <a href="mailto:support@aitrify.com" style="color:#6366f1;text-decoration:none;">support@aitrify.com</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding:32px 0 0;">
+              <p style="margin:0 0 8px;font-size:13px;color:#334155;">© ${new Date().getFullYear()} AItrify. All rights reserved.</p>
+              <p style="margin:0;font-size:12px;color:#1e293b;">Email này được gửi tự động — vui lòng không reply.</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`;
+}
+
+async function sendAgentApproveEmail(env: Env, to: string, name: string, instanceName: string, agentType: string): Promise<void> {
+  const dashboardUrl = `${env.FRONTEND_URL}/dashboard`;
+  const html = buildAgentApproveEmail(name, instanceName, agentType, dashboardUrl);
+  const res = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      from: `AItrify <${env.FROM_EMAIL}>`,
+      to: [to],
+      subject: `🤖 AI Agent ${instanceName} của bạn đã được kích hoạt!`,
       html,
     }),
   });
@@ -889,15 +981,30 @@ async function handleAdminAgentRequests(request: Request, env: Env, cors: Record
 async function handleAdminApproveAgent(id: string, request: Request, env: Env, cors: Record<string, string>): Promise<Response> {
   if (!requireAdmin(request, env)) return json({ success: false, error: "Unauthorized." }, 401, cors);
 
-  const record = await env.DB.prepare(
-    "SELECT id, status FROM agent_instances WHERE id = ?"
-  ).bind(id).first<{ id: string; status: string }>();
+  const record = await env.DB.prepare(`
+    SELECT ai.id, ai.status, ai.instance_name,
+           e.email AS enterprise_email, e.name AS enterprise_name,
+           at.name AS agent_type_name
+    FROM agent_instances ai
+    JOIN enterprises e  ON e.id  = ai.enterprise_id
+    JOIN agent_types at ON at.id = ai.agent_type_id
+    WHERE ai.id = ?
+  `).bind(id).first<{
+    id: string; status: string; instance_name: string;
+    enterprise_email: string; enterprise_name: string; agent_type_name: string;
+  }>();
   if (!record) return json({ success: false, error: "Không tìm thấy request." }, 404, cors);
   if (record.status === "active") return json({ success: false, error: "Request này đã được duyệt." }, 409, cors);
 
   await env.DB.prepare(
     "UPDATE agent_instances SET status = 'active', approved_at = unixepoch(), approved_by = 'admin' WHERE id = ?"
   ).bind(id).run();
+
+  try {
+    await sendAgentApproveEmail(env, record.enterprise_email, record.enterprise_name, record.instance_name, record.agent_type_name);
+  } catch (err) {
+    console.error("Agent approve email failed:", err);
+  }
 
   return json({ success: true, message: "Agent request đã được duyệt." }, 200, cors);
 }
