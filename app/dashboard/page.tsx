@@ -32,7 +32,9 @@ function decodeToken(token: string): JWTClaims | null {
   try {
     const parts = token.split(".");
     if (parts.length !== 3) return null;
-    const payload = JSON.parse(atob(parts[1].replace(/-/g, "+").replace(/_/g, "/"))) as JWTClaims;
+    const b64 = parts[1].replace(/-/g, "+").replace(/_/g, "/");
+    const bytes = Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
+    const payload = JSON.parse(new TextDecoder().decode(bytes)) as JWTClaims;
     if (Math.floor(Date.now() / 1000) > payload.exp) return null;
     return payload;
   } catch { return null; }
