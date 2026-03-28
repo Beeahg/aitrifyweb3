@@ -209,6 +209,7 @@ export default function Chatbox({ agent }: ChatboxProps) {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
+  const isAbortedRef = useRef(false);
 
   const [chatboxExpanded, setChatboxExpanded] = useState(false);
 
@@ -271,6 +272,7 @@ useEffect(() => {
     setInput('');
     setLoading(true);
 
+    isAbortedRef.current = false;
     const controller = new AbortController();
     abortControllerRef.current = controller;
 
@@ -282,6 +284,7 @@ useEffect(() => {
 
   const abortChat = () => {
     if (abortControllerRef.current) {
+      isAbortedRef.current = true;
       abortControllerRef.current.abort();
       abortControllerRef.current = null;
     }
@@ -313,6 +316,11 @@ useEffect(() => {
 
       let i = 1; // sẽ hiển thị prefix [0..i]
       const timer = setInterval(() => {
+        if (isAbortedRef.current) {
+          clearInterval(timer);
+          resolve();
+          return;
+        }
         setChatHistories(prev => {
           const list = prev[agentName] || [];
           const idx = list.findIndex(m => (m as any).id === messageId);
