@@ -164,7 +164,8 @@ async function getVectorizeCount(apiToken: string): Promise<number> {
 // ── CF Workers AI: total input + output tokens ────────────────────────────────
 
 async function getAITokens(apiToken: string): Promise<number> {
-  const start = new Date(Date.now() - 730 * 24 * 3600 * 1000);
+  // CF Analytics limits query range to ~33 days for this dataset
+  const start = new Date(Date.now() - 30 * 24 * 3600 * 1000);
   const end = new Date();
 
   // Truncate to hour boundary for the GraphQL datetime filter
@@ -174,14 +175,14 @@ async function getAITokens(apiToken: string): Promise<number> {
   const query = `{
     viewer {
       accounts(filter: {accountTag: "${CF_ACCOUNT_ID}"}) {
-        workersAiSubrequestsAdaptiveGroups(
+        aiInferenceAdaptiveGroups(
           limit: 1
           filter: {
             datetimeHour_geq: "${startHour}"
             datetimeHour_leq: "${endHour}"
           }
         ) {
-          sum { tokenIn tokenOut }
+          sum { totalInputTokens totalOutputTokens }
         }
       }
     }
@@ -205,8 +206,8 @@ async function getAITokens(apiToken: string): Promise<number> {
     data?: {
       viewer?: {
         accounts?: {
-          workersAiSubrequestsAdaptiveGroups?: {
-            sum?: { tokenIn?: number; tokenOut?: number };
+          aiInferenceAdaptiveGroups?: {
+            sum?: { totalInputTokens?: number; totalOutputTokens?: number };
           }[];
         }[];
       };
@@ -220,8 +221,8 @@ async function getAITokens(apiToken: string): Promise<number> {
   }
 
   const g =
-    data.data?.viewer?.accounts?.[0]?.workersAiSubrequestsAdaptiveGroups?.[0]?.sum ?? {};
-  return (g.tokenIn ?? 0) + (g.tokenOut ?? 0);
+    data.data?.viewer?.accounts?.[0]?.aiInferenceAdaptiveGroups?.[0]?.sum ?? {};
+  return (g.totalInputTokens ?? 0) + (g.totalOutputTokens ?? 0);
 }
 
 // ── CF Analytics: uptime % over last 30 days ─────────────────────────────────
