@@ -39,21 +39,6 @@ const MOCK_DATA: LiveMetrics = {
   uptime_percent: 99.97,
 };
 
-// ── Scale helpers ─────────────────────────────────────────────────────────────
-
-function scaleCount(value: number): { countTo: number; format: (n: number) => string } {
-  if (value >= 1e9) {
-    return { countTo: Math.round(value / 1e8), format: (n) => `${(n / 10).toFixed(1)}B` };
-  }
-  if (value >= 1e6) {
-    return { countTo: Math.round(value / 1e5), format: (n) => `${(n / 10).toFixed(1)}M` };
-  }
-  if (value >= 1e3) {
-    return { countTo: Math.round(value / 100), format: (n) => `${(n / 10).toFixed(1)}K` };
-  }
-  return { countTo: value, format: (n) => `${n}` };
-}
-
 // ── Build metric items from live (or mock) data ───────────────────────────────
 
 const ICONS = {
@@ -80,16 +65,14 @@ const ICONS = {
 };
 
 function buildMetrics(data: LiveMetrics): MetricItem[] {
-  const reqScale = scaleCount(data.total_requests);
-  const tokScale = scaleCount(data.total_tokens);
-
   return [
     {
       id: 'requests',
       label: 'Total AI Requests',
       sublabel: 'Processed across all agents',
-      ...reqScale,
-      suffix: '+',
+      countTo: data.total_requests,
+      format: (n) => n.toLocaleString('en-US'),
+      suffix: '',
       delay: 0,
       accent: 'from-indigo-500 to-violet-500',
       icon: ICONS.requests,
@@ -98,8 +81,9 @@ function buildMetrics(data: LiveMetrics): MetricItem[] {
       id: 'tokens',
       label: 'Tokens Generated',
       sublabel: 'Total input + output tokens served',
-      ...tokScale,
-      suffix: '+',
+      countTo: data.total_tokens,
+      format: (n) => n.toLocaleString('en-US'),
+      suffix: '',
       delay: 150,
       accent: 'from-blue-500 to-cyan-400',
       icon: ICONS.tokens,
@@ -109,8 +93,8 @@ function buildMetrics(data: LiveMetrics): MetricItem[] {
       label: 'Active Agents',
       sublabel: 'Enterprise AI agents deployed',
       countTo: data.active_agents,
-      format: (n) => `${n}`,
-      suffix: '+',
+      format: (n) => n.toLocaleString('en-US'),
+      suffix: '',
       delay: 300,
       accent: 'from-emerald-500 to-teal-400',
       icon: ICONS.agents,
@@ -176,19 +160,21 @@ function MetricCard({
   }, [globalActive, metric.delay]);
 
   return (
-    <div className="group relative overflow-hidden rounded-2xl border border-gray-700/50 bg-gray-900/60 p-5 backdrop-blur-sm transition-all duration-300 hover:border-gray-600/60 hover:bg-gray-900/80">
+    <div className="group relative overflow-hidden rounded-2xl border border-gray-700/50 bg-gray-900/60 p-5 backdrop-blur-sm transition-all duration-300 hover:border-gray-600/60 hover:bg-gray-900/80 text-center">
       {/* Gradient top accent line */}
       <div
         className={`absolute inset-x-0 top-0 h-px bg-gradient-to-r ${metric.accent} opacity-70 transition-opacity duration-300 group-hover:opacity-100`}
       />
 
       {/* Icon */}
-      <div className={`mb-4 inline-flex rounded-xl bg-gradient-to-br ${metric.accent} p-2.5 text-white shadow-lg`}>
-        {metric.icon}
+      <div className="mb-4 flex justify-center">
+        <div className={`inline-flex rounded-xl bg-gradient-to-br ${metric.accent} p-2.5 text-white shadow-lg`}>
+          {metric.icon}
+        </div>
       </div>
 
       {/* Animated number or loading skeleton */}
-      <div className="mb-1 flex items-baseline gap-0.5 min-h-[2.5rem]">
+      <div className="mb-1 flex items-center justify-center gap-0.5 min-h-[2.5rem]">
         {isLoading ? (
           <div className="h-9 w-24 animate-pulse rounded-lg bg-gray-700/50" />
         ) : (
@@ -196,9 +182,11 @@ function MetricCard({
             <span className="font-nacelle text-3xl font-semibold text-white md:text-4xl">
               {metric.format(count)}
             </span>
-            <span className={`bg-gradient-to-r ${metric.accent} bg-clip-text text-xl font-semibold text-transparent`}>
-              {metric.suffix}
-            </span>
+            {metric.suffix && (
+              <span className={`bg-gradient-to-r ${metric.accent} bg-clip-text text-xl font-semibold text-transparent`}>
+                {metric.suffix}
+              </span>
+            )}
           </>
         )}
       </div>
