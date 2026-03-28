@@ -1,0 +1,8 @@
+name            = "public-metrics"
+main            = "src/index.ts"
+compatibility_date = "2025-01-01"
+
+[vars]
+# Secrets (set via CLI, never commit these):
+#   wrangler secret put CF_API_TOKEN
+#   wrangler secret put GCP_SA_KEY   (paste full JSON content of aitrify-main-1f0a71c52084.json)
