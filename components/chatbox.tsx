@@ -208,6 +208,7 @@ export default function Chatbox({ agent }: ChatboxProps) {
 
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   const [chatboxExpanded, setChatboxExpanded] = useState(false);
 
@@ -270,9 +271,24 @@ useEffect(() => {
     setInput('');
     setLoading(true);
 
-    const aiResponse = await mockChatAPI(input);
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
 
+    await mockChatAPI(input, controller.signal);
 
+    abortControllerRef.current = null;
+    setLoading(false);
+  };
+
+  const abortChat = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+    setChatHistories((prev) => ({
+      ...prev,
+      [agent]: [...(prev[agent] || []), { sender: 'ai', text: '(Đã dừng trả lời)' }],
+    }));
     setLoading(false);
   };
 
@@ -359,12 +375,13 @@ useEffect(() => {
 
 
 
-  const mockChatAPI = async (userInput: string) => {
+  const mockChatAPI = async (userInput: string, signal?: AbortSignal) => {
     try {
       const response = await fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: userInput, user_login: USER_LOGIN, agent }),
+        signal,
       });
       if (!response.ok) throw new Error('Không thể kết nối tới máy chủ AI.');
 
@@ -396,6 +413,7 @@ useEffect(() => {
       }
       return fullAnswer || 'AItrify: Không có nội dung trả về.';
     } catch (err) {
+      if ((err as Error).name === 'AbortError') return '';
       console.error('Error in mockChatAPI:', (err as Error).message);
       return '❌ Lỗi kết nối server: ' + (err as Error).message;
     }
@@ -514,16 +532,26 @@ const answerFooterTopic = async (topicKey: string) => {
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+          onKeyDown={(e) => e.key === 'Enter' && !loading && sendMessage()}
           placeholder={`Bạn muốn hỏi gì ${config.name}?`}
-          className="flex-1 border rounded-md px-4 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-indigo-300 text-gray-900 placeholder:text-blue-300"
+          disabled={loading}
+          className="flex-1 border rounded-md px-4 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-indigo-300 text-gray-900 placeholder:text-blue-300 disabled:opacity-50 disabled:cursor-not-allowed"
         />
-        <button
-          onClick={sendMessage}
-          className="w-full sm:w-auto bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 text-sm sm:text-base"
-        >
-          Gửi
-        </button>
+        {loading ? (
+          <button
+            onClick={abortChat}
+            className="w-full sm:w-auto bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 text-sm sm:text-base"
+          >
+            Dừng
+          </button>
+        ) : (
+          <button
+            onClick={sendMessage}
+            className="w-full sm:w-auto bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 text-sm sm:text-base"
+          >
+            Gửi
+          </button>
+        )}
       </div>
     </div>
   );
