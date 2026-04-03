@@ -16,6 +16,8 @@ interface LiveMetrics {
   total_tokens: number;
   active_agents: number;
   uptime_percent: number;
+  zone_all_requests: number;
+  zemmer_requests: number;
 }
 
 interface MetricItem {
@@ -37,6 +39,8 @@ const MOCK_DATA: LiveMetrics = {
   total_tokens: 48_500_000_000,
   active_agents: 247,
   uptime_percent: 99.97,
+  zone_all_requests: 113080,
+  zemmer_requests: 0,
 };
 
 // ── Build metric items from live (or mock) data ───────────────────────────────
@@ -60,6 +64,11 @@ const ICONS = {
   uptime: (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+    </svg>
+  ),
+  http: (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
     </svg>
   ),
 };
@@ -109,6 +118,28 @@ function buildMetrics(data: LiveMetrics): MetricItem[] {
       delay: 450,
       accent: 'from-amber-400 to-orange-500',
       icon: ICONS.uptime,
+    },
+    {
+      id: 'zemmer_requests',
+      label: 'Zemmer Requests',
+      sublabel: 'Zemmer requests (last 30 days)',
+      countTo: data.zemmer_requests,
+      format: (n) => n.toLocaleString('en-US'),
+      suffix: '',
+      delay: 500,
+      accent: 'from-green-500 to-emerald-400',
+      icon: ICONS.http,
+    },
+    {
+      id: 'all_requests',
+      label: 'All HTTP/HTTPS Requests',
+      sublabel: 'All HTTP/HTTPS requests (last 30 days)',
+      countTo: data.zone_all_requests,
+      format: (n) => n.toLocaleString('en-US'),
+      suffix: '',
+      delay: 650,
+      accent: 'from-rose-500 to-pink-400',
+      icon: ICONS.http,
     },
   ];
 }
@@ -263,7 +294,7 @@ export default function PublicMetrics() {
       </p>
 
       {/* 2-col on mobile → 4-col on sm+ */}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
         {metrics.map((m) => (
           <MetricCard key={m.id} metric={m} globalActive={active} isLoading={isLoading} />
         ))}

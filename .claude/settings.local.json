@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npm run dev:*)",
+      "Bash(npm run deploy:*)",
+      "Bash(npx wrangler d1 execute:*)",
+      "Bash(npx wrangler whoami:*)",
+      "Bash(curl:*)",
+      "Bash(npx wrangler tail:*)",
+      "Bash(npx wrangler:*)",
+      "Bash(wc:*)"
+    ]
+  }
+}

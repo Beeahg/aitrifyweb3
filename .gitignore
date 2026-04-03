@@ -39,3 +39,5 @@ next-env.d.ts
 .contentlayer
 aitrify-main-*.json
 workers/public-metrics/node_modules/
+
+workers/auth-api/node_modules/

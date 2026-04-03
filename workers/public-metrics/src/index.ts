@@ -14,10 +14,13 @@ interface MetricsResponse {
   total_tokens: number;
   active_agents: number;
   uptime_percent: number;
+  zone_all_requests: number;
+  zemmer_requests: number;
   cached_at: string;
 }
 
 const CF_ACCOUNT_ID = 'e2fb3d22235a4c18423d7aa45422cb25';
+const CF_ZONE_ID = '41fb378b1b7e7df8e83a779481ec297a';
 const GCP_PROJECT_ID = 'aitrify-main';
 const CACHE_TTL = 300; // 5 minutes
 const CACHE_KEY = 'https://public-metrics-cache.aitrify.internal/v1';
@@ -146,6 +149,45 @@ async function getGCPTotalRequests(gcpToken: string): Promise<number> {
   return total;
 }
 
+
+// ── GCP Cloud Run: Zemmer BE request count (last 30 days) ────────────────────
+async function getZemmerRequests(gcpToken: string): Promise<number> {
+  const end = new Date();
+  const start = new Date(end.getTime() - 30 * 24 * 3600 * 1000);
+
+  const params = new URLSearchParams({
+    filter: 'metric.type="run.googleapis.com/request_count" AND resource.type="cloud_run_revision" AND resource.labels.service_name="zemmer-be"',
+    'interval.startTime': start.toISOString(),
+    'interval.endTime': end.toISOString(),
+    'aggregation.alignmentPeriod': '86400s',
+    'aggregation.perSeriesAligner': 'ALIGN_SUM',
+    'aggregation.crossSeriesReducer': 'REDUCE_SUM',
+  });
+
+  //const url = `https://monitoring.googleapis.com/v3/projects/${GCP_PROJECT_ID}/timeSeries?${params}`;
+  const url = `https://monitoring.googleapis.com/v3/projects/zemmer-qlbh-gcr/timeSeries?${params}`;
+  const res = await fetch(url, { headers: { Authorization: `Bearer ${gcpToken}` } });
+
+  if (!res.ok) {
+    console.error('GCP Zemmer Monitoring error:', res.status, await res.text());
+    return 0;
+  }
+
+  const data = (await res.json()) as {
+    timeSeries?: {
+      points?: { value: { int64Value?: string; doubleValue?: number } }[];
+    }[];
+  };
+
+  let total = 0;
+  for (const series of data.timeSeries ?? []) {
+    for (const point of series.points ?? []) {
+      const v = point.value;
+      total += v.int64Value ? parseInt(v.int64Value, 10) : (v.doubleValue ?? 0);
+    }
+  }
+  return total;
+}
 // ── CF Vectorize: count indexes ───────────────────────────────────────────────
 
 async function getVectorizeCount(apiToken: string): Promise<number> {
@@ -285,6 +327,33 @@ async function getUptimePercent(apiToken: string): Promise<number> {
   return Math.round(((requests - errors) / requests) * 10000) / 100;
 }
 
+
+// ── CF Zone Analytics: HTTP requests (last 30 days) ──────────────────────────
+async function getZoneHttpRequests(apiToken: string, zoneTag: string, hostname?: string): Promise<number> {
+  const start = new Date(Date.now() - 30 * 24 * 3600 * 1000);
+  const end = new Date();
+  const startDate = start.toISOString().slice(0, 10);
+  const endDate = end.toISOString().slice(0, 10);
+  const hostnameFilter = hostname ? `clientRequestHTTPHost: "${hostname}"` : '';
+  const query = `{
+    viewer {
+      zones(filter: { zoneTag: "${zoneTag}" }) {
+        httpRequests1dGroups(limit: 1 filter: { date_geq: "${startDate}" date_leq: "${endDate}" ${hostnameFilter} }) {
+          sum { requests }
+        }
+      }
+    }
+  }`;
+  const res = await fetch('https://api.cloudflare.com/client/v4/graphql', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${apiToken}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ query }),
+  });
+  if (!res.ok) { console.error('Zone Analytics error:', res.status); return 0; }
+  const data = (await res.json()) as { data?: { viewer?: { zones?: { httpRequests1dGroups?: { sum?: { requests?: number } }[] }[] } }; errors?: { message: string }[] };
+  if (data.errors?.length) { console.error('Zone GraphQL errors:', JSON.stringify(data.errors)); return 0; }
+  return data.data?.viewer?.zones?.[0]?.httpRequests1dGroups?.[0]?.sum?.requests ?? 0;
+}
 // ── Main fetch handler ────────────────────────────────────────────────────────
 
 export default {
@@ -323,12 +392,14 @@ export default {
       const sa: GCPServiceAccount = JSON.parse(env.GCP_SA_KEY);
       const gcpToken = await getGCPAccessToken(sa);
 
-      const [total_requests, total_tokens, active_agents, uptime_percent] =
+      const [total_requests, total_tokens, active_agents, uptime_percent, zone_all_requests, zemmer_requests] =
         await Promise.all([
           getGCPTotalRequests(gcpToken),
           getAITokens(env.CF_API_TOKEN),
           getVectorizeCount(env.CF_API_TOKEN),
           getUptimePercent(env.CF_API_TOKEN),
+          getZoneHttpRequests(env.CF_API_TOKEN, CF_ZONE_ID),
+          getZemmerRequests(gcpToken),
         ]);
 
       const metrics: MetricsResponse = {
@@ -336,6 +407,8 @@ export default {
         total_tokens,
         active_agents,
         uptime_percent,
+        zone_all_requests,
+        zemmer_requests,
         cached_at: new Date().toISOString(),
       };
       const body = JSON.stringify(metrics);
