@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import CloudMonitorDashboard from "@/components/zemmer-cloud-monitor";
 
 const AUTH_API_URL =
   process.env.NEXT_PUBLIC_AUTH_API_URL ||
@@ -22,7 +23,7 @@ interface AgentRequest {
 
 type EntTab = "all" | "pending_review" | "active" | "rejected";
 type AgTab  = "all" | "pending" | "active" | "rejected";
-type Section = "enterprises" | "agent_requests";
+type Section = "enterprises" | "agent_requests" | "cloud_monitor";
 
 // ---------------------------------------------------------------------------
 // Badge configs
@@ -361,6 +362,7 @@ export default function AdminPage() {
           {([
             { id: "enterprises"    as Section, label: "Tài khoản DN",    count: entCounts.pending_review },
             { id: "agent_requests" as Section, label: "Agent Requests",  count: agCounts.pending },
+            { id: "cloud_monitor"  as Section, label: "Cloud Monitor",   count: 0 },
           ]).map((s) => (
             <button key={s.id} onClick={() => setSection(s.id)}
               className={`rounded-lg px-4 py-1.5 text-sm font-medium transition-colors ${
@@ -543,6 +545,13 @@ export default function AdminPage() {
             </div>
             <p className="mt-4 text-right text-xs text-gray-700">{agentRequests.length} requests</p>
           </>
+        )}
+
+        {/* ── CLOUD MONITOR SECTION ── */}
+        {section === "cloud_monitor" && (
+          <div className="-mx-4 sm:-mx-6">
+            <CloudMonitorDashboard />
+          </div>
         )}
       </div>
     </>

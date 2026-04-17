@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import CloudMonitorDashboard from "@/components/zemmer-cloud-monitor";
 
 const AUTH_API_URL =
   process.env.NEXT_PUBLIC_AUTH_API_URL ||
@@ -188,7 +189,7 @@ function RequestAgentModal({
 // ---------------------------------------------------------------------------
 // Sidebar nav item
 // ---------------------------------------------------------------------------
-type Section = "overview" | "agents" | "profile";
+type Section = "overview" | "agents" | "profile" | "cloud";
 const NAV_ITEMS: { id: Section; label: string; icon: React.ReactNode }[] = [
   {
     id: "overview",
@@ -204,6 +205,11 @@ const NAV_ITEMS: { id: Section; label: string; icon: React.ReactNode }[] = [
     id: "profile",
     label: "Hồ sơ công ty",
     icon: <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" /></svg>,
+  },
+  {
+    id: "cloud",
+    label: "Hạ tầng Cloud",
+    icon: <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 01-3-3m3 3a3 3 0 100 6h13.5a3 3 0 100-6m-16.5-3a3 3 0 013-3h13.5a3 3 0 013 3m-19.5 0a4.5 4.5 0 01.9-2.7L5.737 5.1a3.375 3.375 0 012.7-1.35h7.126c1.062 0 2.062.5 2.7 1.35l2.587 3.45a4.5 4.5 0 01.9 2.7m0 0a3 3 0 01-3 3m0 3h.008v.008h-.008v-.008zm0-6h.008v.008h-.008v-.008zm-3 6h.008v.008h-.008v-.008zm0-6h.008v.008h-.008v-.008z" /></svg>,
   },
 ];
 
@@ -227,6 +233,12 @@ export default function DashboardPage() {
   const [modalLoading, setModalLoading]     = useState(false);
   const [modalError, setModalError]         = useState("");
   const [toast, setToast] = useState<{ msg: string; type: "success" | "error" } | null>(null);
+
+  // Edit profile state
+  const [editingProfile, setEditingProfile] = useState(false);
+  const [editName, setEditName]             = useState("");
+  const [editCompany, setEditCompany]       = useState("");
+  const [profileSaving, setProfileSaving]   = useState(false);
 
   const showToast = (msg: string, type: "success" | "error") => {
     setToast({ msg, type });
@@ -312,6 +324,34 @@ export default function DashboardPage() {
   function handleLogout() {
     localStorage.removeItem("aitrify_token");
     window.location.href = "/login";
+  }
+
+  async function handleSaveProfile() {
+    setProfileSaving(true);
+    try {
+      const res  = await apiFetch("/user/profile", {
+        method: "PUT",
+        body:   JSON.stringify({ name: editName.trim(), company: editCompany.trim() }),
+      });
+      const data = await res.json() as { success: boolean; token?: string; error?: string };
+      if (data.success) {
+        if (data.token) {
+          localStorage.setItem("aitrify_token", data.token);
+          const claims = decodeToken(data.token);
+          if (claims) setUser(claims);
+          setToken(data.token);
+        }
+        setEditingProfile(false);
+        fetchProfile();
+        showToast("Cập nhật thành công", "success");
+      } else {
+        showToast(data.error || "Cập nhật thất bại.", "error");
+      }
+    } catch {
+      showToast("Lỗi kết nối. Vui lòng thử lại.", "error");
+    } finally {
+      setProfileSaving(false);
+    }
   }
 
   if (!user) return null; // Đang redirect
@@ -532,8 +572,27 @@ export default function DashboardPage() {
           {/* ── PROFILE ── */}
           {section === "profile" && (
             <div>
-              <h2 className="font-nacelle text-2xl font-semibold text-gray-100">Hồ sơ công ty</h2>
-              <p className="mt-1 text-sm text-gray-600">Thông tin tài khoản doanh nghiệp AItrify</p>
+              <div className="flex items-start justify-between">
+                <div>
+                  <h2 className="font-nacelle text-2xl font-semibold text-gray-100">Hồ sơ công ty</h2>
+                  <p className="mt-1 text-sm text-gray-600">Thông tin tài khoản doanh nghiệp AItrify</p>
+                </div>
+                {!editingProfile && !profileLoading && (
+                  <button
+                    onClick={() => {
+                      setEditName(profile?.name ?? user.name);
+                      setEditCompany(profile?.company ?? user.company);
+                      setEditingProfile(true);
+                    }}
+                    className="btn bg-gray-800 text-gray-300 hover:bg-gray-700 text-sm"
+                  >
+                    <svg className="mr-1.5 h-4 w-4 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125" />
+                    </svg>
+                    Chỉnh sửa
+                  </button>
+                )}
+              </div>
 
               {profileLoading ? (
                 <div className="flex justify-center py-20">
@@ -544,41 +603,102 @@ export default function DashboardPage() {
                 </div>
               ) : (
                 <div className="mt-6 max-w-lg">
-                  <div className="rounded-2xl border border-gray-700/40 bg-gray-900/50 divide-y divide-gray-800/60">
-                    {[
-                      { label: "Họ và tên",    value: profile?.name    ?? user.name },
-                      { label: "Công ty",       value: profile?.company ?? user.company },
-                      { label: "Email",         value: profile?.email   ?? user.email },
-                      { label: "Tên miền",      value: profile?.email_domain },
-                      {
-                        label: "Trạng thái",
-                        value: profile?.status,
-                        render: (v: string) => {
-                          const s = ACCOUNT_STATUS_BADGE[v] ?? { label: v, cls: "text-gray-400" };
-                          return <span className={`font-medium ${s.cls}`}>{s.label}</span>;
-                        },
-                      },
-                      { label: "Ngày đăng ký", value: profile ? formatDate(profile.created_at) : "—" },
-                    ].map((row) => (
-                      <div key={row.label} className="flex justify-between gap-4 px-5 py-4">
-                        <span className="text-sm text-gray-600 shrink-0">{row.label}</span>
-                        <span className="text-sm text-gray-200 text-right">
-                          {row.render && row.value
-                            ? row.render(row.value as string)
-                            : (row.value ?? "—")}
-                        </span>
+                  {editingProfile ? (
+                    <div className="rounded-2xl border border-indigo-500/30 bg-gray-900/50 p-6">
+                      <div className="space-y-4">
+                        <div>
+                          <label className="mb-1.5 block text-sm font-medium text-indigo-200/65">Họ và tên</label>
+                          <input
+                            type="text"
+                            className="form-input w-full"
+                            value={editName}
+                            onChange={(e) => setEditName(e.target.value)}
+                            disabled={profileSaving}
+                            maxLength={100}
+                          />
+                        </div>
+                        <div>
+                          <label className="mb-1.5 block text-sm font-medium text-indigo-200/65">Tên công ty</label>
+                          <input
+                            type="text"
+                            className="form-input w-full"
+                            value={editCompany}
+                            onChange={(e) => setEditCompany(e.target.value)}
+                            disabled={profileSaving}
+                            maxLength={100}
+                          />
+                        </div>
                       </div>
-                    ))}
-                  </div>
+                      <div className="mt-5 flex justify-end gap-3">
+                        <button
+                          onClick={() => setEditingProfile(false)}
+                          disabled={profileSaving}
+                          className="btn bg-gray-800 text-gray-300 hover:bg-gray-700"
+                        >
+                          Hủy
+                        </button>
+                        <button
+                          onClick={handleSaveProfile}
+                          disabled={profileSaving || !editName.trim() || !editCompany.trim()}
+                          className="btn bg-linear-to-t from-indigo-600 to-indigo-500 bg-[length:100%_100%] bg-[bottom] text-white shadow-[inset_0px_1px_0px_0px_--theme(--color-white/.16)] hover:bg-[length:100%_150%] disabled:opacity-60 disabled:cursor-not-allowed"
+                        >
+                          {profileSaving ? (
+                            <span className="flex items-center gap-2">
+                              <svg className="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                              </svg>
+                              Đang lưu…
+                            </span>
+                          ) : "Lưu"}
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="rounded-2xl border border-gray-700/40 bg-gray-900/50 divide-y divide-gray-800/60">
+                        {[
+                          { label: "Họ và tên",    value: profile?.name    ?? user.name },
+                          { label: "Công ty",       value: profile?.company ?? user.company },
+                          { label: "Email",         value: profile?.email   ?? user.email },
+                          { label: "Tên miền",      value: profile?.email_domain },
+                          {
+                            label: "Trạng thái",
+                            value: profile?.status,
+                            render: (v: string) => {
+                              const s = ACCOUNT_STATUS_BADGE[v] ?? { label: v, cls: "text-gray-400" };
+                              return <span className={`font-medium ${s.cls}`}>{s.label}</span>;
+                            },
+                          },
+                          { label: "Ngày đăng ký", value: profile ? formatDate(profile.created_at) : "—" },
+                        ].map((row) => (
+                          <div key={row.label} className="flex justify-between gap-4 px-5 py-4">
+                            <span className="text-sm text-gray-600 shrink-0">{row.label}</span>
+                            <span className="text-sm text-gray-200 text-right">
+                              {row.render && row.value
+                                ? row.render(row.value as string)
+                                : (row.value ?? "—")}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
 
-                  <div className="mt-4 rounded-xl border border-gray-800/60 bg-gray-900/30 p-4 text-sm text-gray-600 leading-relaxed">
-                    Để cập nhật thông tin hoặc thay đổi mật khẩu, vui lòng liên hệ{" "}
-                    <a href="mailto:support@aitrify.com" className="text-indigo-400 hover:text-indigo-300">
-                      support@aitrify.com
-                    </a>
-                  </div>
+                      <div className="mt-4 rounded-xl border border-gray-800/60 bg-gray-900/30 p-4 text-sm text-gray-600 leading-relaxed">
+                        Để cập nhật thông tin hoặc thay đổi mật khẩu, vui lòng liên hệ{" "}
+                        <a href="mailto:support@aitrify.com" className="text-indigo-400 hover:text-indigo-300">
+                          support@aitrify.com
+                        </a>
+                      </div>
+                    </>
+                  )}
                 </div>
               )}
+            </div>
+          )}
+          {/* ── CLOUD ── */}
+          {section === "cloud" && (
+            <div className="-mx-4 -my-8 sm:-mx-8">
+              <CloudMonitorDashboard />
             </div>
           )}
         </main>
