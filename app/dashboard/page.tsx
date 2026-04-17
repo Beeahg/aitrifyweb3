@@ -698,7 +698,7 @@ export default function DashboardPage() {
           {/* ── CLOUD ── */}
           {section === "cloud" && (
             <div className="-mx-4 -my-8 sm:-mx-8">
-              <CloudMonitorDashboard />
+              <CloudMonitorDashboard clientId="zemmer-qlbh-v1.0-2026" />
             </div>
           )}
         </main>

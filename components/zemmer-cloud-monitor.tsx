@@ -350,8 +350,8 @@ const CustomTooltip = ({ active, payload, label, formatter }: CustomTooltipProps
 };
 
 // ══ MAIN DASHBOARD ══
-export default function CloudMonitorDashboard() {
-  const [selectedClient, setSelectedClient] = useState<string>("zemmer-qlbh-v1.0-2026");
+export default function CloudMonitorDashboard({ clientId }: { clientId?: string }) {
+  const [selectedClient, setSelectedClient] = useState<string>(clientId ?? "zemmer-qlbh-v1.0-2026");
   const [timeRange, setTimeRange] = useState<"week" | "month">("month");
   const [loaded, setLoaded] = useState<boolean>(false);
 
@@ -415,21 +415,23 @@ export default function CloudMonitorDashboard() {
 
           {/* Client Selector */}
           <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
-            <select
-              value={selectedClient}
-              onChange={(e) => setSelectedClient(e.target.value)}
-              style={{
-                background: "rgba(255,255,255,0.05)", color: "#fff", border: "1px solid rgba(255,255,255,0.1)",
-                borderRadius: 10, padding: "10px 16px", fontSize: 13, fontWeight: 600,
-                cursor: "pointer", outline: "none", minWidth: 260,
-              }}
-            >
-              {Object.entries(CLIENTS).map(([id, c]) => (
-                <option key={id} value={id} style={{ background: "#1a1a2e" }}>
-                  {c.name} — {c.product} {c.version} ({c.year})
-                </option>
-              ))}
-            </select>
+            {!clientId && (
+              <select
+                value={selectedClient}
+                onChange={(e) => setSelectedClient(e.target.value)}
+                style={{
+                  background: "rgba(255,255,255,0.05)", color: "#fff", border: "1px solid rgba(255,255,255,0.1)",
+                  borderRadius: 10, padding: "10px 16px", fontSize: 13, fontWeight: 600,
+                  cursor: "pointer", outline: "none", minWidth: 260,
+                }}
+              >
+                {Object.entries(CLIENTS).map(([id, c]) => (
+                  <option key={id} value={id} style={{ background: "#1a1a2e" }}>
+                    {c.name} — {c.product} {c.version} ({c.year})
+                  </option>
+                ))}
+              </select>
+            )}
             <div style={{
               display: "flex", background: "rgba(255,255,255,0.05)", borderRadius: 8, overflow: "hidden",
               border: "1px solid rgba(255,255,255,0.06)",
