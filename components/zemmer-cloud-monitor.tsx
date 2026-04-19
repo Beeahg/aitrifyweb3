@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { PieChart, Pie, Cell, AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Cell, AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Line, Legend } from "recharts";
 
 // ═══════════════════════════════════════════════════
 // AITRIFY CLOUD MONITOR — Client Infrastructure Dashboard
@@ -363,8 +363,16 @@ export default function CloudMonitorDashboard({ clientId }: { clientId?: string 
   const [selectedClient, setSelectedClient] = useState<string>(clientId ?? "zemmer-qlbh-v1.0-2026");
   const [timeRange, setTimeRange] = useState<"week" | "month">("month");
   const [loaded, setLoaded] = useState<boolean>(false);
+  const [selectedMonth, setSelectedMonth] = useState<string>(() => {
+    const c = CLIENTS[clientId ?? "zemmer-qlbh-v1.0-2026"];
+    return c.costs.monthly[c.costs.monthly.length - 1]?.month ?? "";
+  });
 
   useEffect(() => { setTimeout(() => setLoaded(true), 100); }, []);
+
+  useEffect(() => {
+    setSelectedMonth(CLIENTS[selectedClient].costs.monthly[CLIENTS[selectedClient].costs.monthly.length - 1]?.month ?? "");
+  }, [selectedClient]);
 
   const client = CLIENTS[selectedClient];
   const costs = client.costs;
@@ -633,6 +641,127 @@ export default function CloudMonitorDashboard({ clientId }: { clientId?: string 
             </div>
           </div>
         </div>
+
+        {/* ═══ CHART: 30 NGÀY GẦN NHẤT (DUAL-AXIS) ═══ */}
+        <div style={{
+          background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)",
+          borderRadius: 16, padding: 24, marginBottom: 16,
+        }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+            <h3 style={{ fontSize: 14, fontWeight: 600, margin: 0, color: "rgba(255,255,255,0.7)" }}>30 ngày gần nhất — Chi phí & Dung lượng</h3>
+            <div style={{ display: "flex", gap: 16, fontSize: 12 }}>
+              <span style={{ color: "#22c55e", fontWeight: 600 }}>━ Chi phí (VNĐ)</span>
+              <span style={{ color: "#8b5cf6", fontWeight: 600 }}>━ Dung lượng (GB)</span>
+            </div>
+          </div>
+          <ResponsiveContainer width="100%" height={240}>
+            <ComposedChart data={costs.daily.slice(-30)} margin={{ top: 5, right: 30, left: 10, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
+              <XAxis dataKey="date" tick={{ fill: "rgba(255,255,255,0.3)", fontSize: 11 }} axisLine={false} tickLine={false} interval={4} />
+              <YAxis
+                yAxisId="left"
+                tick={{ fill: "#22c55e", fontSize: 11 }}
+                axisLine={false} tickLine={false}
+                tickFormatter={(v: number) => `${(v / 1000).toFixed(0)}K`}
+              />
+              <YAxis
+                yAxisId="right"
+                orientation="right"
+                tick={{ fill: "#8b5cf6", fontSize: 11 }}
+                axisLine={false} tickLine={false}
+                tickFormatter={(v: number) => `${v.toFixed(0)} GB`}
+              />
+              <Tooltip
+                contentStyle={{ background: "rgba(15,15,20,0.95)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10 }}
+                labelStyle={{ color: "rgba(255,255,255,0.5)", fontSize: 11 }}
+                formatter={(value: unknown, name: unknown) => {
+                  const v = value as number;
+                  const n = name as string;
+                  return n === "Chi phí" ? [formatVND(v), n] : [`${v.toFixed(1)} GB`, n];
+                }}
+              />
+              <Legend wrapperStyle={{ fontSize: 12, color: "rgba(255,255,255,0.5)" }} />
+              <Line yAxisId="left" type="monotone" dataKey="cost" stroke="#22c55e" strokeWidth={2} dot={false} name="Chi phí" />
+              <Line yAxisId="right" type="monotone" dataKey="storage" stroke="#8b5cf6" strokeWidth={2} dot={false} name="Dung lượng" />
+            </ComposedChart>
+          </ResponsiveContainer>
+        </div>
+
+        {/* ═══ CHART: CHI PHÍ THEO THÁNG (DROPDOWN) ═══ */}
+        {(() => {
+          const cleanMonth = selectedMonth.replace("*", "");
+          const monthData = costs.monthly.find((m) => m.month === selectedMonth);
+          const dailyForMonth = costs.daily.filter((d) => d.date.startsWith(cleanMonth));
+          const avgStorage = dailyForMonth.length > 0
+            ? dailyForMonth.reduce((s, d) => s + d.storage, 0) / dailyForMonth.length
+            : 0;
+          return (
+            <div style={{
+              background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)",
+              borderRadius: 16, padding: 24, marginBottom: 16,
+            }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20, flexWrap: "wrap", gap: 12 }}>
+                <h3 style={{ fontSize: 14, fontWeight: 600, margin: 0, color: "rgba(255,255,255,0.7)" }}>Chi phí & Dung lượng theo tháng</h3>
+                <select
+                  value={selectedMonth}
+                  onChange={(e) => setSelectedMonth(e.target.value)}
+                  style={{
+                    background: "rgba(255,255,255,0.05)", color: "#fff",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    borderRadius: 8, padding: "6px 12px", fontSize: 12, fontWeight: 600,
+                    cursor: "pointer", outline: "none",
+                  }}
+                >
+                  {costs.monthly.map((m) => (
+                    <option key={m.month} value={m.month} style={{ background: "#1a1a2e" }}>
+                      {m.month.replace("*", " (forecast)")}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div style={{ display: "flex", gap: 24, marginBottom: 20 }}>
+                <div style={{
+                  flex: 1, padding: "14px 20px", borderRadius: 12,
+                  background: "rgba(34,197,94,0.05)", border: "1px solid rgba(34,197,94,0.1)",
+                }}>
+                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginBottom: 4 }}>Tổng chi phí tháng {cleanMonth}</div>
+                  <div style={{ fontSize: 22, fontWeight: 700, color: "#22c55e", fontFamily: "monospace" }}>
+                    {monthData ? formatVND(monthData.cost) : "—"}
+                  </div>
+                  {monthData?.month.includes("*") && (
+                    <div style={{ fontSize: 10, color: "#f59e0b", marginTop: 4 }}>⚠ Forecast</div>
+                  )}
+                </div>
+                <div style={{
+                  flex: 1, padding: "14px 20px", borderRadius: 12,
+                  background: "rgba(139,92,246,0.05)", border: "1px solid rgba(139,92,246,0.1)",
+                }}>
+                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginBottom: 4 }}>Dung lượng TB tháng {cleanMonth}</div>
+                  <div style={{ fontSize: 22, fontWeight: 700, color: "#8b5cf6", fontFamily: "monospace" }}>
+                    {dailyForMonth.length > 0 ? formatGB(avgStorage) : "—"}
+                  </div>
+                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", marginTop: 4 }}>
+                    từ {dailyForMonth.length} ngày dữ liệu
+                  </div>
+                </div>
+              </div>
+              <ResponsiveContainer width="100%" height={200}>
+                <BarChart data={dailyForMonth} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
+                  <XAxis dataKey="date" tick={{ fill: "rgba(255,255,255,0.3)", fontSize: 11 }} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fill: "rgba(255,255,255,0.3)", fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v: number) => `${(v / 1000).toFixed(0)}K`} />
+                  <Tooltip content={<CustomTooltip formatter={formatVND} />} />
+                  <Bar dataKey="cost" name="Chi phí" fill="rgba(34,197,94,0.5)" radius={[4, 4, 0, 0]} maxBarSize={40} />
+                </BarChart>
+              </ResponsiveContainer>
+              {dailyForMonth.length === 0 && (
+                <div style={{ textAlign: "center", color: "rgba(255,255,255,0.3)", fontSize: 13, padding: "20px 0" }}>
+                  Không có dữ liệu ngày trong window 45 ngày cho tháng này
+                </div>
+              )}
+            </div>
+          );
+        })()}
 
         {/* ═══ INFRA STATUS + MIGRATION ═══ */}
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, paddingBottom: 16 }}>
