@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { PieChart, Pie, Cell, AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Line, Legend } from "recharts";
 
 // ═══════════════════════════════════════════════════
@@ -275,6 +275,314 @@ const pctChange = (curr: number, prev: number): string | null => {
   return (((curr - prev) / prev) * 100).toFixed(1);
 };
 
+// ══ TRANSLATIONS ══
+type Lang = "VI" | "EN" | "KO" | "JA";
+
+type TranslationSet = {
+  // Metric cards
+  cardMonthTotal: string;
+  cardToday: string;
+  cardStorage: string;
+  cardWeek: string;
+  // Trend labels
+  trendVsLastMonth: string;
+  trendVsYesterday: string;
+  trendGrowthMonth: string;
+  trendVsLastWeek: string;
+  // Forecast sub-label
+  forecastSub: (amount: string) => string;
+  // Chart titles
+  chartDailyCost: string;
+  chartCostBreakdown: string;
+  chartStorageGrowth: string;
+  chartLast30Days: string;
+  chartMonthlyCostStorage: string;
+  // Chart legend names (used in recharts name prop)
+  legendCostName: string;
+  legendStorageName: string;
+  // Legend labels (display)
+  legendCostLabel: string;
+  legendStorageLabel: string;
+  // Section headers
+  sectionBuckets: string;
+  sectionInfraStatus: string;
+  sectionMigrationStatus: string;
+  sectionMonthlyTrend: string;
+  // Migration stats
+  migFilesMigrated: string;
+  migTotalSize: string;
+  migCompleted: string;
+  migRemaining: string;
+  migComplete: string;
+  // Infra status values
+  statusRunning: string;
+  statusStopped: string;
+  statusWarning: string;
+  statusError: string;
+  // Monthly section
+  monthTotalLabel: (month: string) => string;
+  monthStorageLabel: (month: string) => string;
+  monthDataDays: (n: number) => string;
+  // Other
+  forecast: string;
+  production: string;
+  headerSubtitle: string;
+  noDataMessage: string;
+  forecastNote: string;
+  footerBuiltFor: (name: string) => string;
+  lastUpdated: string;
+};
+
+const TRANSLATIONS: Record<Lang, TranslationSet> = {
+  VI: {
+    cardMonthTotal: "Tổng chi phí tháng",
+    cardToday: "Chi phí hôm nay",
+    cardStorage: "Tổng dung lượng",
+    cardWeek: "Tuần này",
+    trendVsLastMonth: "vs tháng trước",
+    trendVsYesterday: "vs hôm qua",
+    trendGrowthMonth: "tăng trong tháng",
+    trendVsLastWeek: "vs tuần trước",
+    forecastSub: (amount) => `Forecast: ${amount}`,
+    chartDailyCost: "Chi phí theo ngày (VNĐ)",
+    chartCostBreakdown: "Phân bổ chi phí",
+    chartStorageGrowth: "Dung lượng tăng trưởng (GB)",
+    chartLast30Days: "30 ngày gần nhất — Chi phí & Dung lượng",
+    chartMonthlyCostStorage: "Chi phí & Dung lượng theo tháng",
+    legendCostName: "Chi phí",
+    legendStorageName: "Dung lượng",
+    legendCostLabel: "Chi phí (VNĐ)",
+    legendStorageLabel: "Dung lượng (GB)",
+    sectionBuckets: "Buckets",
+    sectionInfraStatus: "🏗️ Infrastructure Status",
+    sectionMigrationStatus: "📦 Migration Status",
+    sectionMonthlyTrend: "Xu hướng chi phí theo tháng",
+    migFilesMigrated: "files migrated",
+    migTotalSize: "total size",
+    migCompleted: "completed",
+    migRemaining: "remaining",
+    migComplete: "complete",
+    statusRunning: "running",
+    statusStopped: "stopped",
+    statusWarning: "warning",
+    statusError: "error",
+    monthTotalLabel: (month) => `Tổng chi phí tháng ${month}`,
+    monthStorageLabel: (month) => `Dung lượng TB tháng ${month}`,
+    monthDataDays: (n) => `từ ${n} ngày dữ liệu`,
+    forecast: "Forecast",
+    production: "PRODUCTION",
+    headerSubtitle: "Infrastructure & Cost Monitoring Dashboard",
+    noDataMessage: "Không có dữ liệu ngày trong window 45 ngày cho tháng này",
+    forecastNote: "* Tháng 4 là forecast — bao gồm chi phí migration spike",
+    footerBuiltFor: (name) => `Aitrify Cloud Monitor — Built for ${name} infrastructure`,
+    lastUpdated: "Last updated",
+  },
+  EN: {
+    cardMonthTotal: "Monthly Total Cost",
+    cardToday: "Today's Cost",
+    cardStorage: "Total Storage",
+    cardWeek: "This Week",
+    trendVsLastMonth: "vs last month",
+    trendVsYesterday: "vs yesterday",
+    trendGrowthMonth: "growth this month",
+    trendVsLastWeek: "vs last week",
+    forecastSub: (amount) => `Forecast: ${amount}`,
+    chartDailyCost: "Daily Cost (VND)",
+    chartCostBreakdown: "Cost Breakdown",
+    chartStorageGrowth: "Storage Growth (GB)",
+    chartLast30Days: "Last 30 Days — Cost & Storage",
+    chartMonthlyCostStorage: "Monthly Cost & Storage",
+    legendCostName: "Cost",
+    legendStorageName: "Storage",
+    legendCostLabel: "Cost (VND)",
+    legendStorageLabel: "Storage (GB)",
+    sectionBuckets: "Buckets",
+    sectionInfraStatus: "🏗️ Infrastructure Status",
+    sectionMigrationStatus: "📦 Migration Status",
+    sectionMonthlyTrend: "Monthly Cost Trend",
+    migFilesMigrated: "files migrated",
+    migTotalSize: "total size",
+    migCompleted: "completed",
+    migRemaining: "remaining",
+    migComplete: "complete",
+    statusRunning: "running",
+    statusStopped: "stopped",
+    statusWarning: "warning",
+    statusError: "error",
+    monthTotalLabel: (month) => `Total cost for ${month}`,
+    monthStorageLabel: (month) => `Avg. storage for ${month}`,
+    monthDataDays: (n) => `from ${n} days of data`,
+    forecast: "Forecast",
+    production: "PRODUCTION",
+    headerSubtitle: "Infrastructure & Cost Monitoring Dashboard",
+    noDataMessage: "No daily data in the 45-day window for this month",
+    forecastNote: "* April is forecast — includes migration spike cost",
+    footerBuiltFor: (name) => `Aitrify Cloud Monitor — Built for ${name} infrastructure`,
+    lastUpdated: "Last updated",
+  },
+  KO: {
+    cardMonthTotal: "이번 달 총 비용",
+    cardToday: "오늘의 비용",
+    cardStorage: "총 저장 용량",
+    cardWeek: "이번 주",
+    trendVsLastMonth: "전월 대비",
+    trendVsYesterday: "전일 대비",
+    trendGrowthMonth: "이번 달 증가",
+    trendVsLastWeek: "전주 대비",
+    forecastSub: (amount) => `예측: ${amount}`,
+    chartDailyCost: "일별 비용 (VND)",
+    chartCostBreakdown: "비용 구성",
+    chartStorageGrowth: "스토리지 증가 (GB)",
+    chartLast30Days: "최근 30일 — 비용 & 저장 용량",
+    chartMonthlyCostStorage: "월별 비용 & 저장 용량",
+    legendCostName: "비용",
+    legendStorageName: "저장 용량",
+    legendCostLabel: "비용 (VND)",
+    legendStorageLabel: "저장 용량 (GB)",
+    sectionBuckets: "버킷",
+    sectionInfraStatus: "🏗️ 인프라 상태",
+    sectionMigrationStatus: "📦 마이그레이션 상태",
+    sectionMonthlyTrend: "월별 비용 추이",
+    migFilesMigrated: "마이그레이션된 파일",
+    migTotalSize: "총 크기",
+    migCompleted: "완료일",
+    migRemaining: "남은 항목",
+    migComplete: "완료",
+    statusRunning: "실행 중",
+    statusStopped: "중지됨",
+    statusWarning: "경고",
+    statusError: "오류",
+    monthTotalLabel: (month) => `${month} 총 비용`,
+    monthStorageLabel: (month) => `${month} 평균 저장 용량`,
+    monthDataDays: (n) => `${n}일 데이터 기준`,
+    forecast: "예측",
+    production: "운영 중",
+    headerSubtitle: "인프라 & 비용 모니터링 대시보드",
+    noDataMessage: "이번 달 45일 창 내에 일별 데이터가 없습니다",
+    forecastNote: "* 4월은 예측값 — 마이그레이션 급증 비용 포함",
+    footerBuiltFor: (name) => `Aitrify Cloud Monitor — ${name} 인프라용`,
+    lastUpdated: "마지막 업데이트",
+  },
+  JA: {
+    cardMonthTotal: "今月の総コスト",
+    cardToday: "本日のコスト",
+    cardStorage: "総ストレージ",
+    cardWeek: "今週",
+    trendVsLastMonth: "先月比",
+    trendVsYesterday: "前日比",
+    trendGrowthMonth: "今月の増加",
+    trendVsLastWeek: "先週比",
+    forecastSub: (amount) => `予測: ${amount}`,
+    chartDailyCost: "日別コスト (VND)",
+    chartCostBreakdown: "コスト内訳",
+    chartStorageGrowth: "ストレージ増加 (GB)",
+    chartLast30Days: "直近30日間 — コスト & ストレージ",
+    chartMonthlyCostStorage: "月別コスト & ストレージ",
+    legendCostName: "コスト",
+    legendStorageName: "ストレージ",
+    legendCostLabel: "コスト (VND)",
+    legendStorageLabel: "ストレージ (GB)",
+    sectionBuckets: "バケット",
+    sectionInfraStatus: "🏗️ インフラ状況",
+    sectionMigrationStatus: "📦 マイグレーション状況",
+    sectionMonthlyTrend: "月別コスト推移",
+    migFilesMigrated: "移行済みファイル",
+    migTotalSize: "合計サイズ",
+    migCompleted: "完了日",
+    migRemaining: "残り",
+    migComplete: "完了",
+    statusRunning: "稼働中",
+    statusStopped: "停止中",
+    statusWarning: "警告",
+    statusError: "エラー",
+    monthTotalLabel: (month) => `${month} 総コスト`,
+    monthStorageLabel: (month) => `${month} 平均ストレージ`,
+    monthDataDays: (n) => `${n}日分のデータ`,
+    forecast: "予測",
+    production: "本番環境",
+    headerSubtitle: "インフラ & コスト監視ダッシュボード",
+    noDataMessage: "この月の45日ウィンドウに日別データがありません",
+    forecastNote: "* 4月は予測値 — マイグレーションスパイクコスト含む",
+    footerBuiltFor: (name) => `Aitrify Cloud Monitor — ${name} インフラ用`,
+    lastUpdated: "最終更新",
+  },
+};
+
+const LANG_OPTIONS: { code: Lang; flag: string; label: string }[] = [
+  { code: "VI", flag: "🇻🇳", label: "Tiếng Việt" },
+  { code: "EN", flag: "🇺🇸", label: "English" },
+  { code: "KO", flag: "🇰🇷", label: "한국어" },
+  { code: "JA", flag: "🇯🇵", label: "日本語" },
+];
+
+// ══ LANGUAGE SWITCHER ══
+function LanguageSwitcher({ currentLang, onChange }: { currentLang: Lang; onChange: (lang: Lang) => void }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
+
+  const current = LANG_OPTIONS.find((l) => l.code === currentLang)!;
+
+  return (
+    <div ref={ref} style={{ position: "relative", userSelect: "none" }}>
+      <button
+        onClick={() => setOpen((o) => !o)}
+        style={{
+          display: "flex", alignItems: "center", gap: 8,
+          background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)",
+          borderRadius: 10, padding: "8px 14px", cursor: "pointer", color: "#fff",
+          fontSize: 13, fontWeight: 600, transition: "all 0.2s",
+        }}
+      >
+        <span>{current.flag}</span>
+        <span>{current.label}</span>
+        <span style={{
+          fontSize: 10, opacity: 0.6, transition: "transform 0.2s",
+          transform: open ? "rotate(180deg)" : "rotate(0deg)",
+          display: "inline-block",
+        }}>▼</span>
+      </button>
+      {open && (
+        <div style={{
+          position: "absolute", top: "calc(100% + 8px)", right: 0, zIndex: 100,
+          background: "#13131a", border: "1px solid rgba(255,255,255,0.1)",
+          borderRadius: 12, overflow: "hidden", minWidth: 160,
+          boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
+        }}>
+          {LANG_OPTIONS.map((opt) => (
+            <button
+              key={opt.code}
+              onClick={() => { onChange(opt.code); setOpen(false); }}
+              style={{
+                display: "flex", alignItems: "center", justifyContent: "space-between",
+                width: "100%", padding: "10px 16px", border: "none", cursor: "pointer",
+                background: currentLang === opt.code ? "rgba(34,197,94,0.1)" : "transparent",
+                color: currentLang === opt.code ? "#22c55e" : "rgba(255,255,255,0.7)",
+                fontSize: 13, fontWeight: currentLang === opt.code ? 600 : 400,
+                transition: "background 0.15s",
+                gap: 10,
+              }}
+            >
+              <span style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <span>{opt.flag}</span>
+                <span>{opt.label}</span>
+              </span>
+              {currentLang === opt.code && <span style={{ fontSize: 11 }}>✓</span>}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ══ COMPONENTS ══
 
 interface StatusDotProps {
@@ -363,6 +671,7 @@ export default function CloudMonitorDashboard({ clientId }: { clientId?: string 
   const [selectedClient, setSelectedClient] = useState<string>(clientId ?? "zemmer-qlbh-v1.0-2026");
   const [timeRange, setTimeRange] = useState<"week" | "month">("month");
   const [loaded, setLoaded] = useState<boolean>(false);
+  const [currentLang, setCurrentLang] = useState<Lang>("VI");
   const [selectedMonth, setSelectedMonth] = useState<string>(() => {
     const c = CLIENTS[clientId ?? "zemmer-qlbh-v1.0-2026"];
     return c.costs.monthly[c.costs.monthly.length - 1]?.month ?? "";
@@ -374,6 +683,7 @@ export default function CloudMonitorDashboard({ clientId }: { clientId?: string 
     setSelectedMonth(CLIENTS[selectedClient].costs.monthly[CLIENTS[selectedClient].costs.monthly.length - 1]?.month ?? "");
   }, [selectedClient]);
 
+  const t = TRANSLATIONS[currentLang];
   const client = CLIENTS[selectedClient];
   const costs = client.costs;
   const storage = client.storage;
@@ -387,6 +697,16 @@ export default function CloudMonitorDashboard({ clientId }: { clientId?: string 
   const storageGrowth = (costs.daily[costs.daily.length - 1]?.storage ?? 0) - (costs.daily[0]?.storage ?? 0);
 
   const totalBucketSize = storage.buckets.reduce((s, b) => s + b.sizeGB, 0);
+
+  const statusLabel = (status: InfraStatus): string => {
+    const map: Record<InfraStatus, string> = {
+      running: t.statusRunning,
+      stopped: t.statusStopped,
+      warning: t.statusWarning,
+      error: t.statusError,
+    };
+    return map[status];
+  };
 
   return (
     <div style={{
@@ -426,11 +746,11 @@ export default function CloudMonitorDashboard({ clientId }: { clientId?: string 
               </div>
             </div>
             <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", margin: 0 }}>
-              Infrastructure & Cost Monitoring Dashboard
+              {t.headerSubtitle}
             </p>
           </div>
 
-          {/* Client Selector */}
+          {/* Controls: Client Selector + WEEK/MONTH + Language */}
           <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
             {!clientId && (
               <select
@@ -463,6 +783,7 @@ export default function CloudMonitorDashboard({ clientId }: { clientId?: string 
                 }}>{r}</button>
               ))}
             </div>
+            <LanguageSwitcher currentLang={currentLang} onChange={setCurrentLang} />
           </div>
         </header>
 
@@ -477,7 +798,7 @@ export default function CloudMonitorDashboard({ clientId }: { clientId?: string 
           <span>🏗️ {client.gcpProject}</span>
           <span>📅 Deploy: {client.deployDate}</span>
           <span style={{ marginLeft: "auto", fontSize: 11, padding: "4px 12px", borderRadius: 20, background: "rgba(34,197,94,0.1)", color: "#22c55e", fontWeight: 600 }}>
-            PRODUCTION
+            {t.production}
           </span>
         </div>
 
@@ -487,25 +808,25 @@ export default function CloudMonitorDashboard({ clientId }: { clientId?: string 
           gap: 16, padding: "24px 0",
         }}>
           <MetricCard
-            icon="💰" label="Tổng chi phí tháng" value={formatVND(costs.current.total)}
-            sub={`Forecast: ${formatVND(forecastMonth)}`}
-            trend={pctChange(forecastMonth, 168000)} trendLabel="vs tháng trước"
+            icon="💰" label={t.cardMonthTotal} value={formatVND(costs.current.total)}
+            sub={t.forecastSub(formatVND(forecastMonth))}
+            trend={pctChange(forecastMonth, 168000)} trendLabel={t.trendVsLastMonth}
             accent="#ef4444"
           />
           <MetricCard
-            icon="📊" label="Chi phí hôm nay" value={formatVND(todayCost)}
-            trend={pctChange(todayCost, yesterdayCost)} trendLabel="vs hôm qua"
+            icon="📊" label={t.cardToday} value={formatVND(todayCost)}
+            trend={pctChange(todayCost, yesterdayCost)} trendLabel={t.trendVsYesterday}
             accent="#f59e0b"
           />
           <MetricCard
-            icon="💾" label="Tổng dung lượng" value={formatGB(storage.totalGB)}
+            icon="💾" label={t.cardStorage} value={formatGB(storage.totalGB)}
             sub={`${storage.totalFiles.toLocaleString()} files`}
-            trend={((storageGrowth / (costs.daily[0]?.storage ?? 1)) * 100).toFixed(0)} trendLabel="tăng trong tháng"
+            trend={((storageGrowth / (costs.daily[0]?.storage ?? 1)) * 100).toFixed(0)} trendLabel={t.trendGrowthMonth}
             accent="#22c55e"
           />
           <MetricCard
-            icon="📦" label="Tuần này" value={formatVND(weekCost)}
-            trend={pctChange(weekCost, prevWeekCost)} trendLabel="vs tuần trước"
+            icon="📦" label={t.cardWeek} value={formatVND(weekCost)}
+            trend={pctChange(weekCost, prevWeekCost)} trendLabel={t.trendVsLastWeek}
             accent="#3b82f6"
           />
         </div>
@@ -518,7 +839,7 @@ export default function CloudMonitorDashboard({ clientId }: { clientId?: string 
             borderRadius: 16, padding: 24,
           }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-              <h3 style={{ fontSize: 14, fontWeight: 600, margin: 0, color: "rgba(255,255,255,0.7)" }}>Chi phí theo ngày (VNĐ)</h3>
+              <h3 style={{ fontSize: 14, fontWeight: 600, margin: 0, color: "rgba(255,255,255,0.7)" }}>{t.chartDailyCost}</h3>
               <span style={{ fontSize: 11, color: "rgba(255,255,255,0.3)" }}>April 2026</span>
             </div>
             <ResponsiveContainer width="100%" height={220}>
@@ -533,7 +854,7 @@ export default function CloudMonitorDashboard({ clientId }: { clientId?: string 
                 <XAxis dataKey="date" tick={{ fill: "rgba(255,255,255,0.3)", fontSize: 11 }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fill: "rgba(255,255,255,0.3)", fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v: number) => `${(v/1000).toFixed(0)}K`} />
                 <Tooltip content={<CustomTooltip formatter={formatVND} />} />
-                <Area type="monotone" dataKey="cost" stroke="#22c55e" strokeWidth={2} fill="url(#costGrad)" name="Chi phí" />
+                <Area type="monotone" dataKey="cost" stroke="#22c55e" strokeWidth={2} fill="url(#costGrad)" name={t.legendCostName} />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -543,7 +864,7 @@ export default function CloudMonitorDashboard({ clientId }: { clientId?: string 
             background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)",
             borderRadius: 16, padding: 24,
           }}>
-            <h3 style={{ fontSize: 14, fontWeight: 600, margin: "0 0 16px", color: "rgba(255,255,255,0.7)" }}>Phân bổ chi phí</h3>
+            <h3 style={{ fontSize: 14, fontWeight: 600, margin: "0 0 16px", color: "rgba(255,255,255,0.7)" }}>{t.chartCostBreakdown}</h3>
             <ResponsiveContainer width="100%" height={140}>
               <PieChart>
                 <Pie
@@ -585,7 +906,7 @@ export default function CloudMonitorDashboard({ clientId }: { clientId?: string 
             borderRadius: 16, padding: 24,
           }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-              <h3 style={{ fontSize: 14, fontWeight: 600, margin: 0, color: "rgba(255,255,255,0.7)" }}>Dung lượng tăng trưởng (GB)</h3>
+              <h3 style={{ fontSize: 14, fontWeight: 600, margin: 0, color: "rgba(255,255,255,0.7)" }}>{t.chartStorageGrowth}</h3>
               <span style={{ fontSize: 11, padding: "3px 10px", borderRadius: 12, background: "rgba(245,158,11,0.1)", color: "#f59e0b" }}>
                 📈 Migration spike Apr 14-16
               </span>
@@ -602,7 +923,7 @@ export default function CloudMonitorDashboard({ clientId }: { clientId?: string 
                 <XAxis dataKey="date" tick={{ fill: "rgba(255,255,255,0.3)", fontSize: 11 }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fill: "rgba(255,255,255,0.3)", fontSize: 11 }} axisLine={false} tickLine={false} />
                 <Tooltip content={<CustomTooltip formatter={(v: number) => `${v.toFixed(1)} GB`} />} />
-                <Area type="monotone" dataKey="storage" stroke="#3b82f6" strokeWidth={2} fill="url(#storageGrad)" name="Storage" />
+                <Area type="monotone" dataKey="storage" stroke="#3b82f6" strokeWidth={2} fill="url(#storageGrad)" name={t.legendStorageName} />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -612,7 +933,7 @@ export default function CloudMonitorDashboard({ clientId }: { clientId?: string 
             background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)",
             borderRadius: 16, padding: 24,
           }}>
-            <h3 style={{ fontSize: 14, fontWeight: 600, margin: "0 0 20px", color: "rgba(255,255,255,0.7)" }}>Buckets</h3>
+            <h3 style={{ fontSize: 14, fontWeight: 600, margin: "0 0 20px", color: "rgba(255,255,255,0.7)" }}>{t.sectionBuckets}</h3>
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
               {storage.buckets.map((b, i) => {
                 const pct = (b.sizeGB / totalBucketSize) * 100;
@@ -648,10 +969,10 @@ export default function CloudMonitorDashboard({ clientId }: { clientId?: string 
           borderRadius: 16, padding: 24, marginBottom: 16,
         }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-            <h3 style={{ fontSize: 14, fontWeight: 600, margin: 0, color: "rgba(255,255,255,0.7)" }}>30 ngày gần nhất — Chi phí & Dung lượng</h3>
+            <h3 style={{ fontSize: 14, fontWeight: 600, margin: 0, color: "rgba(255,255,255,0.7)" }}>{t.chartLast30Days}</h3>
             <div style={{ display: "flex", gap: 16, fontSize: 12 }}>
-              <span style={{ color: "#22c55e", fontWeight: 600 }}>━ Chi phí (VNĐ)</span>
-              <span style={{ color: "#8b5cf6", fontWeight: 600 }}>━ Dung lượng (GB)</span>
+              <span style={{ color: "#22c55e", fontWeight: 600 }}>━ {t.legendCostLabel}</span>
+              <span style={{ color: "#8b5cf6", fontWeight: 600 }}>━ {t.legendStorageLabel}</span>
             </div>
           </div>
           <ResponsiveContainer width="100%" height={240}>
@@ -677,12 +998,12 @@ export default function CloudMonitorDashboard({ clientId }: { clientId?: string 
                 formatter={(value: unknown, name: unknown) => {
                   const v = value as number;
                   const n = name as string;
-                  return n === "Chi phí" ? [formatVND(v), n] : [`${v.toFixed(1)} GB`, n];
+                  return n === t.legendCostName ? [formatVND(v), n] : [`${v.toFixed(1)} GB`, n];
                 }}
               />
               <Legend wrapperStyle={{ fontSize: 12, color: "rgba(255,255,255,0.5)" }} />
-              <Line yAxisId="left" type="monotone" dataKey="cost" stroke="#22c55e" strokeWidth={2} dot={false} name="Chi phí" />
-              <Line yAxisId="right" type="monotone" dataKey="storage" stroke="#8b5cf6" strokeWidth={2} dot={false} name="Dung lượng" />
+              <Line yAxisId="left" type="monotone" dataKey="cost" stroke="#22c55e" strokeWidth={2} dot={false} name={t.legendCostName} />
+              <Line yAxisId="right" type="monotone" dataKey="storage" stroke="#8b5cf6" strokeWidth={2} dot={false} name={t.legendStorageName} />
             </ComposedChart>
           </ResponsiveContainer>
         </div>
@@ -701,7 +1022,7 @@ export default function CloudMonitorDashboard({ clientId }: { clientId?: string 
               borderRadius: 16, padding: 24, marginBottom: 16,
             }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20, flexWrap: "wrap", gap: 12 }}>
-                <h3 style={{ fontSize: 14, fontWeight: 600, margin: 0, color: "rgba(255,255,255,0.7)" }}>Chi phí & Dung lượng theo tháng</h3>
+                <h3 style={{ fontSize: 14, fontWeight: 600, margin: 0, color: "rgba(255,255,255,0.7)" }}>{t.chartMonthlyCostStorage}</h3>
                 <select
                   value={selectedMonth}
                   onChange={(e) => setSelectedMonth(e.target.value)}
@@ -714,7 +1035,7 @@ export default function CloudMonitorDashboard({ clientId }: { clientId?: string 
                 >
                   {costs.monthly.map((m) => (
                     <option key={m.month} value={m.month} style={{ background: "#1a1a2e" }}>
-                      {m.month.replace("*", " (forecast)")}
+                      {m.month.replace("*", ` (${t.forecast})`)}
                     </option>
                   ))}
                 </select>
@@ -724,24 +1045,24 @@ export default function CloudMonitorDashboard({ clientId }: { clientId?: string 
                   flex: 1, padding: "14px 20px", borderRadius: 12,
                   background: "rgba(34,197,94,0.05)", border: "1px solid rgba(34,197,94,0.1)",
                 }}>
-                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginBottom: 4 }}>Tổng chi phí tháng {cleanMonth}</div>
+                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginBottom: 4 }}>{t.monthTotalLabel(cleanMonth)}</div>
                   <div style={{ fontSize: 22, fontWeight: 700, color: "#22c55e", fontFamily: "monospace" }}>
                     {monthData ? formatVND(monthData.cost) : "—"}
                   </div>
                   {monthData?.month.includes("*") && (
-                    <div style={{ fontSize: 10, color: "#f59e0b", marginTop: 4 }}>⚠ Forecast</div>
+                    <div style={{ fontSize: 10, color: "#f59e0b", marginTop: 4 }}>⚠ {t.forecast}</div>
                   )}
                 </div>
                 <div style={{
                   flex: 1, padding: "14px 20px", borderRadius: 12,
                   background: "rgba(139,92,246,0.05)", border: "1px solid rgba(139,92,246,0.1)",
                 }}>
-                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginBottom: 4 }}>Dung lượng TB tháng {cleanMonth}</div>
+                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginBottom: 4 }}>{t.monthStorageLabel(cleanMonth)}</div>
                   <div style={{ fontSize: 22, fontWeight: 700, color: "#8b5cf6", fontFamily: "monospace" }}>
                     {dailyForMonth.length > 0 ? formatGB(avgStorage) : "—"}
                   </div>
                   <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", marginTop: 4 }}>
-                    từ {dailyForMonth.length} ngày dữ liệu
+                    {t.monthDataDays(dailyForMonth.length)}
                   </div>
                 </div>
               </div>
@@ -751,12 +1072,12 @@ export default function CloudMonitorDashboard({ clientId }: { clientId?: string 
                   <XAxis dataKey="date" tick={{ fill: "rgba(255,255,255,0.3)", fontSize: 11 }} axisLine={false} tickLine={false} />
                   <YAxis tick={{ fill: "rgba(255,255,255,0.3)", fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v: number) => `${(v / 1000).toFixed(0)}K`} />
                   <Tooltip content={<CustomTooltip formatter={formatVND} />} />
-                  <Bar dataKey="cost" name="Chi phí" fill="rgba(34,197,94,0.5)" radius={[4, 4, 0, 0]} maxBarSize={40} />
+                  <Bar dataKey="cost" name={t.legendCostName} fill="rgba(34,197,94,0.5)" radius={[4, 4, 0, 0]} maxBarSize={40} />
                 </BarChart>
               </ResponsiveContainer>
               {dailyForMonth.length === 0 && (
                 <div style={{ textAlign: "center", color: "rgba(255,255,255,0.3)", fontSize: 13, padding: "20px 0" }}>
-                  Không có dữ liệu ngày trong window 45 ngày cho tháng này
+                  {t.noDataMessage}
                 </div>
               )}
             </div>
@@ -770,7 +1091,7 @@ export default function CloudMonitorDashboard({ clientId }: { clientId?: string 
             background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)",
             borderRadius: 16, padding: 24,
           }}>
-            <h3 style={{ fontSize: 14, fontWeight: 600, margin: "0 0 16px", color: "rgba(255,255,255,0.7)" }}>🏗️ Infrastructure Status</h3>
+            <h3 style={{ fontSize: 14, fontWeight: 600, margin: "0 0 16px", color: "rgba(255,255,255,0.7)" }}>{t.sectionInfraStatus}</h3>
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               {client.infra.map((s, i) => (
                 <div key={i} style={{
@@ -787,9 +1108,10 @@ export default function CloudMonitorDashboard({ clientId }: { clientId?: string 
                   </div>
                   <span style={{
                     fontSize: 10, padding: "3px 10px", borderRadius: 12,
-                    background: "rgba(34,197,94,0.1)", color: "#22c55e",
+                    background: s.status === "running" ? "rgba(34,197,94,0.1)" : s.status === "stopped" ? "rgba(107,114,128,0.1)" : "rgba(239,68,68,0.1)",
+                    color: s.status === "running" ? "#22c55e" : s.status === "stopped" ? "#6b7280" : "#ef4444",
                     fontWeight: 600, textTransform: "uppercase",
-                  }}>{s.status}</span>
+                  }}>{statusLabel(s.status)}</span>
                 </div>
               ))}
             </div>
@@ -800,7 +1122,7 @@ export default function CloudMonitorDashboard({ clientId }: { clientId?: string 
             background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)",
             borderRadius: 16, padding: 24,
           }}>
-            <h3 style={{ fontSize: 14, fontWeight: 600, margin: "0 0 16px", color: "rgba(255,255,255,0.7)" }}>📦 Migration Status — {client.migration.source} → {client.migration.target}</h3>
+            <h3 style={{ fontSize: 14, fontWeight: 600, margin: "0 0 16px", color: "rgba(255,255,255,0.7)" }}>{t.sectionMigrationStatus} — {client.migration.source} → {client.migration.target}</h3>
             <div style={{
               display: "flex", gap: 16, marginBottom: 20,
               padding: "16px", borderRadius: 12, background: "rgba(34,197,94,0.05)",
@@ -808,26 +1130,26 @@ export default function CloudMonitorDashboard({ clientId }: { clientId?: string 
             }}>
               <div style={{ textAlign: "center", flex: 1 }}>
                 <div style={{ fontSize: 24, fontWeight: 700, color: "#22c55e", fontFamily: "monospace" }}>{client.migration.totalFiles.toLocaleString()}</div>
-                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}>files migrated</div>
+                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}>{t.migFilesMigrated}</div>
               </div>
               <div style={{ width: 1, background: "rgba(255,255,255,0.06)" }} />
               <div style={{ textAlign: "center", flex: 1 }}>
                 <div style={{ fontSize: 24, fontWeight: 700, color: "#3b82f6", fontFamily: "monospace" }}>{formatGB(client.migration.totalGB)}</div>
-                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}>total size</div>
+                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}>{t.migTotalSize}</div>
               </div>
               <div style={{ width: 1, background: "rgba(255,255,255,0.06)" }} />
               <div style={{ textAlign: "center", flex: 1 }}>
                 <div style={{ fontSize: 24, fontWeight: 700, color: "#f59e0b", fontFamily: "monospace" }}>{client.migration.completed}</div>
-                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}>completed</div>
+                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}>{t.migCompleted}</div>
               </div>
             </div>
-            {client.migration.tables.map((t, i) => {
-              const pct = (t.migrated / t.total) * 100;
+            {client.migration.tables.map((tbl, i) => {
+              const pct = (tbl.migrated / tbl.total) * 100;
               return (
                 <div key={i} style={{ marginBottom: 14 }}>
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6, fontSize: 12 }}>
-                    <span style={{ color: "rgba(255,255,255,0.6)", fontFamily: "monospace" }}>{t.table}</span>
-                    <span style={{ color: "#fff", fontWeight: 600 }}>{t.migrated.toLocaleString()} / {t.total.toLocaleString()}</span>
+                    <span style={{ color: "rgba(255,255,255,0.6)", fontFamily: "monospace" }}>{tbl.table}</span>
+                    <span style={{ color: "#fff", fontWeight: 600 }}>{tbl.migrated.toLocaleString()} / {tbl.total.toLocaleString()}</span>
                   </div>
                   <div style={{ height: 8, background: "rgba(255,255,255,0.05)", borderRadius: 4, overflow: "hidden" }}>
                     <div style={{
@@ -837,7 +1159,7 @@ export default function CloudMonitorDashboard({ clientId }: { clientId?: string 
                     }} />
                   </div>
                   <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", marginTop: 4 }}>
-                    {pct.toFixed(1)}% complete — {t.remaining.toLocaleString()} remaining
+                    {pct.toFixed(1)}% {t.migComplete} — {tbl.remaining.toLocaleString()} {t.migRemaining}
                   </div>
                 </div>
               );
@@ -850,14 +1172,14 @@ export default function CloudMonitorDashboard({ clientId }: { clientId?: string 
           background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)",
           borderRadius: 16, padding: 24, marginBottom: 24,
         }}>
-          <h3 style={{ fontSize: 14, fontWeight: 600, margin: "0 0 20px", color: "rgba(255,255,255,0.7)" }}>Xu hướng chi phí theo tháng</h3>
+          <h3 style={{ fontSize: 14, fontWeight: 600, margin: "0 0 20px", color: "rgba(255,255,255,0.7)" }}>{t.sectionMonthlyTrend}</h3>
           <ResponsiveContainer width="100%" height={180}>
             <BarChart data={costs.monthly}>
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
               <XAxis dataKey="month" tick={{ fill: "rgba(255,255,255,0.4)", fontSize: 12 }} axisLine={false} tickLine={false} />
               <YAxis tick={{ fill: "rgba(255,255,255,0.3)", fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v: number) => `${(v/1000).toFixed(0)}K`} />
               <Tooltip content={<CustomTooltip formatter={formatVND} />} />
-              <Bar dataKey="cost" name="Chi phí" radius={[6, 6, 0, 0]} maxBarSize={60}>
+              <Bar dataKey="cost" name={t.legendCostName} radius={[6, 6, 0, 0]} maxBarSize={60}>
                 {costs.monthly.map((m, i) => (
                   <Cell key={i} fill={m.month.includes("*") ? "rgba(245,158,11,0.6)" : "rgba(34,197,94,0.5)"} />
                 ))}
@@ -865,7 +1187,7 @@ export default function CloudMonitorDashboard({ clientId }: { clientId?: string 
             </BarChart>
           </ResponsiveContainer>
           <div style={{ textAlign: "center", fontSize: 11, color: "rgba(255,255,255,0.3)", marginTop: 8 }}>
-            * Tháng 4 là forecast — bao gồm chi phí migration spike
+            {t.forecastNote}
           </div>
         </div>
 
@@ -875,8 +1197,8 @@ export default function CloudMonitorDashboard({ clientId }: { clientId?: string 
           display: "flex", justifyContent: "space-between", alignItems: "center",
           fontSize: 11, color: "rgba(255,255,255,0.25)", marginBottom: 24,
         }}>
-          <span>Aitrify Cloud Monitor — Built for {client.name} infrastructure</span>
-          <span>Last updated: Apr 17, 2026 09:00 UTC+7</span>
+          <span>{t.footerBuiltFor(client.name)}</span>
+          <span>{t.lastUpdated}: Apr 17, 2026 09:00 UTC+7</span>
         </footer>
       </div>
     </div>
