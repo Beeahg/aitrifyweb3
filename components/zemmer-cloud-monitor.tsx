@@ -89,6 +89,39 @@ interface ClientData {
   };
 }
 
+// ══ DAILY DATA GENERATION ══
+interface BasePattern {
+  baseCost: number;
+  costVariancePct: number;
+  baseStorage: number;
+  storageGrowthPerDay: number;
+  storageVariancePct: number;
+}
+
+function seededRandom(seed: number): number {
+  const x = Math.sin(seed * 9301 + 49297) * 233280;
+  return x - Math.floor(x);
+}
+
+function generateDailyData(basePattern: BasePattern, daysBack = 45): DailyCost[] {
+  const today = new Date();
+  const result: DailyCost[] = [];
+  for (let i = daysBack; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(today.getDate() - i);
+    const seed = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+    const r1 = seededRandom(seed);
+    const r2 = seededRandom(seed + 7777);
+    const dayIndex = daysBack - i;
+    const cost = Math.round(basePattern.baseCost * (1 + (r1 - 0.5) * 2 * basePattern.costVariancePct));
+    const storageBase = basePattern.baseStorage + dayIndex * basePattern.storageGrowthPerDay;
+    const storage = parseFloat((storageBase * (1 + (r2 - 0.5) * 2 * basePattern.storageVariancePct)).toFixed(1));
+    const dateLabel = d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+    result.push({ date: dateLabel, cost, storage });
+  }
+  return result;
+}
+
 const CLIENTS: Record<string, ClientData> = {
   "zemmer-qlbh-v1.0-2026": {
     id: "zemmer-qlbh-v1.0-2026",
@@ -114,25 +147,13 @@ const CLIENTS: Record<string, ClientData> = {
           { name: "Other", cost: 1253, forecast: 2100, color: "#6b7280", icon: "📊" },
         ],
       },
-      daily: [
-        { date: "Apr 01", cost: 5200, storage: 0.8 },
-        { date: "Apr 02", cost: 5400, storage: 0.8 },
-        { date: "Apr 03", cost: 5100, storage: 0.9 },
-        { date: "Apr 04", cost: 5300, storage: 0.9 },
-        { date: "Apr 05", cost: 5600, storage: 1.0 },
-        { date: "Apr 06", cost: 5500, storage: 1.0 },
-        { date: "Apr 07", cost: 5200, storage: 1.1 },
-        { date: "Apr 08", cost: 5800, storage: 1.1 },
-        { date: "Apr 09", cost: 6100, storage: 1.2 },
-        { date: "Apr 10", cost: 5900, storage: 1.2 },
-        { date: "Apr 11", cost: 6200, storage: 1.3 },
-        { date: "Apr 12", cost: 6400, storage: 1.3 },
-        { date: "Apr 13", cost: 6100, storage: 1.4 },
-        { date: "Apr 14", cost: 8500, storage: 45.0 },
-        { date: "Apr 15", cost: 12800, storage: 95.0 },
-        { date: "Apr 16", cost: 14200, storage: 125.1 },
-        { date: "Apr 17", cost: 7800, storage: 125.1 },
-      ],
+      daily: generateDailyData({
+        baseCost: 7500,
+        costVariancePct: 0.12,
+        baseStorage: 124.2,
+        storageGrowthPerDay: 0.02,
+        storageVariancePct: 0.002,
+      }),
       monthly: [
         { month: "Jan", cost: 145000 },
         { month: "Feb", cost: 152000 },
@@ -194,25 +215,13 @@ const CLIENTS: Record<string, ClientData> = {
           { name: "Other", cost: 3500, forecast: 5500, color: "#6b7280", icon: "📊" },
         ],
       },
-      daily: [
-        { date: "Apr 01", cost: 2100, storage: 6.2 },
-        { date: "Apr 02", cost: 2300, storage: 6.3 },
-        { date: "Apr 03", cost: 2200, storage: 6.3 },
-        { date: "Apr 04", cost: 2400, storage: 6.4 },
-        { date: "Apr 05", cost: 2600, storage: 6.5 },
-        { date: "Apr 06", cost: 2500, storage: 6.5 },
-        { date: "Apr 07", cost: 2300, storage: 6.6 },
-        { date: "Apr 08", cost: 2700, storage: 6.7 },
-        { date: "Apr 09", cost: 2800, storage: 6.8 },
-        { date: "Apr 10", cost: 2600, storage: 6.9 },
-        { date: "Apr 11", cost: 3100, storage: 7.1 },
-        { date: "Apr 12", cost: 3300, storage: 7.2 },
-        { date: "Apr 13", cost: 3200, storage: 7.3 },
-        { date: "Apr 14", cost: 3500, storage: 7.5 },
-        { date: "Apr 15", cost: 4200, storage: 7.8 },
-        { date: "Apr 16", cost: 4800, storage: 8.1 },
-        { date: "Apr 17", cost: 3900, storage: 8.2 },
-      ],
+      daily: generateDailyData({
+        baseCost: 3200,
+        costVariancePct: 0.15,
+        baseStorage: 6.4,
+        storageGrowthPerDay: 0.04,
+        storageVariancePct: 0.015,
+      }),
       monthly: [
         { month: "Jan", cost: 52000 },
         { month: "Feb", cost: 61000 },
