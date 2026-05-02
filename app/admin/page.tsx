@@ -21,9 +21,24 @@ interface AgentRequest {
   agent_type_name: string; industry: string;
 }
 
+
+// ---------------------------------------------------------------------------
+// Log types
+// ---------------------------------------------------------------------------
+interface LogRow {
+  id: string; timestamp: string; service: string; agent: string;
+  level: string; message: string; trace_id: string;
+  user_login: string; duration_ms: number; metadata: string; app: string; created_at: string;
+}
+interface LogCost {
+  today_writes: number; month_writes: number; d1_free_limit: number;
+  cost_usd_estimate: number;
+  by_service: {service: string; n: number}[];
+  by_level: {level: string; n: number}[];
+}
 type EntTab = "all" | "pending_review" | "active" | "rejected";
 type AgTab  = "all" | "pending" | "active" | "rejected";
-type Section = "enterprises" | "agent_requests" | "cloud_monitor";
+type Section = "enterprises" | "agent_requests" | "cloud_monitor" | "system_logs";
 
 // ---------------------------------------------------------------------------
 // Badge configs
@@ -140,6 +155,20 @@ export default function AdminPage() {
   const [agActing, setAgActing]           = useState<string | null>(null);
   const [agRejectTarget, setAgRejectTarget] = useState<AgentRequest | null>(null);
 
+
+  // Log state
+  const LOG_URL = process.env.NEXT_PUBLIC_LOG_COLLECTOR_URL || "https://log-collector.hoangn-ahg.workers.dev";
+  const LOG_TOKEN = process.env.NEXT_PUBLIC_LOG_COLLECTOR_TOKEN || "";
+  const [logs, setLogs]           = useState<LogRow[]>([]);
+  const [logTotal, setLogTotal]   = useState(0);
+  const [logLoading, setLogLoading] = useState(false);
+  const [logCost, setLogCost]     = useState<LogCost | null>(null);
+  const [logPage, setLogPage]     = useState(0);
+  const [logLevel, setLogLevel]   = useState("");
+  const [logService, setLogService] = useState("");
+  const [logSearch, setLogSearch] = useState("");
+  const [logLive, setLogLive]     = useState(false);
+  const LOG_LIMIT = 20;
   const showToast = (msg: string, type: "success" | "error") => {
     setToast({ msg, type });
     setTimeout(() => setToast(null), 4000);
@@ -225,6 +254,47 @@ export default function AdminPage() {
     fetchEnterprises(password, "all").then(() => fetchEnterprises(password, entTab));
   const refreshAgentReqs = () =>
     fetchAgentRequests(password, "all").then(() => fetchAgentRequests(password, agTab));
+
+
+  // ── Fetch logs ──
+  const fetchLogs = useCallback(async (page = 0, level = "", service = "", q = "") => {
+    setLogLoading(true);
+    try {
+      const params = new URLSearchParams({
+        limit: String(LOG_LIMIT),
+        offset: String(page * LOG_LIMIT),
+        ...(level   ? { level }   : {}),
+        ...(service ? { service } : {}),
+        ...(q       ? { q }       : {}),
+      });
+      const res = await fetch(`${LOG_URL}/logs?${params}`, {
+        headers: { "X-Log-Token": LOG_TOKEN },
+      });
+      const data = await res.json() as { ok: boolean; total: number; rows: LogRow[] };
+      if (data.ok) { setLogs(data.rows); setLogTotal(data.total); }
+    } catch { showToast("Lỗi tải logs.", "error"); }
+    finally { setLogLoading(false); }
+  }, [LOG_URL, LOG_TOKEN]);
+
+  const fetchLogCost = useCallback(async () => {
+    try {
+      const res = await fetch(`${LOG_URL}/logs/cost`, { headers: { "X-Log-Token": LOG_TOKEN } });
+      const data = await res.json() as { ok: boolean } & LogCost;
+      if (data.ok) setLogCost(data);
+    } catch { /* silent */ }
+  }, [LOG_URL, LOG_TOKEN]);
+
+  useEffect(() => {
+    if (!authed || section !== "system_logs") return;
+    fetchLogs(logPage, logLevel, logService, logSearch);
+    fetchLogCost();
+  }, [authed, section, logPage, logLevel, logService, logSearch, fetchLogs, fetchLogCost]);
+
+  useEffect(() => {
+    if (!logLive || section !== "system_logs") return;
+    const id = setInterval(() => fetchLogs(0, logLevel, logService, logSearch), 5000);
+    return () => clearInterval(id);
+  }, [logLive, section, logLevel, logService, logSearch, fetchLogs]);
 
   function handleLogin(e: React.FormEvent) {
     e.preventDefault();
@@ -363,6 +433,7 @@ export default function AdminPage() {
             { id: "enterprises"    as Section, label: "Tài khoản DN",    count: entCounts.pending_review },
             { id: "agent_requests" as Section, label: "Agent Requests",  count: agCounts.pending },
             { id: "cloud_monitor"  as Section, label: "Cloud Monitor",   count: 0 },
+            { id: "system_logs"    as Section, label: "System Logs",     count: 0 },
           ]).map((s) => (
             <button key={s.id} onClick={() => setSection(s.id)}
               className={`rounded-lg px-4 py-1.5 text-sm font-medium transition-colors ${
@@ -547,7 +618,151 @@ export default function AdminPage() {
           </>
         )}
 
-        {/* ── CLOUD MONITOR SECTION ── */}
+
+        {/* ── SYSTEM LOGS SECTION ── */}
+        {section === "system_logs" && (
+          <div className="space-y-5">
+            {/* Cost bar */}
+            {logCost && (
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 rounded-xl border border-gray-700/40 bg-gray-900/50 px-5 py-3 text-xs">
+                <div className="flex items-center gap-1.5">
+                  <span className={`h-2 w-2 rounded-full ${logCost.today_writes / logCost.d1_free_limit > 0.8 ? "bg-red-400" : logCost.today_writes / logCost.d1_free_limit > 0.5 ? "bg-yellow-400" : "bg-green-400"}`}/>
+                  <span className="text-gray-500">D1 writes hôm nay:</span>
+                  <span className="font-semibold text-gray-300">{logCost.today_writes.toLocaleString()} / {logCost.d1_free_limit.toLocaleString()}</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="h-2 w-2 rounded-full bg-indigo-400"/>
+                  <span className="text-gray-500">Tháng này:</span>
+                  <span className="font-semibold text-gray-300">{logCost.month_writes.toLocaleString()}</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="h-2 w-2 rounded-full bg-green-400"/>
+                  <span className="text-gray-500">Chi phí ước tính:</span>
+                  <span className="font-semibold text-green-400">~${logCost.cost_usd_estimate.toFixed(3)}/tháng</span>
+                </div>
+                <button onClick={fetchLogCost} className="ml-auto text-gray-600 hover:text-gray-400 transition-colors">↻ Refresh</button>
+              </div>
+            )}
+
+            {/* Filters */}
+            <div className="flex flex-wrap items-end gap-3">
+              <div className="flex flex-col gap-1">
+                <label className="text-xs text-gray-600 uppercase tracking-wider">Level</label>
+                <select value={logLevel} onChange={e => { setLogLevel(e.target.value); setLogPage(0); }}
+                  className="rounded-lg border border-gray-700/40 bg-gray-900/50 px-3 py-1.5 text-sm text-gray-300 focus:outline-none focus:border-indigo-500">
+                  <option value="">Tất cả</option>
+                  <option value="INFO">INFO</option>
+                  <option value="WARN">WARN</option>
+                  <option value="ERROR">ERROR</option>
+                </select>
+              </div>
+              <div className="flex flex-col gap-1">
+                <label className="text-xs text-gray-600 uppercase tracking-wider">Service</label>
+                <select value={logService} onChange={e => { setLogService(e.target.value); setLogPage(0); }}
+                  className="rounded-lg border border-gray-700/40 bg-gray-900/50 px-3 py-1.5 text-sm text-gray-300 focus:outline-none focus:border-indigo-500">
+                  <option value="">Tất cả</option>
+                  <option value="aitrify-api">aitrify-api</option>
+                  <option value="baisys-api">baisys-api</option>
+                  <option value="cf-auth">cf-auth</option>
+                  <option value="cf-rag-search">cf-rag-search</option>
+                </select>
+              </div>
+              <div className="flex flex-col gap-1 flex-1 min-w-[200px]">
+                <label className="text-xs text-gray-600 uppercase tracking-wider">Tìm kiếm</label>
+                <input value={logSearch}
+                  onChange={e => { setLogSearch(e.target.value); setLogPage(0); }}
+                  placeholder="trace_id, message, user..."
+                  className="rounded-lg border border-gray-700/40 bg-gray-900/50 px-3 py-1.5 text-sm text-gray-300 focus:outline-none focus:border-indigo-500 placeholder:text-gray-700"
+                />
+              </div>
+              <button
+                onClick={() => setLogLive(v => !v)}
+                className={`flex items-center gap-2 rounded-lg px-4 py-1.5 text-sm font-medium ring-1 transition-colors ${logLive ? "bg-green-500/10 text-green-400 ring-green-500/20" : "bg-gray-800 text-gray-500 ring-gray-700/40 hover:text-gray-300"}`}
+              >
+                <span className={`h-2 w-2 rounded-full ${logLive ? "bg-green-400 animate-pulse" : "bg-gray-600"}`}/>
+                {logLive ? "Live" : "Live tail"}
+              </button>
+              <button onClick={() => fetchLogs(logPage, logLevel, logService, logSearch)}
+                className="rounded-lg border border-gray-700/40 bg-gray-800/50 px-4 py-1.5 text-sm text-gray-400 hover:text-gray-200 transition-colors">
+                ↻ Refresh
+              </button>
+              {/* Export CSV */}
+              <button onClick={() => {
+                const header = "timestamp,service,agent,level,message,duration_ms,trace_id,user_login
+";
+                const rows = logs.map(r =>
+                  [r.timestamp, r.service, r.agent, r.level,
+                   `"${r.message.replace(/"/g,"''")}"`,
+                   r.duration_ms, r.trace_id, r.user_login].join(",")
+                ).join("
+");
+                const blob = new Blob([header + rows], { type: "text/csv" });
+                const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+                a.download = `aitrify-logs-${Date.now()}.csv`; a.click();
+              }} className="rounded-lg border border-gray-700/40 bg-gray-800/50 px-4 py-1.5 text-sm text-gray-400 hover:text-gray-200 transition-colors">
+                ↓ CSV
+              </button>
+            </div>
+
+            {/* Table */}
+            <div className="overflow-hidden rounded-2xl border border-gray-700/40 bg-gray-900/50">
+              {logLoading ? <Spinner /> : logs.length === 0 ? (
+                <div className="py-20 text-center text-sm text-gray-600">Không có log nào.</div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-xs">
+                    <thead>
+                      <tr className="border-b border-gray-700/40 text-left text-xs font-medium uppercase tracking-wider text-gray-600">
+                        <th className="px-4 py-3 whitespace-nowrap">Thời gian</th>
+                        <th className="px-4 py-3">Level</th>
+                        <th className="px-4 py-3">Service</th>
+                        <th className="px-4 py-3">Agent</th>
+                        <th className="px-4 py-3">Message</th>
+                        <th className="px-4 py-3 whitespace-nowrap">Duration</th>
+                        <th className="px-4 py-3">Trace ID</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-700/30">
+                      {logs.map(r => {
+                        const lvlCls = r.level === "ERROR" ? "bg-red-500/10 text-red-400 ring-red-500/20"
+                          : r.level === "WARN" ? "bg-yellow-500/10 text-yellow-400 ring-yellow-500/20"
+                          : "bg-green-500/10 text-green-400 ring-green-500/20";
+                        return (
+                          <tr key={r.id} className="hover:bg-gray-800/40 transition-colors">
+                            <td className="px-4 py-3 whitespace-nowrap text-gray-500 font-mono">
+                              {new Date(r.timestamp).toLocaleTimeString("vi-VN", { hour12: false })}
+                              <span className="block text-gray-700">{new Date(r.timestamp).toLocaleDateString("vi-VN")}</span>
+                            </td>
+                            <td className="px-4 py-3">
+                              <span className={`inline-block rounded-full px-2 py-0.5 text-xs font-semibold ring-1 ${lvlCls}`}>{r.level}</span>
+                            </td>
+                            <td className="px-4 py-3 text-indigo-300 font-mono">{r.service}</td>
+                            <td className="px-4 py-3 text-gray-400">{r.agent || "—"}</td>
+                            <td className="px-4 py-3 text-gray-300 max-w-[300px] truncate" title={r.message}>{r.message}</td>
+                            <td className="px-4 py-3 text-gray-500 whitespace-nowrap">{r.duration_ms > 0 ? `${r.duration_ms}ms` : "—"}</td>
+                            <td className="px-4 py-3 text-gray-600 font-mono">{r.trace_id || "—"}</td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+
+            {/* Pagination */}
+            <div className="flex items-center justify-between text-xs text-gray-600">
+              <span>{logTotal} log • Trang {logPage + 1} / {Math.max(1, Math.ceil(logTotal / LOG_LIMIT))}</span>
+              <div className="flex gap-2">
+                <button disabled={logPage === 0} onClick={() => setLogPage(p => p - 1)}
+                  className="rounded-lg border border-gray-700/40 bg-gray-800/50 px-3 py-1.5 text-gray-400 hover:text-gray-200 disabled:opacity-30 transition-colors">← Trước</button>
+                <button disabled={(logPage + 1) * LOG_LIMIT >= logTotal} onClick={() => setLogPage(p => p + 1)}
+                  className="rounded-lg border border-gray-700/40 bg-gray-800/50 px-3 py-1.5 text-gray-400 hover:text-gray-200 disabled:opacity-30 transition-colors">Sau →</button>
+              </div>
+            </div>
+          </div>
+        )}
+        {/* ── CLOUD MONITOR SECTION ── */
         {section === "cloud_monitor" && (
           <div className="-mx-4 sm:-mx-6">
             <CloudMonitorDashboard />
