@@ -688,14 +688,12 @@ export default function AdminPage() {
               </button>
               {/* Export CSV */}
               <button onClick={() => {
-                const header = "timestamp,service,agent,level,message,duration_ms,trace_id,user_login
-";
+                const header = "timestamp,service,agent,level,message,duration_ms,trace_id,user_login\n";
                 const rows = logs.map(r =>
                   [r.timestamp, r.service, r.agent, r.level,
-                   `"${r.message.replace(/"/g,"''")}"`,
+                   '"' + r.message.replace(/"/g,"''") + '"',
                    r.duration_ms, r.trace_id, r.user_login].join(",")
-                ).join("
-");
+                ).join("\n");
                 const blob = new Blob([header + rows], { type: "text/csv" });
                 const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
                 a.download = `aitrify-logs-${Date.now()}.csv`; a.click();
