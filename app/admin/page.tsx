@@ -762,7 +762,7 @@ export default function AdminPage() {
             </div>
           </div>
         )}
-        {/* ── CLOUD MONITOR SECTION ── */
+        {/* ── CLOUD MONITOR SECTION ── */}
         {section === "cloud_monitor" && (
           <div className="-mx-4 sm:-mx-6">
             <CloudMonitorDashboard />
