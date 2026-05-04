@@ -1,7 +1,8 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useCallback } from "react";
 import CloudMonitorDashboard from "@/components/zemmer-cloud-monitor";
+import ASADashboard from "./components/ASADashboard";
 
 const AUTH_API_URL =
   process.env.NEXT_PUBLIC_AUTH_API_URL ||
@@ -36,7 +37,7 @@ interface LogCost {
 
 type EntTab = "all" | "pending_review" | "active" | "rejected";
 type AgTab  = "all" | "pending" | "active" | "rejected";
-type Section = "enterprises" | "agent_requests" | "cloud_monitor" | "system_logs";
+type Section = "asa" | "enterprises" | "agent_requests" | "cloud_monitor" | "system_logs";
 
 // ---------------------------------------------------------------------------
 // Badge configs
@@ -134,7 +135,7 @@ export default function AdminPage() {
   const [authed, setAuthed]     = useState(false);
   const [authError, setAuthError] = useState("");
 
-  const [section, setSection] = useState<Section>("enterprises");
+  const [section, setSection] = useState<Section>("asa");
   const [toast, setToast]     = useState<{ msg: string; type: "success" | "error" } | null>(null);
 
   // Enterprise state
@@ -428,6 +429,7 @@ export default function AdminPage() {
         {/* Section switcher */}
         <div className="mb-6 flex gap-1 rounded-xl border border-gray-700/40 bg-gray-900/50 p-1 w-fit">
           {([
+            { id: "asa"            as Section, label: "ASA Dashboard",   count: 0 },
             { id: "enterprises"    as Section, label: "Tài khoản DN",    count: entCounts.pending_review },
             { id: "agent_requests" as Section, label: "Agent Requests",  count: agCounts.pending },
             { id: "cloud_monitor"  as Section, label: "Cloud Monitor",   count: 0 },
@@ -445,6 +447,9 @@ export default function AdminPage() {
             </button>
           ))}
         </div>
+
+        {/* ── ASA DASHBOARD SECTION ── */}
+        {section === "asa" && <ASADashboard />}
 
         {/* ── ENTERPRISES SECTION ── */}
         {section === "enterprises" && (
