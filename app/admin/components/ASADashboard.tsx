@@ -33,11 +33,23 @@ interface TransactionData {
   netProfit: number;
 }
 
+interface PnLRecord {
+  date: string;       // "2026-05-05"
+  ma: string;         // "DGC"
+  klBan: number;      // số lượng bán
+  giaMuaTB: number;   // giá mua trung bình
+  giaBanTB: number;   // giá bán trung bình
+  laiGop: number;     // lãi gộp (VND)
+  phanTram: number;   // % lãi gộp
+  feeTax?: number;    // phí + thuế nếu có
+}
+
 interface ASAData {
   date: string;
   accounts: { X1: AccountData; M1: AccountData };
   transactions_yesterday: TransactionData;
   uploadedAt: string;
+  laiLo?: PnLRecord[];
 }
 
 interface Signal {
@@ -95,6 +107,7 @@ const MOCK_DATA: ASAData = {
     marginCostEst: 246575,
     netProfit: 5482760,
   },
+  laiLo: [],
 };
 
 // ─── Tính signals từ data ─────────────────────────────────────────────────────
@@ -402,6 +415,16 @@ function UploadZone({ onDataLoaded }: { onDataLoaded: (d: ASAData) => void }) {
             marginCostEst: raw.transactions_yesterday?.marginCostEst || 0,
             netProfit: raw.transactions_yesterday?.netProfit || 0,
           },
+          laiLo: (raw.laiLo || []).map((r: any) => ({
+            date: r.date,
+            ma: r.ma,
+            klBan: r.klBan || r.sl || 0,
+            giaMuaTB: r.giaMuaTB || r.giaTB || 0,
+            giaBanTB: r.giaBanTB || r.giaHienTai || 0,
+            laiGop: r.laiGop || r.laiLo || 0,
+            phanTram: r.phanTram || r.plPercent || 0,
+            feeTax: r.feeTax,
+          })),
         };
         onDataLoaded(parsed);
         setStatus("done");
@@ -573,6 +596,188 @@ function SnowballProjection({ nav }: { nav: number }) {
   );
 }
 
+// ─── Mock P&L data ────────────────────────────────────────────────────────────
+
+const MOCK_PNL: PnLRecord[] = [
+  { date: "2026-05-05", ma: "VRE",  klBan: 100, giaMuaTB: 30175, giaBanTB: 33500, laiGop:  332500, phanTram: 11.02, feeTax: 15000 },
+  { date: "2026-05-05", ma: "VIC",  klBan: 50,  giaMuaTB: 195343,giaBanTB: 208200,laiGop:  642850, phanTram: 6.58,  feeTax: 31000 },
+  { date: "2026-05-04", ma: "TCB",  klBan: 200, giaMuaTB: 32500, giaBanTB: 33550, laiGop:  210000, phanTram: 3.23,  feeTax: 10000 },
+  { date: "2026-05-04", ma: "SSI",  klBan: 300, giaMuaTB: 27200, giaBanTB: 27850, laiGop:  195000, phanTram: 2.39,  feeTax: 9500  },
+  { date: "2026-05-03", ma: "HPG",  klBan: 500, giaMuaTB: 27000, giaBanTB: 27600, laiGop:  300000, phanTram: 2.22,  feeTax: 14500 },
+  { date: "2026-05-03", ma: "VOS",  klBan: 100, giaMuaTB: 13500, giaBanTB: 12550, laiGop: -95000,  phanTram: -7.04, feeTax: 4600  },
+  { date: "2026-05-02", ma: "DGC",  klBan: 200, giaMuaTB: 54000, giaBanTB: 56000, laiGop:  400000, phanTram: 3.70,  feeTax: 19000 },
+  { date: "2026-05-02", ma: "NAG",  klBan: 1000,giaMuaTB: 8000,  giaBanTB: 8800,  laiGop:  800000, phanTram: 10.00, feeTax: 38000 },
+  { date: "2026-04-29", ma: "VIX",  klBan: 500, giaMuaTB: 16000, giaBanTB: 16850, laiGop:  425000, phanTram: 5.31,  feeTax: 20000 },
+  { date: "2026-04-29", ma: "MBB",  klBan: 300, giaMuaTB: 26500, giaBanTB: 26150, laiGop: -105000, phanTram: -1.32, feeTax: 5100  },
+];
+
+// ─── P&L Card ─────────────────────────────────────────────────────────────────
+
+function PnLCard({ records }: { records: PnLRecord[] }) {
+  const today = new Date().toISOString().slice(0, 10);
+  const [mode, setMode] = useState<"today" | "date" | "range">("today");
+  const [pickedDate, setPickedDate] = useState(today);
+  const [startDate, setStartDate] = useState(() => {
+    const d = new Date(); d.setDate(d.getDate() - 30);
+    return d.toISOString().slice(0, 10);
+  });
+  const [endDate, setEndDate] = useState(today);
+  const [infraCost, setInfraCost] = useState(0);
+
+  const filtered = records.filter(r => {
+    if (mode === "today")  return r.date === today;
+    if (mode === "date")   return r.date === pickedDate;
+    return r.date >= startDate && r.date <= endDate;
+  });
+
+  const totalLaiGop  = filtered.reduce((s, r) => s + r.laiGop, 0);
+  const totalFeeTax  = filtered.reduce((s, r) => s + (r.feeTax ?? 0), 0);
+  const totalLaiThuan = totalLaiGop - totalFeeTax - infraCost;
+
+  const groupByDate = filtered.reduce((acc, r) => {
+    if (!acc[r.date]) acc[r.date] = [];
+    acc[r.date].push(r);
+    return acc;
+  }, {} as Record<string, PnLRecord[]>);
+
+  const fmtVND = (n: number) => {
+    const abs = Math.abs(n);
+    const s = abs >= 1e6 ? (abs / 1e6).toFixed(2) + " tr" : abs.toLocaleString("vi-VN") + "đ";
+    return (n < 0 ? "-" : "+") + s;
+  };
+
+  const colorVal = (n: number) => n >= 0 ? "text-green-400" : "text-red-400";
+
+  return (
+    <div className="bg-gray-900/60 border border-gray-800 rounded-xl p-4">
+      {/* Header + mode selector */}
+      <div className="flex justify-between items-center mb-4">
+        <p className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">
+          Lãi / Lỗ tham khảo — Lãi gộp từ TPBS
+        </p>
+        <div className="flex gap-1">
+          {(["today","date","range"] as const).map(m => (
+            <button key={m} onClick={() => setMode(m)}
+              className={`font-mono text-[10px] px-2.5 py-1 rounded transition-all ${
+                mode === m ? "bg-purple-600 text-white" : "bg-gray-800 text-gray-500 hover:bg-gray-700"
+              }`}>
+              {m === "today" ? "Hôm nay" : m === "date" ? "Chọn ngày" : "Khoảng ngày"}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Date pickers */}
+      {mode === "date" && (
+        <div className="flex items-center gap-2 mb-4">
+          <span className="font-mono text-[10px] text-gray-500">Ngày:</span>
+          <input type="date" value={pickedDate} onChange={e => setPickedDate(e.target.value)}
+            className="font-mono text-xs bg-gray-800 border border-gray-700 rounded px-2 py-1 text-gray-300 focus:outline-none focus:border-purple-500" />
+        </div>
+      )}
+      {mode === "range" && (
+        <div className="flex items-center gap-2 mb-4 flex-wrap">
+          <span className="font-mono text-[10px] text-gray-500">Từ:</span>
+          <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)}
+            className="font-mono text-xs bg-gray-800 border border-gray-700 rounded px-2 py-1 text-gray-300 focus:outline-none focus:border-purple-500" />
+          <span className="font-mono text-[10px] text-gray-500">đến:</span>
+          <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)}
+            className="font-mono text-xs bg-gray-800 border border-gray-700 rounded px-2 py-1 text-gray-300 focus:outline-none focus:border-purple-500" />
+        </div>
+      )}
+
+      {/* Summary row */}
+      <div className="grid grid-cols-4 gap-3 mb-4">
+        <div className="bg-gray-800/60 rounded-lg px-3 py-2">
+          <p className="font-mono text-[10px] text-gray-500 mb-1">Lãi gộp</p>
+          <p className={`font-mono text-sm font-semibold ${colorVal(totalLaiGop)}`}>{fmtVND(totalLaiGop)}</p>
+          <p className="font-mono text-[10px] text-gray-600">Trước phí · thuế</p>
+        </div>
+        <div className="bg-gray-800/60 rounded-lg px-3 py-2">
+          <p className="font-mono text-[10px] text-gray-500 mb-1">Phí + thuế</p>
+          <p className="font-mono text-sm font-semibold text-amber-400">-{(totalFeeTax/1e3).toFixed(0)}k</p>
+          <p className="font-mono text-[10px] text-gray-600">Từ báo cáo TPS</p>
+        </div>
+        <div className="bg-gray-800/60 rounded-lg px-3 py-2">
+          <p className="font-mono text-[10px] text-gray-500 mb-1">Chi phí hạ tầng</p>
+          <div className="flex items-center gap-1">
+            <span className="font-mono text-[10px] text-red-400">-</span>
+            <input
+              type="number"
+              value={infraCost === 0 ? "" : infraCost}
+              onChange={e => setInfraCost(Number(e.target.value) || 0)}
+              placeholder="0"
+              className="font-mono text-sm font-semibold w-full bg-transparent border-b border-gray-700 text-amber-400 focus:outline-none focus:border-purple-500 pb-0.5"
+            />
+          </div>
+          <p className="font-mono text-[10px] text-gray-600">AI · IT · Cloud (VND)</p>
+        </div>
+        <div className={`rounded-lg px-3 py-2 ${totalLaiThuan >= 0 ? "bg-green-950/40 border border-green-900/40" : "bg-red-950/40 border border-red-900/40"}`}>
+          <p className="font-mono text-[10px] text-gray-500 mb-1">Lãi thuần</p>
+          <p className={`font-mono text-sm font-bold ${colorVal(totalLaiThuan)}`}>{fmtVND(totalLaiThuan)}</p>
+          <p className="font-mono text-[10px] text-gray-600">Sau tất cả chi phí</p>
+        </div>
+      </div>
+
+      {/* Transaction table */}
+      {filtered.length === 0 ? (
+        <div className="text-center py-6">
+          <p className="font-mono text-xs text-gray-600">Không có giao dịch trong kỳ này</p>
+          <p className="font-mono text-[10px] text-gray-700 mt-1">Upload ảnh Lãi/Lỗ từ TPBS để có dữ liệu thật</p>
+        </div>
+      ) : (
+        <div className="space-y-3">
+          {Object.entries(groupByDate).sort(([a],[b]) => b.localeCompare(a)).map(([date, rows]) => {
+            const dayLai = rows.reduce((s, r) => s + r.laiGop, 0);
+            return (
+              <div key={date}>
+                <div className="flex justify-between items-center mb-1.5">
+                  <span className="font-mono text-[10px] text-gray-500">
+                    {new Date(date).toLocaleDateString("vi-VN", { weekday: "short", day: "2-digit", month: "2-digit" })}
+                  </span>
+                  <span className={`font-mono text-[10px] font-semibold ${colorVal(dayLai)}`}>
+                    {fmtVND(dayLai)}
+                  </span>
+                </div>
+                <div className="bg-gray-800/40 rounded-lg overflow-hidden">
+                  <table className="w-full" style={{ tableLayout: "fixed" }}>
+                    <thead>
+                      <tr className="border-b border-gray-700/40">
+                        <th className="text-left font-mono text-[9px] text-gray-600 px-3 py-1.5 w-16">Mã</th>
+                        <th className="text-right font-mono text-[9px] text-gray-600 px-3 py-1.5">KL bán</th>
+                        <th className="text-right font-mono text-[9px] text-gray-600 px-3 py-1.5">Giá mua TB</th>
+                        <th className="text-right font-mono text-[9px] text-gray-600 px-3 py-1.5">Giá bán TB</th>
+                        <th className="text-right font-mono text-[9px] text-gray-600 px-3 py-1.5">Lãi gộp</th>
+                        <th className="text-right font-mono text-[9px] text-gray-600 px-3 py-1.5">%</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {rows.map((r, i) => (
+                        <tr key={i} className="border-b border-gray-700/20 last:border-0 hover:bg-gray-700/20">
+                          <td className="font-mono text-xs font-semibold text-white px-3 py-2">{r.ma}</td>
+                          <td className="font-mono text-[11px] text-gray-400 text-right px-3 py-2">{r.klBan.toLocaleString()}</td>
+                          <td className="font-mono text-[11px] text-gray-400 text-right px-3 py-2">{r.giaMuaTB.toLocaleString("vi-VN")}</td>
+                          <td className="font-mono text-[11px] text-gray-300 text-right px-3 py-2">{r.giaBanTB.toLocaleString("vi-VN")}</td>
+                          <td className={`font-mono text-[11px] font-medium text-right px-3 py-2 ${colorVal(r.laiGop)}`}>
+                            {fmtVND(r.laiGop)}
+                          </td>
+                          <td className={`font-mono text-[11px] font-medium text-right px-3 py-2 ${colorVal(r.phanTram)}`}>
+                            {r.phanTram >= 0 ? "+" : ""}{r.phanTram.toFixed(2)}%
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function ASADashboard() {
@@ -659,6 +864,9 @@ export default function ASADashboard() {
           ))}
         </div>
       </div>
+
+      {/* P&L Card — thẻ số 5 */}
+      <PnLCard records={data.laiLo && data.laiLo.length > 0 ? data.laiLo : MOCK_PNL} />
 
       {/* Ratio + Steps */}
       <div className="grid grid-cols-2 gap-4">
