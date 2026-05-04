@@ -704,7 +704,7 @@ function PnLCard({ records }: { records: PnLRecord[] }) {
 
   const handlePnLLoaded = useCallback((loaded: PnLRecord[]) => {
     setPnlRecords(loaded);
-    const dates = [...new Set(loaded.map(r => r.date))].sort();
+    const dates = Array.from(new Set(loaded.map(r => r.date))).sort();
     if (dates.length > 1) {
       setStartDate(dates[0]);
       setEndDate(dates[dates.length - 1]);
