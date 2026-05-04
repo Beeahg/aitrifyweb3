@@ -35,6 +35,7 @@ interface TransactionData {
 
 interface PnLRecord {
   date: string;       // "2026-05-05"
+  tk: "X1" | "M1";   // tài khoản
   ma: string;         // "DGC"
   klBan: number;      // số lượng bán
   giaMuaTB: number;   // giá mua trung bình
@@ -417,6 +418,7 @@ function UploadZone({ onDataLoaded }: { onDataLoaded: (d: ASAData) => void }) {
           },
           laiLo: (raw.laiLo || []).map((r: any) => ({
             date: r.date,
+            tk: (r.tk as "X1" | "M1") || "X1",
             ma: r.ma,
             klBan: r.klBan || r.sl || 0,
             giaMuaTB: r.giaMuaTB || r.giaTB || 0,
@@ -599,16 +601,16 @@ function SnowballProjection({ nav }: { nav: number }) {
 // ─── Mock P&L data ────────────────────────────────────────────────────────────
 
 const MOCK_PNL: PnLRecord[] = [
-  { date: "2026-05-05", ma: "VRE",  klBan: 100, giaMuaTB: 30175, giaBanTB: 33500, laiGop:  332500, phanTram: 11.02, feeTax: 15000 },
-  { date: "2026-05-05", ma: "VIC",  klBan: 50,  giaMuaTB: 195343,giaBanTB: 208200,laiGop:  642850, phanTram: 6.58,  feeTax: 31000 },
-  { date: "2026-05-04", ma: "TCB",  klBan: 200, giaMuaTB: 32500, giaBanTB: 33550, laiGop:  210000, phanTram: 3.23,  feeTax: 10000 },
-  { date: "2026-05-04", ma: "SSI",  klBan: 300, giaMuaTB: 27200, giaBanTB: 27850, laiGop:  195000, phanTram: 2.39,  feeTax: 9500  },
-  { date: "2026-05-03", ma: "HPG",  klBan: 500, giaMuaTB: 27000, giaBanTB: 27600, laiGop:  300000, phanTram: 2.22,  feeTax: 14500 },
-  { date: "2026-05-03", ma: "VOS",  klBan: 100, giaMuaTB: 13500, giaBanTB: 12550, laiGop: -95000,  phanTram: -7.04, feeTax: 4600  },
-  { date: "2026-05-02", ma: "DGC",  klBan: 200, giaMuaTB: 54000, giaBanTB: 56000, laiGop:  400000, phanTram: 3.70,  feeTax: 19000 },
-  { date: "2026-05-02", ma: "NAG",  klBan: 1000,giaMuaTB: 8000,  giaBanTB: 8800,  laiGop:  800000, phanTram: 10.00, feeTax: 38000 },
-  { date: "2026-04-29", ma: "VIX",  klBan: 500, giaMuaTB: 16000, giaBanTB: 16850, laiGop:  425000, phanTram: 5.31,  feeTax: 20000 },
-  { date: "2026-04-29", ma: "MBB",  klBan: 300, giaMuaTB: 26500, giaBanTB: 26150, laiGop: -105000, phanTram: -1.32, feeTax: 5100  },
+  { date: "2026-05-05", tk: "X1", ma: "VRE",  klBan: 100, giaMuaTB: 30175, giaBanTB: 33500, laiGop:  332500, phanTram: 11.02, feeTax: 15000 },
+  { date: "2026-05-05", tk: "M1", ma: "VIC",  klBan: 50,  giaMuaTB: 195343,giaBanTB: 208200,laiGop:  642850, phanTram: 6.58,  feeTax: 31000 },
+  { date: "2026-05-04", tk: "X1", ma: "TCB",  klBan: 200, giaMuaTB: 32500, giaBanTB: 33550, laiGop:  210000, phanTram: 3.23,  feeTax: 10000 },
+  { date: "2026-05-04", tk: "M1", ma: "SSI",  klBan: 300, giaMuaTB: 27200, giaBanTB: 27850, laiGop:  195000, phanTram: 2.39,  feeTax: 9500  },
+  { date: "2026-05-03", tk: "X1", ma: "HPG",  klBan: 500, giaMuaTB: 27000, giaBanTB: 27600, laiGop:  300000, phanTram: 2.22,  feeTax: 14500 },
+  { date: "2026-05-03", tk: "X1", ma: "VOS",  klBan: 100, giaMuaTB: 13500, giaBanTB: 12550, laiGop: -95000,  phanTram: -7.04, feeTax: 4600  },
+  { date: "2026-05-02", tk: "X1", ma: "DGC",  klBan: 200, giaMuaTB: 54000, giaBanTB: 56000, laiGop:  400000, phanTram: 3.70,  feeTax: 19000 },
+  { date: "2026-05-02", tk: "M1", ma: "NAG",  klBan: 1000,giaMuaTB: 8000,  giaBanTB: 8800,  laiGop:  800000, phanTram: 10.00, feeTax: 38000 },
+  { date: "2026-04-29", tk: "X1", ma: "VIX",  klBan: 500, giaMuaTB: 16000, giaBanTB: 16850, laiGop:  425000, phanTram: 5.31,  feeTax: 20000 },
+  { date: "2026-04-29", tk: "M1", ma: "MBB",  klBan: 300, giaMuaTB: 26500, giaBanTB: 26150, laiGop: -105000, phanTram: -1.32, feeTax: 5100  },
 ];
 
 // ─── P&L Card ─────────────────────────────────────────────────────────────────
@@ -633,6 +635,15 @@ function PnLCard({ records }: { records: PnLRecord[] }) {
   const totalLaiGop  = filtered.reduce((s, r) => s + r.laiGop, 0);
   const totalFeeTax  = filtered.reduce((s, r) => s + (r.feeTax ?? 0), 0);
   const totalLaiThuan = totalLaiGop - totalFeeTax - infraCost;
+
+  const x1Recs = filtered.filter(r => r.tk === "X1");
+  const m1Recs = filtered.filter(r => r.tk === "M1");
+  const x1Lai  = x1Recs.reduce((s, r) => s + r.laiGop, 0);
+  const m1Lai  = m1Recs.reduce((s, r) => s + r.laiGop, 0);
+  const x1Win  = x1Recs.length ? Math.round(x1Recs.filter(r => r.laiGop > 0).length / x1Recs.length * 100) : 0;
+  const m1Win  = m1Recs.length ? Math.round(m1Recs.filter(r => r.laiGop > 0).length / m1Recs.length * 100) : 0;
+  const x1Pct  = totalLaiGop !== 0 ? Math.round(x1Lai / Math.abs(totalLaiGop) * 100) : 0;
+  const m1Pct  = totalLaiGop !== 0 ? Math.round(m1Lai / Math.abs(totalLaiGop) * 100) : 0;
 
   const groupByDate = filtered.reduce((acc, r) => {
     if (!acc[r.date]) acc[r.date] = [];
@@ -719,6 +730,34 @@ function PnLCard({ records }: { records: PnLRecord[] }) {
         </div>
       </div>
 
+      {/* X1 vs M1 breakdown */}
+      {filtered.length > 0 && (
+        <div className="grid grid-cols-2 gap-3 mb-4">
+          <div className="bg-gray-800/40 rounded-lg px-4 py-3 border border-green-900/30">
+            <div className="flex justify-between items-center mb-2">
+              <span className="font-mono text-[10px] font-semibold text-green-400 uppercase tracking-wide">X1 — Engine</span>
+              <span className="font-mono text-[10px] text-gray-500">{x1Recs.length} lệnh · Win {x1Win}%</span>
+            </div>
+            <p className={`font-mono text-base font-bold ${colorVal(x1Lai)}`}>{fmtVND(x1Lai)}</p>
+            <div className="mt-2 h-1.5 bg-gray-700 rounded-full overflow-hidden">
+              <div className="h-full bg-green-600 rounded-full" style={{ width: `${Math.min(Math.abs(x1Pct), 100)}%` }} />
+            </div>
+            <p className="font-mono text-[10px] text-gray-600 mt-1">{x1Pct}% tổng lãi gộp · vốn sạch</p>
+          </div>
+          <div className="bg-gray-800/40 rounded-lg px-4 py-3 border border-amber-900/30">
+            <div className="flex justify-between items-center mb-2">
+              <span className="font-mono text-[10px] font-semibold text-amber-400 uppercase tracking-wide">M1 — Booster</span>
+              <span className="font-mono text-[10px] text-gray-500">{m1Recs.length} lệnh · Win {m1Win}%</span>
+            </div>
+            <p className={`font-mono text-base font-bold ${colorVal(m1Lai)}`}>{fmtVND(m1Lai)}</p>
+            <div className="mt-2 h-1.5 bg-gray-700 rounded-full overflow-hidden">
+              <div className="h-full bg-amber-600 rounded-full" style={{ width: `${Math.min(Math.abs(m1Pct), 100)}%` }} />
+            </div>
+            <p className="font-mono text-[10px] text-gray-600 mt-1">{m1Pct}% tổng lãi gộp · có margin cost</p>
+          </div>
+        </div>
+      )}
+
       {/* Transaction table */}
       {filtered.length === 0 ? (
         <div className="text-center py-6">
@@ -743,7 +782,8 @@ function PnLCard({ records }: { records: PnLRecord[] }) {
                   <table className="w-full" style={{ tableLayout: "fixed" }}>
                     <thead>
                       <tr className="border-b border-gray-700/40">
-                        <th className="text-left font-mono text-[9px] text-gray-600 px-3 py-1.5 w-16">Mã</th>
+                        <th className="text-left font-mono text-[9px] text-gray-600 px-3 py-1.5 w-14">Mã</th>
+                        <th className="text-left font-mono text-[9px] text-gray-600 px-2 py-1.5 w-12">TK</th>
                         <th className="text-right font-mono text-[9px] text-gray-600 px-3 py-1.5">KL bán</th>
                         <th className="text-right font-mono text-[9px] text-gray-600 px-3 py-1.5">Giá mua TB</th>
                         <th className="text-right font-mono text-[9px] text-gray-600 px-3 py-1.5">Giá bán TB</th>
@@ -755,6 +795,13 @@ function PnLCard({ records }: { records: PnLRecord[] }) {
                       {rows.map((r, i) => (
                         <tr key={i} className="border-b border-gray-700/20 last:border-0 hover:bg-gray-700/20">
                           <td className="font-mono text-xs font-semibold text-white px-3 py-2">{r.ma}</td>
+                          <td className="px-2 py-2">
+                            <span className={`font-mono text-[9px] font-semibold px-1.5 py-0.5 rounded ${
+                              r.tk === "X1"
+                                ? "bg-green-900/60 text-green-300"
+                                : "bg-amber-900/60 text-amber-300"
+                            }`}>{r.tk}</span>
+                          </td>
                           <td className="font-mono text-[11px] text-gray-400 text-right px-3 py-2">{r.klBan.toLocaleString()}</td>
                           <td className="font-mono text-[11px] text-gray-400 text-right px-3 py-2">{r.giaMuaTB.toLocaleString("vi-VN")}</td>
                           <td className="font-mono text-[11px] text-gray-300 text-right px-3 py-2">{r.giaBanTB.toLocaleString("vi-VN")}</td>
