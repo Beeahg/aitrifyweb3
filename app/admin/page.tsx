@@ -675,6 +675,7 @@ export default function AdminPage() {
                     { id: "baisys-api",   label: "GCR baisys-api" },
                     { id: "cf-auth",      label: "CF auth" },
                     { id: "cf-rag-search",label: "CF rag" },
+                    { id: "zemmer-be",    label: "GCR zemmer-be" },
                   ].map(s => (
                     <button key={s.id} onClick={() => { setLogService(s.id); setLogPage(0); }}
                       className={`rounded-lg px-3 py-1.5 text-xs font-medium ring-1 transition-colors ${
