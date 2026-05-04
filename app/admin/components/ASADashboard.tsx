@@ -358,13 +358,62 @@ function UploadZone({ onDataLoaded }: { onDataLoaded: (d: ASAData) => void }) {
 
   const handleFiles = useCallback(async (files: FileList) => {
     setStatus("loading");
-    // Với ảnh/PDF: gọi AI để parse — hiện tại mock ngay
-    // Sau này: gọi Claude API để OCR
-    await new Promise((r) => setTimeout(r, 800));
-    const today = new Date().toISOString().slice(0, 10);
-    const data = { ...MOCK_DATA, date: today, uploadedAt: new Date().toISOString() };
-    onDataLoaded(data);
-    setStatus("done");
+    const file = Array.from(files).find(f => f.name.endsWith(".json"));
+    if (file) {
+      try {
+        const text = await file.text();
+        const raw = JSON.parse(text);
+        // Map JSON format mới sang ASAData
+        const mapHoldings = (holdings: any[], tk: "X1" | "M1") =>
+          (holdings || []).map((h: any) => ({
+            ma: h.ma,
+            sl: h.sl,
+            giaTB: h.giaTB,
+            giaHienTai: h.giaHienTai,
+            plPercent: h.plPercent,
+            tang: (h.tang as any) || "ChooCatalyst",
+            catalyst: h.catalyst || "",
+            tk,
+            broker: (h.broker as any) || "TPBS",
+          }));
+        const parsed: ASAData = {
+          date: raw.date || new Date().toISOString().slice(0, 10),
+          uploadedAt: raw.uploadedAt || new Date().toISOString(),
+          accounts: {
+            X1: {
+              vonGoc: raw.accounts?.X1?.vonGoc || 0,
+              thiGia: raw.accounts?.X1?.thiGia || 0,
+              tienMat: raw.accounts?.X1?.tienMat || 0,
+              holdings: mapHoldings(raw.accounts?.X1?.holdings || [], "X1"),
+            },
+            M1: {
+              vonGoc: raw.accounts?.M1?.vonGoc || 0,
+              thiGia: raw.accounts?.M1?.thiGia || 0,
+              tienMat: raw.accounts?.M1?.tienMat || 0,
+              duNoMargin: raw.accounts?.M1?.duNoMargin ?? undefined,
+              safetyRatio: raw.accounts?.M1?.safetyRatio ?? undefined,
+              m1Usage: raw.accounts?.M1?.m1Usage ?? undefined,
+              holdings: mapHoldings(raw.accounts?.M1?.holdings || [], "M1"),
+            },
+          },
+          transactions_yesterday: {
+            grossProfit: raw.transactions_yesterday?.grossProfit || 0,
+            feeTax: raw.transactions_yesterday?.feeTax || 0,
+            marginCostEst: raw.transactions_yesterday?.marginCostEst || 0,
+            netProfit: raw.transactions_yesterday?.netProfit || 0,
+          },
+        };
+        onDataLoaded(parsed);
+        setStatus("done");
+      } catch {
+        setStatus("error");
+      }
+    } else {
+      // Ảnh/PDF: tạm dùng mock, sau tích hợp OCR API
+      await new Promise((r) => setTimeout(r, 600));
+      onDataLoaded({ ...MOCK_DATA, uploadedAt: new Date().toISOString() });
+      setStatus("done");
+    }
   }, [onDataLoaded]);
 
   return (
@@ -396,7 +445,11 @@ function UploadZone({ onDataLoaded }: { onDataLoaded: (d: ASAData) => void }) {
               <path d="M3 8l4 4 6-7" stroke="#4ade80" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
-          <p className="font-mono text-xs text-green-400">Đã tải · nhấn để cập nhật</p>
+          <p className="font-mono text-xs text-green-400">Dashboard đã cập nhật · kéo thả file mới để load lại</p>
+        </div>
+      ) : status === "error" ? (
+        <div className="flex flex-col items-center gap-1">
+          <p className="font-mono text-xs text-red-400">Lỗi đọc file · thử lại</p>
         </div>
       ) : (
         <div className="flex flex-col items-center gap-2">
