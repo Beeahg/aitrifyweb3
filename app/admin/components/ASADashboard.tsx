@@ -598,6 +598,81 @@ function SnowballProjection({ nav }: { nav: number }) {
   );
 }
 
+// ─── P&L Upload Zone ──────────────────────────────────────────────────────────
+
+function PnLUploadZone({ onPnLLoaded }: { onPnLLoaded: (records: PnLRecord[]) => void }) {
+  const [dragging, setDragging] = useState(false);
+  const [status, setStatus] = useState<"idle" | "loading" | "done" | "error">("idle");
+  const [count, setCount] = useState(0);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleFiles = useCallback(async (files: FileList) => {
+    const file = Array.from(files).find(f => f.name.endsWith(".json"));
+    if (!file) return;
+    setStatus("loading");
+    try {
+      const text = await file.text();
+      const raw = JSON.parse(text);
+      const records: PnLRecord[] = (raw.laiLo || []).map((r: any) => ({
+        date: r.date,
+        tk: (r.tk === "M1" ? "M1" : "X1") as "X1" | "M1",
+        ma: r.ma,
+        klBan: r.klBan || 0,
+        giaMuaTB: r.giaMuaTB || 0,
+        giaBanTB: r.giaBanTB || 0,
+        laiGop: r.laiGop || 0,
+        phanTram: r.phanTram || 0,
+        feeTax: r.feeTax,
+      }));
+      setCount(records.length);
+      onPnLLoaded(records);
+      setStatus("done");
+    } catch {
+      setStatus("error");
+    }
+  }, [onPnLLoaded]);
+
+  return (
+    <div
+      className={`border border-dashed rounded-lg px-4 py-2.5 flex items-center gap-3 cursor-pointer transition-all duration-200 mb-4
+        ${dragging ? "border-purple-500 bg-purple-950/20" : "border-gray-700 hover:border-gray-600 bg-gray-800/30"}`}
+      onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
+      onDragLeave={() => setDragging(false)}
+      onDrop={(e) => { e.preventDefault(); setDragging(false); handleFiles(e.dataTransfer.files); }}
+      onClick={() => inputRef.current?.click()}
+    >
+      <input
+        ref={inputRef}
+        type="file"
+        accept=".json"
+        className="hidden"
+        onChange={(e) => e.target.files && handleFiles(e.target.files)}
+      />
+      {status === "loading" ? (
+        <div className="w-3.5 h-3.5 border border-purple-500 border-t-transparent rounded-full animate-spin flex-shrink-0" />
+      ) : status === "done" ? (
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="flex-shrink-0">
+          <path d="M3 8l4 4 6-7" stroke="#4ade80" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      ) : status === "error" ? (
+        <span className="font-mono text-xs text-red-400 flex-shrink-0">✕</span>
+      ) : (
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="text-gray-600 flex-shrink-0">
+          <path d="M12 4v12m0-12L8 8m4-4l4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+        </svg>
+      )}
+      <span className="font-mono text-[10px]">
+        {status === "done"
+          ? <span className="text-green-400">Đã tải {count} giao dịch · kéo thả file mới để cập nhật</span>
+          : status === "error"
+          ? <span className="text-red-400">Lỗi đọc file JSON · thử lại</span>
+          : <span className="text-gray-500">Kéo thả file JSON Lãi/Lỗ vào đây</span>}
+      </span>
+    </div>
+  );
+}
+
 // ─── Mock P&L data ────────────────────────────────────────────────────────────
 
 const MOCK_PNL: PnLRecord[] = [
@@ -617,6 +692,7 @@ const MOCK_PNL: PnLRecord[] = [
 
 function PnLCard({ records }: { records: PnLRecord[] }) {
   const today = new Date().toISOString().slice(0, 10);
+  const [pnlRecords, setPnlRecords] = useState<PnLRecord[]>(records);
   const [mode, setMode] = useState<"today" | "date" | "range">("today");
   const [pickedDate, setPickedDate] = useState(today);
   const [startDate, setStartDate] = useState(() => {
@@ -626,7 +702,17 @@ function PnLCard({ records }: { records: PnLRecord[] }) {
   const [endDate, setEndDate] = useState(today);
   const [infraCost, setInfraCost] = useState(0);
 
-  const filtered = records.filter(r => {
+  const handlePnLLoaded = useCallback((loaded: PnLRecord[]) => {
+    setPnlRecords(loaded);
+    const dates = [...new Set(loaded.map(r => r.date))].sort();
+    if (dates.length > 1) {
+      setStartDate(dates[0]);
+      setEndDate(dates[dates.length - 1]);
+      setMode("range");
+    }
+  }, []);
+
+  const filtered = pnlRecords.filter(r => {
     if (mode === "today")  return r.date === today;
     if (mode === "date")   return r.date === pickedDate;
     return r.date >= startDate && r.date <= endDate;
@@ -661,6 +747,9 @@ function PnLCard({ records }: { records: PnLRecord[] }) {
 
   return (
     <div className="bg-gray-900/60 border border-gray-800 rounded-xl p-4">
+      {/* P&L Upload Zone */}
+      <PnLUploadZone onPnLLoaded={handlePnLLoaded} />
+
       {/* Header + mode selector */}
       <div className="flex justify-between items-center mb-4">
         <p className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">
