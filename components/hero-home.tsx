@@ -49,14 +49,25 @@ export default function Hero({ agent }: { agent: string }) {
                 không chỉ hiểu câu hỏi mà quan trọng hơn là hiểu Quy trình nghiệp vụ nội bộ Công ty của bạn. Với AItrify, Doanh nghiệp của bạn đã là AA: {' '}
                 <strong className="font-bold text-indigo-100">AI Agentic Enterprise</strong>.
               </p>
-              <p className="mt-3 flex items-center gap-2 text-sm text-indigo-200/60" data-aos="fade-up" data-aos-delay={250}>
-                {"Phát triển bởi "}
-                <img src="/Bee_System.png" alt="Bee Systems Inc." style={{height:"20px",width:"auto",filter:"brightness(2)"}} />
-                {" "}
-                <a href="https://www.beeinc.vn" target="_blank" rel="noopener noreferrer" className="underline hover:text-white transition-colors">
-                  www.beeinc.vn
+              <div className="mt-5 flex flex-col items-center gap-2 text-center" data-aos="fade-up" data-aos-delay={250}>
+                <p className="flex items-center justify-center gap-2 text-base font-medium">
+                  <span className="text-indigo-200/70">Phát triển bởi</span>
+                  <svg width="36" height="32" viewBox="0 0 40 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="20,0 27.8,4.5 27.8,13.5 20,18 12.2,13.5 12.2,4.5" fill="#EAB308"/>
+                    <polygon points="13,14 20.8,18.5 20.8,27.5 13,32 5.2,27.5 5.2,18.5" fill="#EAB308" opacity="0.85"/>
+                    <polygon points="27,14 34.8,18.5 34.8,27.5 27,32 19.2,27.5 19.2,18.5" fill="#EAB308" opacity="0.85"/>
+                  </svg>
+                  <span className="font-semibold text-white">Bee Systems Inc.</span>
+                </p>
+                <a
+                  href="https://www.beeinc.vn"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,#a5b4fc,#c4b5fd,#e0e7ff,#818cf8,#a5b4fc)] bg-[length:200%_auto] bg-clip-text text-lg font-semibold text-transparent hover:opacity-80 transition-opacity"
+                >
+                  www.beeinc.vn →
                 </a>
-              </p>
+              </div>
             </div>
 
             <PublicMetrics />
