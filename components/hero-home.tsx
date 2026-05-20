@@ -47,7 +47,15 @@ export default function Hero({ agent }: { agent: string }) {
               <p className="mb-8 text-xl text-indigo-100/80" data-aos="fade-up" data-aos-delay={200}>
                 AItrify xây dựng nền tảng AI đa tác tử chỉ dành cho Doanh nghiệp, nơi Trí tuệ nhân tạo
                 không chỉ hiểu câu hỏi mà quan trọng hơn là hiểu Quy trình nghiệp vụ nội bộ Công ty của bạn. Với AItrify, Doanh nghiệp của bạn đã là AA: {' '}
-                <strong className="font-bold text-indigo-100">AI Agentic Enterprise</strong>
+                <strong className="font-bold text-indigo-100">AI Agentic Enterprise</strong>.
+              </p>
+              <p className="mt-3 flex items-center gap-2 text-sm text-indigo-200/60" data-aos="fade-up" data-aos-delay={250}>
+                {"Phát triển bởi "}
+                <img src="/Bee_System.png" alt="Bee Systems Inc." style={{height:"20px",width:"auto",filter:"brightness(2)"}} />
+                {" "}
+                <a href="https://www.beeinc.vn" target="_blank" rel="noopener noreferrer" className="underline hover:text-white transition-colors">
+                  www.beeinc.vn
+                </a>
               </p>
             </div>
 
