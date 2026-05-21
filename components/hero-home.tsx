@@ -4,10 +4,10 @@ import { useEffect, useRef, useState } from 'react';
 import Chatbox from '@/components/chatbox';
 import PublicMetrics from '@/components/public-metrics';
 
-type Agent = 'anna' | 'lisa' | 'green' | 'lega' | 'mobi' | 'aifi';
+type Agent = 'anna' | 'lisa' | 'ugreen' | 'lega' | 'mobi' | 'aifi';
 
 export default function Hero({ agent }: { agent: string }) {
-  const initial: Agent = agent === 'lisa' ? 'lisa' : agent === 'green' ? 'green' : 'anna';
+  const initial: Agent = agent === 'lisa' ? 'lisa' : agent === 'ugreen' ? 'ugreen' : 'anna';
   const [selectedAgent, setSelectedAgent] = useState<Agent>(initial);
 
   const chatRef = useRef<HTMLDivElement>(null);
@@ -35,7 +35,7 @@ export default function Hero({ agent }: { agent: string }) {
     <section>
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="py-12 md:py-20">
-          <div className="pb-12 text-center md:pb-20">
+          <div className="pb-4 text-center md:pb-6">
             <h1
               className="animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,var(--color-gray-200),var(--color-indigo-200),var(--color-gray-50),var(--color-indigo-300),var(--color-gray-200))] bg-[length:200%_auto] bg-clip-text pb-5 font-nacelle text-4xl font-semibold text-transparent md:text-5xl"
               data-aos="fade-up"
@@ -44,7 +44,7 @@ export default function Hero({ agent }: { agent: string }) {
             </h1>
 
             <div className="mx-auto max-w-3xl">
-              <p className="mb-8 text-xl text-indigo-100/80" data-aos="fade-up" data-aos-delay={200}>
+              <p className="mb-8 text-xl text-indigo-100/80" style={{textShadow:"0 2px 12px rgba(165,180,252,0.4), 0 1px 3px rgba(0,0,0,0.6)"}} data-aos="fade-up" data-aos-delay={200}>
                 AItrify xây dựng nền tảng AI đa tác tử chỉ dành cho Doanh nghiệp, nơi Trí tuệ nhân tạo
                 không chỉ hiểu câu hỏi mà quan trọng hơn là hiểu Quy trình nghiệp vụ nội bộ Công ty của bạn. Với AItrify, Doanh nghiệp của bạn đã là AA: {' '}
                 <strong className="font-bold text-indigo-100">AI Agentic Enterprise</strong>.
@@ -72,7 +72,7 @@ export default function Hero({ agent }: { agent: string }) {
 
             <PublicMetrics />
 
-            <div className="mx-auto grid w-full max-w-4xl grid-cols-2 gap-3 sm:grid-cols-3">
+            <div className="mx-auto grid w-full max-w-4xl grid-cols-2 gap-x-3 gap-y-5 sm:grid-cols-3">
                 {/* Nút ANNA (đỏ Nagakawa) */}
                 <div className="flex-1" data-aos="fade-up" data-aos-delay={400}>
                   <button
@@ -106,7 +106,7 @@ export default function Hero({ agent }: { agent: string }) {
                 {/* Nút UGREEN (xanh lá gradient) */}
                 <div className="flex-1" data-aos="fade-up" data-aos-delay={650}>
                   <button
-                    onClick={() => handleAgentSelect('green')}
+                    onClick={() => handleAgentSelect('ugreen')}
                     className="btn w-full bg-gradient-to-r from-green-400 to-green-800 text-white hover:from-green-500 hover:to-green-600"
                   >
                     <span className="flex items-center justify-center gap-2">
