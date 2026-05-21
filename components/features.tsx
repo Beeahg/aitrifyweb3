@@ -38,16 +38,15 @@ export default function Features() {
           {/* Section header */}
           <div className="mx-auto max-w-3xl pb-4 text-center md:pb-12">
             <div className="inline-flex items-center gap-3 pb-3 before:h-px before:w-8 before:bg-linear-to-r before:from-transparent before:to-indigo-200/50 after:h-px after:w-8 after:bg-linear-to-l after:from-transparent after:to-indigo-200/50">
-              <span className="inline-flex bg-linear-to-r from-indigo-500 to-indigo-200 bg-clip-text text-transparent">
+              <span className="inline-flex bg-linear-to-r from-indigo-500 to-indigo-200 bg-clip-text text-transparent text-base font-semibold tracking-wide">
                 AItrify là để
               </span>
             </div>
             <h2 className="animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,var(--color-gray-200),var(--color-indigo-200),var(--color-gray-50),var(--color-indigo-300),var(--color-gray-200))] bg-[length:200%_auto] bg-clip-text pb-4 font-nacelle text-3xl font-semibold text-transparent md:text-4xl">
-              Cho một cuộc sống tốt hơn mỗi ngày
+              Cho cuộc sống và công việc tốt hơn mỗi ngày
             </h2>
             <p className="text-lg text-indigo-200/65">
-              Dù bạn có ít hay nhiều điều kiện về tài chính, bạn luôn xứng đáng với các tiện nghi, sản phẩm tương xứng với số tiền chi ra. 
-              AItrify sử dụng tối đa công nghệ trí tuệ nhân tạo AI để hiện diện trong đời sống hàng ngày của bạn để giúp bạn có cuộc sống dễ chịu hơn.
+              AItrify tập hợp <strong>6 AI Agent (Tác tử AI) chuyên biệt</strong> — mỗi Agent là chuyên gia một lĩnh vực, được đào tạo từ nguồn dữ liệu <strong>chính thống, có trích dẫn nguyên văn và ghi rõ thời gian cập nhật</strong>. Dù bạn cần tư vấn tiêu dùng, pháp lý, tài chính hay công nghệ — luôn có Agent sẵn sàng <strong>24/7, chi phí siêu thấp</strong>.
             </p>
           </div>
           {/* Items */}
@@ -66,11 +65,10 @@ export default function Features() {
                 />
               </svg>
               <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
-                Bạn khá giả nhưng bận rộn?
+                ANNA – Trợ lý Điều hòa &amp; Gia dụng
               </h3>
               <p className="text-indigo-200/65">
-                AItrify muốn giới thiệu bạn về Golf, hơn cả một môn thể thao, đó là đẳng cấp về sự kết nối. Kết nối cộng đồng cùng sở thích, 
-                kết nối các cơ hội kinh doanh trên sân golf, kết nối phong cách sống, giảm áp lực công việc bộn bề với không khí trên sân golf.
+                ANNA được <strong>đào tạo chuyên sâu</strong> về điều hòa không khí, tủ lạnh, bình nước nóng, bếp điện từ, nồi cơm, máy giặt... Thông số kỹ thuật, giá cả được <strong>trích dẫn nguyên văn từ catalogue chính hãng</strong>, ghi rõ nguồn và <strong>cập nhật định kỳ</strong> — giúp bạn mua đúng sản phẩm, đúng giá, chính hãng.
               </p>
             </article>
             <article>
@@ -84,11 +82,10 @@ export default function Features() {
                 <path d="M19 6H0v2h17v8H7v-6H5v8h19v-2h-5V6Z" />
               </svg>
               <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
-                Bạn chưa có điều kiện kinh tế?
+                LISA – Trợ lý Golf &amp; Golfer
               </h3>
               <p className="text-indigo-200/65">
-                Bạn có thể đang nấu bằng bếp gas cũ, hoặc chưa dám mơ các thiết bị tiện nghi như bình nước nóng, tủ lạnh, máy điều hòa không khí. 
-                Nhưng bạn luôn xứng đáng có một cuộc sống tiện nghi hơn, mà không cần trả chi phí cao. AItrify giúp bạn tìm đúng
+                LISA am hiểu <strong>toàn diện về golf</strong>: gậy, bóng, phụ kiện, sân golf, luật chơi, kỹ thuật tập luyện. Thông tin được lấy từ <strong>nguồn chính thống có trích dẫn rõ ràng</strong> — từ người mới tập đến golfer chuyên nghiệp đều được <strong>tư vấn phù hợp với trình độ</strong> của mình.
               </p>
             </article>
             <article>
@@ -105,11 +102,10 @@ export default function Features() {
                 />
               </svg>
               <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
-                AItrify Tăng tốc tìm kiếm cho bạn
+                GREEN – Trợ lý Năng lượng Xanh
               </h3>
               <p className="text-indigo-200/65">
-                Cá nhân hóa thông tin sản phẩm bạn cần để tìm kiếm nhanh nhất và phù hợp nhất. AItrify hơn cả tìm kiếm mà còn là một trợ lý 
-                tư vấn cá nhân của bạn trong việc mua hàng đúng, giá tốt, chính hãng, dịch vụ hậu mãi chuẩn hãng. Cần gì bạn hãy hỏi AItrify
+                GREEN tư vấn về <strong>xe máy điện, xe đạp điện, trạm đổi pin, phát thải CO2</strong> và công nghệ Smart Grid. Dữ liệu từ <strong>các tổ chức năng lượng uy tín</strong>, có timestamp cập nhật — giúp bạn chuyển đổi xanh <strong>thông minh và chi phí tối ưu</strong>.
               </p>
             </article>
             <article>
@@ -131,11 +127,10 @@ export default function Features() {
                 <path d="m16.321 2-.5-.866 1.733-1 .5.866A22 22 0 0 1 21 12c0 3.852-1.017 7.636-2.948 10.97l-.502.865-1.73-1.003.501-.865A19.878 19.878 0 0 0 19 12a20 20 0 0 0-2.679-10Z" />
               </svg>
               <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
-                AItrify LISA – Trợ lý cho người chơi Golf
+                LEGA – Trợ lý Pháp lý
               </h3>
               <p className="text-indigo-200/65">
-                Bạn có thể hỏi trợ lý AI "AItrify" về thông tin sản phẩm liên quan tới golf như sân golf, gậy golf, bóng golf, phụ kiện golf.
-                AItrify đang nỗ lực từng ngày mang lại cho bạn các tính năng để hỗ trợ bạn tập chơi golf ngay từ khi bạn chưa biết về golf hay cả khi bạn đã tập golf được một thời gian
+                LEGA tra cứu và giải thích <strong>văn bản pháp luật Việt Nam</strong>: luật, nghị định, thông tư, quy định hành chính. Mọi câu trả lời đều <strong>trích dẫn nguyên văn điều khoản</strong>, ghi rõ <strong>số văn bản và ngày hiệu lực</strong> — giúp bạn hiểu đúng và hành động đúng luật.
               </p>
             </article>
             <article>
@@ -152,11 +147,10 @@ export default function Features() {
                 <path d="m7.454 2.891.891-.454L7.437.655l-.891.454a12 12 0 0 0 0 21.382l.89.454.91-1.781-.892-.455a10 10 0 0 1 0-17.818ZM17.456 1.11l-.891-.454-.909 1.782.891.454a10 10 0 0 1 0 17.819l-.89.454.908 1.781.89-.454a12 12 0 0 0 0-21.382Z" />
               </svg>
               <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
-                AItrify ANNA – Trợ lý cho Điều hòa gia dụng
+                MOBI – Trợ lý Công nghệ Di động
               </h3>
               <p className="text-indigo-200/65">
-                AItrify mong muốn cải thiện cuộc sống cho những người thu nhập thấp với các tiện nghi cuộc sống tốt hơn gồm điều hòa, 
-                bình nước nóng, bếp điện từ, nồi cơm, máy xay sinh tố,... với giá cả rất bình dân nhưng vẫn là chính hãng vì hơn cả một sản phẩm, AItrify mong mang lại sự Yên tâm
+                MOBI tư vấn cho các <strong>nhà mạng di động MNO, nhà mạng di động ảo MVNO</strong> các thông tin công nghệ viễn thông, công nghệ truyền số liệu thế hệ mới gồm <strong>5G, 6G, vệ tinh, IoT</strong> và các công nghệ mà <strong>Bee Systems đã và đang phát triển</strong>.
               </p>
             </article>
             <article>
@@ -173,11 +167,10 @@ export default function Features() {
                 <path d="M19.406 3.844 6.083 20.497.586 15 2 13.586l3.917 3.917L17.844 2.595l1.562 1.25Z" />
               </svg>
               <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
-                AItrify UGREEN – Trợ lý cho Cuộc sống Xanh
+                AIFI – Trợ lý Tài chính
               </h3>
               <p className="text-indigo-200/65">
-                AItrify UGREEN là trợ lý AI cho cuộc sống Xanh, cung cấp thông tin về xe điện, trạm đổi pin xe điện,
-                kiến thức về phát thải CO2. UGREEN sử AI, IoT, Digital Twin, Blockchain để hướng tới lưới điện thông minh trong sản xuất, tiêu dùng bền vững, chia sẻ năng lượng và giảm phát thải.
+                AIFI thu thập, phân tích và tổng hợp thông tin tức thì về <strong>tỉ giá, giá logistics</strong> (vận chuyển đường biển), <strong>giá dầu, vàng, chứng khoán, cổ phiếu</strong> và các tài sản số như <strong>tài sản mã hóa</strong> — nguồn chính thống, trích dẫn nguyên văn, <strong>cập nhật thời gian thực</strong> để bạn ra quyết định đầu tư sáng suốt hơn.
               </p>
             </article>
           </div>
