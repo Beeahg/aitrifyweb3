@@ -44,7 +44,7 @@ export default function Hero({ agent }: { agent: string }) {
             </h1>
 
             <div className="mx-auto max-w-3xl">
-              <p className="mb-8 text-xl text-indigo-100/80" style={{textShadow:"0 2px 12px rgba(165,180,252,0.4), 0 1px 3px rgba(0,0,0,0.6)"}} data-aos="fade-up" data-aos-delay={200}>
+              <p className="mb-8 text-xl text-indigo-100/80" style={{textShadow:"0 2px 12px rgba(165,180,252,0.9), 0 2px 8px rgba(0,0,0,0.8)"}} data-aos="fade-up" data-aos-delay={200}>
                 AItrify xây dựng nền tảng AI đa tác tử chỉ dành cho Doanh nghiệp, nơi Trí tuệ nhân tạo
                 không chỉ hiểu câu hỏi mà quan trọng hơn là hiểu Quy trình nghiệp vụ nội bộ Công ty của bạn. Với AItrify, Doanh nghiệp của bạn đã là AA: {' '}
                 <strong className="font-bold text-indigo-100">AI Agentic Enterprise</strong>.

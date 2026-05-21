@@ -13,15 +13,14 @@ export default function Workflows() {
           <div className="mx-auto max-w-3xl pb-12 text-center md:pb-20">
             <div className="inline-flex items-center gap-3 pb-3 before:h-px before:w-8 before:bg-linear-to-r before:from-transparent before:to-indigo-200/50 after:h-px after:w-8 after:bg-linear-to-l after:from-transparent after:to-indigo-200/50">
               <span className="inline-flex bg-linear-to-r from-indigo-400 to-indigo-100 bg-clip-text text-transparent">
-                Mọi yêu cầu
+                Sức mạnh AI Agent (Tác tử AI)
               </span>
             </div>
             <h2 className="animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,var(--color-gray-200),var(--color-indigo-200),var(--color-gray-50),var(--color-indigo-300),var(--color-gray-200))] bg-[length:200%_auto] bg-clip-text pb-4 font-nacelle text-3xl font-semibold text-transparent md:text-4xl">
-              Trí tuệ nhân tạo giúp tìm đúng thứ bạn cần
+              Từ câu hỏi đến hành động — AI Agent tư vấn như chuyên gia
             </h2>
             <p className="text-lg text-indigo-100/90">
-              Bạn là người có khả năng tài chính hạn chế, AItrify vẫn tìm kiếm được cho bạn nhà cung cấp hàng chính hãng, bạn không cần phải nhiều tiền mới có điều hòa tốt, thiết bị gia dụng chuẩn.
-              Bạn là người có điều kiện và thành đạt với mong muốn mở rộng kết nối kinh doanh, nâng đẳng cấp sống, AItrify tư vấn và mang lại sản phẩm và dịch vụ Golf xứng Tầm.
+              Mỗi AI Agent (Tác tử AI) của AItrify được <strong>huấn luyện chuyên sâu</strong> cho từng lĩnh vực — kết hợp <strong>tri thức cập nhật liên tục</strong> với khả năng <strong>hiểu ngữ cảnh</strong> và <strong>tự động hóa quy trình</strong>, giúp bạn đưa ra quyết định đúng nhất, nhanh nhất.
             </p>
           </div>
           {/* Spotlight items */}
@@ -62,13 +61,12 @@ export default function Workflows() {
                   <div className="mb-3">
                     <span className="btn-sm relative rounded-full bg-gray-800/40 px-2.5 py-0.5 text-xs font-normal before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_bottom,--theme(--color-gray-700/.15),--theme(--color-gray-700/.5))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] hover:bg-gray-800/60">
                       <span className="bg-linear-to-r from-indigo-300 to-indigo-100 bg-clip-text text-transparent font-semibold">
-                        Hàng chính hãng
+                        Tri thức chuyên sâu
                       </span>
                     </span>
                   </div>
                   <p className="text-indigo-100/90">
-                    Điều hòa không khí và thiết bị gia dụng giá hợp lý, mang tới khả năng tiếp cận cho mọi nhà, mọi người. Vì bạn xứng đáng được cuộc sống ngày một tiện nghi hơn.<br />
-                    Sản phẩm cho Golfer và dịch vụ cao cấp cho khách hàng giàu có và phong cách. Vì bạn xứng được được dịch vụ đẳng cấp hơn.
+                    Mỗi AI Agent (Tác tử AI) được <strong>đào tạo chuyên biệt</strong> theo lĩnh vực riêng: điện gia dụng, golf, năng lượng xanh, pháp lý, tài chính, công nghệ thông tin di động. Agent <strong>hiểu đúng ngữ cảnh</strong>, đưa ra tư vấn <strong>chính xác và có căn cứ</strong> từ nguồn dữ liệu được kiểm chứng — không trả lời chung chung.
                   </p>
                 </div>
               </div>
@@ -109,13 +107,12 @@ export default function Workflows() {
                   <div className="mb-3">
                     <span className="btn-sm relative rounded-full bg-gray-800/40 px-2.5 py-0.5 text-xs font-normal before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_bottom,--theme(--color-gray-700/.15),--theme(--color-gray-700/.5))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] hover:bg-gray-800/60">
                       <span className="bg-linear-to-r from-indigo-300 to-indigo-100 bg-clip-text text-transparent font-semibold">
-                        Cam kết cao
+                        Tư vấn thông minh
                       </span>
                     </span>
                   </div>
                   <p className="text-indigo-100/90">
-                    Cho dù bạn mua sản phẩm điều hòa gia dụng với giá trị nhỏ với với bất cứ model nào hay sử dụng dịch vụ tập golf, chơi golf, mua sản phẩm golf với chi phí tương xứng, 
-                    AItrify luôn đi cùng bạn với Cam kết vững chắc về "HÀNG CHÍNH HÃNG" để cam kết về chất lượng và xuất xử, "DỊCH VỤ HẬU MÃI" chính hãng để bạn luôn An tâm 
+                    Không chỉ trả lời câu hỏi — AItrify Agent <strong>hiểu nhu cầu thực sự</strong> của bạn, <strong>gợi ý phương án phù hợp</strong> và hướng dẫn từng bước ra quyết định. Như có một <strong>chuyên gia riêng luôn sẵn sàng 24/7</strong> — không chờ đợi, không hẹn lịch, <strong>chi phí tư vấn siêu thấp hoặc bằng không</strong>.
                   </p>
                 </div>
               </div>
@@ -156,14 +153,12 @@ export default function Workflows() {
                   <div className="mb-3">
                     <span className="btn-sm relative rounded-full bg-gray-800/40 px-2.5 py-0.5 text-xs font-normal before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_bottom,--theme(--color-gray-700/.15),--theme(--color-gray-700/.5))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] hover:bg-gray-800/60">
                       <span className="bg-linear-to-r from-indigo-300 to-indigo-100 bg-clip-text text-transparent font-semibold">
-                        Sự sẵn sàng
+                        Tự động & Liên tục
                       </span>
                     </span>
                   </div>
                   <p className="text-indigo-100/90">
-                    Bạn nhìn thấy hay tìm thấy trên AItrify, sản phẩm đó PHẢI CÓ SẴN (A đại diện cho Available). 
-                    Đó cũng là cam kết các hãng cung cấp sản phẩm dịch vụ khi hợp tác với AItrify để mang tới cho bạn, chúng tôi có hệ thống kho lưu trữ đủ hàng của các hãng để không làm bạn thất vọng.<br />
-                    Một điểm chạm AItrify, đơn hàng tự động xử lý bởi AI
+                    AItrify <strong>tự động cập nhật</strong> thông tin thị trường, giá cả và sản phẩm mới vào kho tri thức (knowledge base) của từng Agent. Khi bạn hỏi, Agent trả lời với <strong>dữ liệu mới nhất</strong> — không bao giờ lỗi thời. <strong>Một điểm chạm</strong>, từ tư vấn đến kết nối nhà cung cấp được xử lý <strong>tự động bởi AI</strong>.
                   </p>
                 </div>
               </div>
