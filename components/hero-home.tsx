@@ -71,6 +71,22 @@ export default function Hero({ agent }: { agent: string }) {
             </div>
 
             <PublicMetrics />
+            {/* ── Divider + Guide ── */}
+            <div className="my-6 flex flex-col items-center gap-3" data-aos="fade-up" data-aos-delay={350}>
+              <div className="flex w-full max-w-4xl items-center gap-4">
+                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-indigo-500/60 to-transparent"/>
+                <svg className="h-5 w-5 shrink-0 text-indigo-400" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M13 2L3 14h9v8l9-12h-9V2z"/>
+                </svg>
+                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-indigo-500/60 to-transparent"/>
+              </div>
+              <p
+                className="text-center text-sm font-semibold tracking-wide text-indigo-200/90"
+                style={{textShadow:"0 0 14px rgba(129,140,248,0.7), 0 2px 6px rgba(0,0,0,0.5)"}}
+              >
+                Nhấn vào AI Agent bạn muốn trải nghiệm — mỗi nút là một chuyên gia riêng biệt
+              </p>
+            </div>
 
             <div className="mx-auto grid w-full max-w-4xl grid-cols-2 gap-x-3 gap-y-5 sm:grid-cols-3">
                 {/* Nút ANNA (đỏ Nagakawa) */}
