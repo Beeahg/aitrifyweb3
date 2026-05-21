@@ -4,10 +4,10 @@ import { useEffect, useRef, useState } from 'react';
 import Chatbox from '@/components/chatbox';
 import PublicMetrics from '@/components/public-metrics';
 
-type Agent = 'anna' | 'lisa' | 'ugreen';
+type Agent = 'anna' | 'lisa' | 'green' | 'lega' | 'mobi' | 'aifi';
 
 export default function Hero({ agent }: { agent: string }) {
-  const initial: Agent = agent === 'lisa' ? 'lisa' : agent === 'ugreen' ? 'ugreen' : 'anna';
+  const initial: Agent = agent === 'lisa' ? 'lisa' : agent === 'green' ? 'green' : 'anna';
   const [selectedAgent, setSelectedAgent] = useState<Agent>(initial);
 
   const chatRef = useRef<HTMLDivElement>(null);
@@ -49,7 +49,7 @@ export default function Hero({ agent }: { agent: string }) {
                 không chỉ hiểu câu hỏi mà quan trọng hơn là hiểu Quy trình nghiệp vụ nội bộ Công ty của bạn. Với AItrify, Doanh nghiệp của bạn đã là AA: {' '}
                 <strong className="font-bold text-indigo-100">AI Agentic Enterprise</strong>.
               </p>
-              <div className="mt-5 flex flex-col items-center gap-2 text-center" data-aos="fade-up" data-aos-delay={250}>
+              <div className="mt-5 mb-8 flex flex-col items-center gap-2 text-center" data-aos="fade-up" data-aos-delay={250}>
                 <p className="flex items-center justify-center gap-2 text-base font-medium">
                   <span className="text-indigo-200/70">Phát triển bởi</span>
                   <svg width="36" height="32" viewBox="0 0 40 35" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -72,7 +72,7 @@ export default function Hero({ agent }: { agent: string }) {
 
             <PublicMetrics />
 
-            <div className="mx-auto flex w-full max-w-3xl flex-col gap-3 sm:flex-row">
+            <div className="mx-auto grid w-full max-w-4xl grid-cols-2 gap-3 sm:grid-cols-3">
                 {/* Nút ANNA (đỏ Nagakawa) */}
                 <div className="flex-1" data-aos="fade-up" data-aos-delay={400}>
                   <button
@@ -106,7 +106,7 @@ export default function Hero({ agent }: { agent: string }) {
                 {/* Nút UGREEN (xanh lá gradient) */}
                 <div className="flex-1" data-aos="fade-up" data-aos-delay={650}>
                   <button
-                    onClick={() => handleAgentSelect('ugreen')}
+                    onClick={() => handleAgentSelect('green')}
                     className="btn w-full bg-gradient-to-r from-green-400 to-green-800 text-white hover:from-green-500 hover:to-green-600"
                   >
                     <span className="flex items-center justify-center gap-2">
@@ -114,28 +114,56 @@ export default function Hero({ agent }: { agent: string }) {
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12 2C8 2 4 6 4 10c0 3.31 2.69 6 6 6h1v2H9v2h6v-2h-2v-2h1c3.31 0 6-2.69 6-6 0-4-4-8-8-8zM7 10c0-2.76 2.24-5 5-5s5 2.24 5 5-2.24 5-5 5-5-2.24-5-5z"/>
                       </svg>
-                      UGREEN Xanh
+                      GREEN Xanh
                     </span>
                   </button>
                 </div>
 
-                {/* Nút Mua hàng */}
-                <div className="flex-1" data-aos="fade-up" data-aos-delay={800}>
+                {/* Nút Mua hàng - ẩn tạm */}
+                <div className="hidden" data-aos="fade-up" data-aos-delay={800}>
+                  <button className="btn w-full bg-gradient-to-r from-yellow-400 to-yellow-700 text-white">
+                    <span>Mua hàng với AItrify</span>
+                  </button>
+                </div>
+                {/* Nút LEGA (tím) */}
+                <div data-aos="fade-up" data-aos-delay={700}>
                   <button
-                    onClick={() =>
-                      window.dispatchEvent(
-                        new CustomEvent('aitrify:footer', {
-                          detail: { topic: 'guide/purchase' },
-                        }),
-                      )
-                    }
-                    className="btn w-full bg-gradient-to-r from-yellow-400 to-yellow-700 text-white hover:from-yellow-500 hover:to-yellow-800"
+                    onClick={() => handleAgentSelect('lega')}
+                    className="btn w-full bg-gradient-to-r from-violet-500 to-purple-700 text-white hover:from-violet-600 hover:to-purple-800"
                   >
                     <span className="flex items-center justify-center gap-2">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M7 4h-2l-3 7v2h2l1 9h14l1-9h2v-2l-3-7h-2l-1 2h-8l-1-2zm2.5 2h5l1 2h-7l1-2zm9 4l1.5 3h-15l1.5-3h12zm-2.5 9c.83 0 1.5-.67 1.5-1.5S16.83 16 16 16s-1.5.67-1.5 1.5S15.17 19 16 19zm-8 0c.83 0 1.5-.67 1.5-1.5S8.83 16 8 16s-1.5.67-1.5 1.5S7.17 19 8 19z" />
+                        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
                       </svg>
-                      Mua hàng với AItrify
+                      LEGA Pháp lý
+                    </span>
+                  </button>
+                </div>
+                {/* Nút MOBI (cam) */}
+                <div data-aos="fade-up" data-aos-delay={750}>
+                  <button
+                    onClick={() => handleAgentSelect('mobi')}
+                    className="btn w-full bg-gradient-to-r from-orange-400 to-orange-700 text-white hover:from-orange-500 hover:to-orange-800"
+                  >
+                    <span className="flex items-center justify-center gap-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17 2H7C5.9 2 5 2.9 5 4v16c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-5 18c-.83 0-1.5-.67-1.5-1.5S11.17 17 12 17s1.5.67 1.5 1.5S12.83 20 12 20zm5-4H7V4h10v12z"/>
+                      </svg>
+                      MOBI Di động
+                    </span>
+                  </button>
+                </div>
+                {/* Nút AIFI (xanh ngọc) */}
+                <div data-aos="fade-up" data-aos-delay={800}>
+                  <button
+                    onClick={() => handleAgentSelect('aifi')}
+                    className="btn w-full bg-gradient-to-r from-cyan-400 to-teal-700 text-white hover:from-cyan-500 hover:to-teal-800"
+                  >
+                    <span className="flex items-center justify-center gap-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+                      </svg>
+                      AIFI Tài chính
                     </span>
                   </button>
                 </div>

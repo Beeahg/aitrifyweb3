@@ -289,8 +289,8 @@ export default function PublicMetrics() {
   return (
     <div ref={ref} className="mb-10" data-aos="fade-up" data-aos-delay={300}>
       {/* Section label */}
-      <p className="mb-5 text-center text-xs font-semibold uppercase tracking-widest text-indigo-400/80">
-        AItrify in Numbers
+      <p className="mb-5 text-center text-sm font-bold uppercase tracking-widest text-indigo-300" style={{textShadow:"0 0 12px rgba(129,140,248,0.8), 0 2px 4px rgba(0,0,0,0.5)"}}>
+        AItrify qua những con số
       </p>
 
       {/* 2-col on mobile → 4-col on sm+ */}
