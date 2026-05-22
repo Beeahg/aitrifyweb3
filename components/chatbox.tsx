@@ -25,9 +25,9 @@ const AGENT_CONFIGS: Record<string, { name: string; greeting: string; color: str
     color: 'bg-blue-50 border-blue-300',
   },
   ugreen: {
-    name: 'UGREEN',
+    name: 'GREEN',
     greeting:
-      'Chào anh/chị, UGREEN là trợ lý của mọi người Việt về kiến thức dành cho cuộc sống Xanh, sản xuất Xanh, công nghệ Xanh tập trung vào giảm phát thải các bon (CO2), UGREEN sẽ trả lời các câu hỏi về xe máy điện, xe đạp điện, trạm đổi pin xe máy điện, quy đổi các nguồn phát thải sang tỉ lệ giảm phát thải CO2, UGREEN đang được phát triển với các công nghệ AI, IoT, Blockchain và lưới điện thông minh Smart Grid, tập trung vào chia sẻ Xanh P2P',
+      'Chào anh/chị, GREEN là trợ lý về kiến thức năng lượng xanh, xe điện và công nghệ giảm phát thải CO2. GREEN hỗ trợ tìm kiếm xe đạp điện, xe máy điện, trạm sạc và trạm đổi pin, cùng các giải pháp chuyển đổi xanh phù hợp nhu cầu và ngân sách của bạn.',
     color: 'bg-green-50 border-green-300', // màu xanh cũ của ANNA
   },
 };
