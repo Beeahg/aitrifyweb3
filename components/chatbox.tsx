@@ -89,8 +89,8 @@ const FOOTER_TOPICS: Record<string, { title: string; content: string }> = {
     content:
       'Tầm nhìn: AItrify hướng tới đưa AI Agent trở thành cố vấn chuyên gia riêng cho mọi cá nhân và doanh nghiệp — hoạt động 24/7, chi phí siêu thấp, không giới hạn lĩnh vực.\n\n' +
       'Sứ mệnh: Dân chủ hóa tri thức chuyên sâu — để mọi người đều được tiếp cận thông tin chính xác, có căn cứ và cập nhật liên tục từ các nguồn chính thống, bất kể thu nhập hay vị trí địa lý.'
-  'technology': {
   },
+  'technology': {
     title: 'Công nghệ AItrify',
     content:
       'AItrify được xây dựng trên nền tảng công nghệ hiện đại, triển khai toàn bộ trên hạ tầng Cloud Native:\n\n' +
