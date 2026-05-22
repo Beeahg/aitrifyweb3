@@ -241,19 +241,24 @@ export default function Footer() {
             <div className="mb-3">
               <Logo />
             </div>
-            <div className="text-sm">
-              <p className="mb-3 text-indigo-200/65">
-                ©aitrify.com
-                <span className="text-gray-700"> · </span>
-                <a
-                  className="text-indigo-200/65 transition hover:text-indigo-500"
-                  href="https://www.aitrify.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  2025. BEESOTA6G Technologies Alliance
-                </a>
+            <div className="mt-4 flex flex-col items-end gap-2">
+              <p className="flex items-center gap-2 text-sm font-medium text-indigo-200/70">
+                Phát triển bởi
+                <svg width="22" height="20" viewBox="0 0 40 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <polygon points="20,0 27.8,4.5 27.8,13.5 20,18 12.2,13.5 12.2,4.5" fill="#EAB308"/>
+                  <polygon points="13,14 20.8,18.5 20.8,27.5 13,32 5.2,27.5 5.2,18.5" fill="#EAB308" opacity="0.85"/>
+                  <polygon points="27,14 34.8,18.5 34.8,27.5 27,32 19.2,27.5 19.2,18.5" fill="#EAB308" opacity="0.85"/>
+                </svg>
+                <span className="font-semibold text-white">Bee Systems Inc.</span>
               </p>
+              <a
+                href="https://www.beeinc.vn"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,#a5b4fc,#c4b5fd,#e0e7ff,#818cf8,#a5b4fc)] bg-[length:200%_auto] bg-clip-text text-sm font-semibold text-transparent hover:opacity-80 transition-opacity"
+              >
+                www.beeinc.vn →
+              </a>
             </div>
           </div>
 
