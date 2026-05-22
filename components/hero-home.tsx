@@ -200,7 +200,6 @@ export default function Hero({ agent }: { agent: string }) {
           </div>
         </div>
       </div>
-    </section>
 
       {/* Scroll to top */}
       {showTop && (
@@ -214,5 +213,6 @@ export default function Hero({ agent }: { agent: string }) {
           </svg>
         </button>
       )}
+    </section>
   );
 }
