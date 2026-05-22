@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="110" height="36" viewBox="0 0 110 36">
+  <defs><linearGradient id="mobi-g" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#F97316"/><stop offset="100%" stop-color="#FDBA74"/></linearGradient></defs>
+  <text x="2" y="28" font-family="Arial Black,Impact,sans-serif" font-weight="900" font-size="26" fill="url(#mobi-g)">MOBI</text>
+</svg>
