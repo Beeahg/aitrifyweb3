@@ -98,24 +98,32 @@ const FOOTER_TOPICS: Record<string, { title: string; content: string }> = {
   'careers': {
     title: 'Tuyển dụng',
     content:
-      'Chúng tôi tìm Đồng đội tham gia vào xây dựng Nền tảng Thương mại điện tử AI.Commerce: người có khả năng kinh doanh cao, người có đam mê về khoa học dữ liệu, người có khả năng phân tích về khoa học xã hội. ' +
-      'Không quan trọng bạn tốt nghiệp trường đại học nào, chỉ cần bạn đóng góp vào vận hành dòng chảy Thông tin để kích thích dòng chảy Hàng hóa qua nền tảng thương mại điện tử ' +
-      'thế hệ mới AItrify với 2 trợ lý AI chuyên biệt đầu tiên ANNA/LISA, bạn đều có thể trở thành đồng đội của chúng tôi. ' +
-      'Đừng ngại ngần, hãy gửi mail tới: chairm@beeinc.vn kèm CV nói về bạn.'
+      'Bee Systems Inc. đang tìm kiếm đồng đội tài năng và đam mê công nghệ:\n\n' +
+      '• Kỹ sư AI/ML, Backend, Frontend\n' +
+      '• Chuyên gia viễn thông, IoT, Blockchain\n' +
+      '• Business Development & Partnership\n' +
+      '• Phân tích dữ liệu và nội dung chuyên sâu\n\n' +
+      'Không quan trọng bằng cấp — quan trọng là đam mê, năng lực thực chiến và tư duy sản phẩm.\n\n' +
+      'Gửi CV tới: chairm@beeinc.vn'
   },
   'investors': {
     title: 'Dành cho Nhà đầu tư',
     content:
-      'Chúng tôi chào đón các nhà đầu tư có "Khẩu vị" và "Tầm nhìn" trong việc đẩy nhanh dòng chảy Thông tin để kích thích dòng chảy Hàng hóa giúp tăng cao Tốc độ dòng tiền, ' +
-      'để có thể vừa phục vụ được người dân Việt Nam mua hàng/bán hàng CHÍNH HÃNG nhanh nhất với giá Ưu đãi nhất, và vừa có điều kiện để tăng cường Công nghệ cho nền tảng AItrify tốt hơn Mỗi ngày. ' +
-      'Nếu bạn quan tâm đầu tư, chúng tôi vô cùng cảm kích, chỉ cần gửi mail tới chairm@beeinc.vn, hội đồng quan hệ nhà đầu tư IR của chúng tôi sẽ lập tức quan tâm tới đề nghị Đầu tư của Bạn.'
+      'Bee Systems Inc. đang phát triển hệ sinh thái công nghệ gồm:\n\n' +
+      '• AItrify: Nền tảng AI đa tác tử cho doanh nghiệp và người dùng\n' +
+      '• Hạ tầng viễn thông thế hệ mới: 5G, IoT, Smart Grid\n' +
+      '• Blockchain & tài sản số: DLT, ERC-20, chia sẻ năng lượng P2P\n\n' +
+      'Chúng tôi chào đón các nhà đầu tư có tầm nhìn dài hạn trong lĩnh vực AI, viễn thông và công nghệ xanh.\n\n' +
+      'Liên hệ quan hệ nhà đầu tư: chairm@beeinc.vn'
   },
   'partners': {
     title: 'Dành cho Hãng/Đối tác',
     content:
-      'Với Tầm nhìn và Sứ mệnh chính đó là qua nền tảng thương mại điện tử công nghệ AI (AI.Commerce), để phục vụ bất kể ai với thu nhập dù có thấp hay cao cũng đều xứng đáng được hưởng sản phẩm dịch vụ chính hãng ' +
-      'với Top giá Ưu đãi nhất, thông qua sự trợ giúp của AI và các công nghệ tiên tiến khác. ' +
-      'Chúng tôi chào đón các Hãng sản phẩm có thể cung cấp không chỉ hàng chính hãng tuân thủ theo Pháp luật Việt Nam mà còn đi kèm Dịch vụ sau bán hàng Tận tâm cho khách hàng, cho dù giá trị món hàng thấp hay cao.'
+      'AItrify chào đón các hãng và đối tác muốn đưa sản phẩm/dịch vụ đến người dùng qua nền tảng AI:\\n\\n' +
+      '• Hàng hóa CHÍNH HÃNG, có đầy đủ nguồn gốc xuất xứ và hóa đơn hợp lệ theo pháp luật Việt Nam\\n' +
+      '• Cam kết dịch vụ hậu mãi tận tâm cho người dùng cuối\\n' +
+      '• Phù hợp với các lĩnh vực: gia dụng, golf, xe điện, pháp lý, viễn thông, tài chính\\n\\n' +
+      'Gửi đề xuất hợp tác tới: chairm@beeinc.vn — đội ngũ sẽ phản hồi sớm nhất.'
   },
   'eua': {
     title: 'Thoả thuận người dùng (EUA)',
