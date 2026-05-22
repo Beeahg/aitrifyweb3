@@ -16,24 +16,28 @@ import ClientImg06 from "@/public/images/client-logo-06.svg";
 import ClientImgLega from "@/public/images/client-logo-lega.svg";
 import ClientImgMobi from "@/public/images/client-logo-mobi.svg";
 import ClientImgAifi from "@/public/images/client-logo-aifi.svg";
+import ClientImgGreen from "@/public/images/client-logo-green.svg";
+import AvatarAnna from "@/public/images/avatar-anna.svg";
+import AvatarLisa from "@/public/images/avatar-lisa.svg";
+import AvatarGreen from "@/public/images/avatar-green.svg";
 import AvatarLega from "@/public/images/avatar-lega.svg";
 import AvatarMobi from "@/public/images/avatar-mobi.svg";
 import AvatarAifi from "@/public/images/avatar-aifi.svg";
 
 
 const testimonials = [
-  {img:TestimonialImg01,clientImg:ClientImg01,name:"Tư vấn gia dụng",company:"ANNA – AItrify",content:"Bạn cần tư vấn thiết bị gia dụng nhưng không biết bắt đầu từ đâu? ANNA hiểu ngữ cảnh của bạn, gợi ý đúng sản phẩm phù hợp nhu cầu và ngân sách — không cần phải là chuyên gia kỹ thuật.",categories:[1,2]},
-  {img:TestimonialImg02,clientImg:ClientImg01,name:"So sánh & Lựa chọn",company:"ANNA – AItrify",content:"Thị trường gia dụng có hàng trăm lựa chọn. ANNA lọ, so sánh và giải thích sự khác biệt rõ ràng — để bạn mua đúng thứ mình cần với giá xứng đáng.",categories:[1,2]},
-  {img:TestimonialImg01,clientImg:ClientImg02,name:"Golf & Kinh doanh",company:"LISA – AItrify",content:"Dù vừa cầm gậy lần đầu hay đã chơi nhiều năm, LISA tư vấn phù hợp trình độ — từ thiết bị, kỹ thuật đến văn hóa golf trong kinh doanh. Golf là ngôn ngữ kết nối của người thành đạt.",categories:[1,3]},
-  {img:TestimonialImg02,clientImg:ClientImg02,name:"Golf thiếu nhi 5–15 tuổi",company:"LISA – AItrify",content:"Golf rèn luyện tư duy và kiên nhẫn từ nhỏ. LISA hỗ trợ phụ huynh tìm chương trình học golf cho trẻ 5–15 tuổi, gợi ý dụng cụ phù hợp độ tuổi và kết nối học viện golf uy tín tại Việt Nam.",categories:[1,3]},
-  {img:TestimonialImg01,clientImg:ClientImg04,name:"Xe điện & Trạm sạc",company:"GREEN – AItrify",content:"Từ xe đạp điện, xe máy điện đến trạm sạc và đổi pin — thị trường xe điện ngày càng đa dạng. GREEN giúp bạn tìm kiếm, so sánh và chọn phương tiện xanh phù hợp nhu cầu và tài chính.",categories:[1,4]},
-  {img:TestimonialImg02,clientImg:ClientImg04,name:"Lộ trình ESG",company:"GREEN – AItrify",content:"Cần lộ trình ESG nhưng chưa biết bắt đầu từ đâu? GREEN cung cấp kiến thức và số liệu theo tiêu chuẩn quốc tế — để bạn hành động ngay, không chỉ lập kế hoạch.",categories:[1,4]},
-  {img:AvatarLega,clientImg:ClientImgLega,name:"Tra cứu pháp luật",company:"LEGA – AItrify",content:"Pháp luật ban hành thành nhiều văn bản và liên tục cập nhật, không phải ai cũng có luật sư riêng. LEGA tra cứu, trích dẫn, giải thích dễ hiểu — giúp bạn hiểu đúng quyền và nghĩa vụ của mình.",categories:[1,5]},
+  {img:AvatarAnna,clientImg:ClientImg01,name:"Tư vấn gia dụng",company:"ANNA – AItrify",content:"Cần tư vấn thiết bị gia dụng nhưng không biết bắt đầu từ đâu? ANNA hiểu ngữ cảnh của bạn, gợi ý đúng sản phẩm phù hợp nhu cầu và ngân sách — không cần phải là chuyên gia kỹ thuật.",categories:[1,2]},
+  {img:AvatarAnna,clientImg:ClientImg01,name:"So sánh & Lựa chọn",company:"ANNA – AItrify",content:"Thị trường gia dụng có hàng trăm lựa chọn. ANNA lọ, so sánh và giải thích sự khác biệt rõ ràng — để bạn mua đúng thứ mình cần với giá xứng đáng và không mất công tìm hiểu thêm.",categories:[1,2]},
+  {img:AvatarLisa,clientImg:ClientImg02,name:"Golf & Kinh doanh",company:"LISA – AItrify",content:"Dù vừa cầm gậy lần đầu hay đã chơi nhiều năm, LISA tư vấn phù hợp trình độ — từ thiết bị, kỹ thuật đến văn hóa golf trong môi trường kinh doanh.",categories:[1,3]},
+  {img:AvatarLisa,clientImg:ClientImg02,name:"Golf thiếu nhi 5–15 tuổi",company:"LISA – AItrify",content:"Golf rèn luyện tư duy và kiên nhẫn từ nhỏ. LISA hỗ trợ phụ huynh tìm chương trình học cho trẻ 5–15 tuổi, gợi ý dụng cụ phù hợp và kết nối học viện golf uy tín tại Việt Nam.",categories:[1,3]},
+  {img:AvatarGreen,clientImg:ClientImgGreen,name:"Xe điện & Trạm sạc",company:"GREEN – AItrify",content:"Từ xe đạp điện, xe máy điện đến trạm sạc và đổi pin — thị trường xe điện ngày càng đa dạng. GREEN giúp tìm kiếm, so sánh và chọn phương tiện xanh phù hợp nhu cầu và tài chính.",categories:[1,4]},
+  {img:AvatarGreen,clientImg:ClientImgGreen,name:"Lộ trình ESG",company:"GREEN – AItrify",content:"Cần lộ trình ESG nhưng chưa biết bắt đầu từ đâu? GREEN cung cấp kiến thức và số liệu theo tiêu chuẩn quốc tế — để bạn hành động được ngay, không chỉ lập kế hoạch.",categories:[1,4]},
+  {img:AvatarLega,clientImg:ClientImgLega,name:"Tra cứu pháp luật",company:"LEGA – AItrify",content:"Pháp luật có nhiều văn bản và liên tục cập nhật, không phải ai cũng có luật sư riêng. LEGA tra cứu, trích dẫn và giải thích dễ hiểu — giúp bạn hiểu đúng quyền và nghĩa vụ của mình.",categories:[1,5]},
   {img:AvatarLega,clientImg:ClientImgLega,name:"Thủ tục & Kinh doanh",company:"LEGA – AItrify",content:"Từ thủ tục hành chính đến câu hỏi pháp lý kinh doanh, LEGA tìm kiếm có căn cứ, trích dẫn điều khoản cụ thể — hỗ trợ bạn có đủ thông tin để tuân thủ đúng pháp luật.",categories:[1,5]},
   {img:AvatarMobi,clientImg:ClientImgMobi,name:"Viễn thông MNO/MVNO",company:"MOBI – AItrify",content:"Viễn thông phát triển nhanh với nhiều phương thức mới. MOBI giúp kỹ sư và chuyên gia các nhà mạng MNO/MVNO cập nhật thông tin nhanh và tra cứu kiến thức viễn thông dễ dàng.",categories:[1,6]},
-  {img:AvatarMobi,clientImg:ClientImgMobi,name:"IoT & Hạ tầng số",company:"MOBI – AItrify",content:"Bee Systems đầu tư nghiên cứu hạ tầng viễn thông thế hệ mới. MOBI giúp tìm thông tin về thiết bị IoT, công nghệ truyền số liệu IoT và các nhà cung cấp IoT uy tín.",categories:[1,6]},
-  {img:AvatarAifi,clientImg:ClientImgAifi,name:"Tài chính thị trường",company:"AIFI – AItrify",content:"Tỉ giá, vàng, dầu, chứng khoán biến động từng giờ. AIFI tổng hợp và phân tích thông tin tài chính đa chiều — hỗ trợ bạn ra quyết định đầu tư nhanh hơn và sáng suốt hơn.",categories:[1,7]},
-  {img:AvatarAifi,clientImg:ClientImgAifi,name:"Tài sản mã hóa",company:"AIFI – AItrify",content:"Tài sản mã hóa đang định hình kinh tế toàn cầu. AIFI theo dõi xu hướng tài sản số tại Việt Nam — chính sách vĩ mô, nhà cung cấp được cấp phép và cách chuẩn bị đăng ký giao dịch — giúp bạn tiên phong trong kỷ nguyên Tài sản Số.",categories:[1,7]},
+  {img:AvatarMobi,clientImg:ClientImgMobi,name:"IoT & Hạ tầng số",company:"MOBI – AItrify",content:"Bee Systems đầu tư nghiên cứu hạ tầng viễn thông thế hệ mới. MOBI giúp tìm thông tin về thiết bị IoT, công nghệ truyền số liệu và các nhà cung cấp IoT uy tín.",categories:[1,6]},
+  {img:AvatarAifi,clientImg:ClientImgAifi,name:"Tài chính thị trường",company:"AIFI – AItrify",content:"Tỉ giá, vàng, dầu, chứng khoán biến động từng giờ. AIFI tổng hợp và phân tích thông tin tài chính đa chiều — hỗ trợ bạn ra quyết định đầu tư nhanh hơn, sáng suốt hơn.",categories:[1,7]},
+  {img:AvatarAifi,clientImg:ClientImgAifi,name:"Tài sản mã hóa",company:"AIFI – AItrify",content:"Tài sản mã hóa định hình kinh tế toàn cầu. AIFI theo dõi tài sản số tại Việt Nam — chính sách vĩ mô, nhà cung cấp được cấp phép và cách đăng ký giao dịch — giúp bạn tiên phong trong kỷ nguyên Tài sản Số.",categories:[1,7]},
 ];
 
 export default function Testimonials() {
