@@ -80,25 +80,24 @@ const FOOTER_TOPICS: Record<string, { title: string; content: string }> = {
   'about': {
     title: 'Về AItrify',
     content:
-      'Ra đời vào ngày 02/09/2025 tại www.aitrify.com AItrify được thiết kế định hướng là nền tảng thương mại điện tử sử dụng hầu hết công nghệ trí tuệ nhân tạo AI để giúp cho hoạt động tìm kiếm mua sắm dễ dàng hơn hàng chính hãng với giá cả thuộc top ưu đãi nhất. ' +
-      'Bạn có thể giao tiếp với các trợ lý AI của AItrify được thiết kế và đào tạo với kiến thức chuyên sâu, chuyên biệt với ANNA dành cho sản phẩm điều hòa gia dụng, LISA chuyên biệt dành cho Golf và Golfer \n\n' +
-      'Riêng trợ lý AI tên UGREEN được tạo ra để không chỉ tìm kiếm các hàng hóa liên quan tới công cuộc Xanh hóa của Việt Nam như xe đạp điện, xe máy điện, tủ đổi pin,... mà còn để sắp tới giới thiệu tới Trạm Tiện Ích Xanh UGREEN trên nền tảng Xanh Số Grenify với Thanh toán và chia sẻ hàng hóa qua mạng lưới ngang hàng dễ dàng  '+
-      'AItrify được xây dựng bởi Liên minh công nghệ BEESOTA6G gồm các công ty công nghệ mạnh trong các lĩnh vực AI, Blockchain, Robotics, Cloud, I/IoT, ERP với các chuẩn gồm 4G GSM, 5G LTE-A, oneM2M, ERC-20 đi cùng với các mã nguồn mở rất mạnh gồm Linux, oneM2M, Open-RAN, Odoo, LLaMa'
-  },
+      'AItrify là nền tảng AI đa tác tử (Multi-Agent AI Platform) do Bee Systems Inc. phát triển — đưa Trí tuệ nhân tạo vào từng lĩnh vực chuyên sâu của đời sống và kinh doanh.\n\n' +
+      'AItrify hiện triển khai 6 AI Agent chuyên biệt: ANNA (điện gia dụng), LISA (Golf & Golfer), GREEN (năng lượng xanh), LEGA (pháp lý), MOBI (viễn thông & IoT), AIFI (tài chính & tài sản số) — mỗi Agent được đào tạo từ dữ liệu chính thống, có trích dẫn nguyên văn và cập nhật liên tục.\n\n' +
+      'Phát triển bởi Bee Systems Inc. — www.beeinc.vn'
   'vision': {
     title: 'Tầm nhìn & Sứ mệnh',
     content:
-      'Tầm nhìn: Đưa AI vào mọi mặt của đời sống tại Việt Nam, không để ai bị bỏ lại phía sau trong làn sóng công nghệ tiên tiến trên toàn thế giới. ' +
-      'Bất kể ai với thu nhập dù có thấp hay cao cũng đều xứng đáng được hưởng sản phẩm dịch vụ chính hãng thông qua sự trợ giúp của AI và các công nghệ tiên tiến khác.'
-  },
+      'Tầm nhìn: AItrify hướng tới đưa AI Agent trở thành cố vấn chuyên gia riêng cho mọi cá nhân và doanh nghiệp — hoạt động 24/7, chi phí siêu thấp, không giới hạn lĩnh vực.\n\n' +
+      'Sứ mệnh: Dân chủ hóa tri thức chuyên sâu — để mọi người đều được tiếp cận thông tin chính xác, có căn cứ và cập nhật liên tục từ các nguồn chính thống, bất kể thu nhập hay vị trí địa lý.'
   'technology': {
     title: 'Công nghệ AItrify',
     content:
-      'Khởi nguồn tên AItrify mang ý nghĩa của 3 từ khóa gồm "AI" + "tri" + "fy" với ý nghĩa "AI hóa" để gia tốc mọi hoạt động thương mại trên không gian Số lên tối thiểu từ ba lần trở lên. \n' +
-      'AItrify sử dụng các công nghệ AI mới nhất với  nhiều mô hình LLM tiên tiến mã nguồn mở, các công nghệ ANN&Vectoring, OpenCV, RAG, AI Gateway, công nghệ database dành riêng cho dữ liệu AI, để nạp, truy xuất, truy hồi dữ liệu từ tri thức của AItrify cùng với công nghệ SAITMe (structured) & NoSAITMe (unstructured) của Liên mình các công ty công nghệ BEESOTA6G tham gia xây dựng AItrify tự phát triển. \n' + 
-      'Công nghệ AI nào mới nhất cũng luôn sớm có mặt trên AItrify, tích hợp với các nguồn dữ liệu khác được xác thực, có dẫn chiếu và cả nguồn dữ liệu từ các thiết bị M2M, IoT qua công nghệ truyền số liệu cho dù là cũ hay mới cho dữ liệu Số với số lượng thông tin, tri thức lớn nhất nhưng lại với chi phí OPEX trong top rẻ nhất \n' +
-      'Công nghệ chúng tôi sẽ hướng tới có thể đạt được chữ "tri" trong AI"tri"fy với: sau ba (3) tháng, hiệu năng hệ thống AItrify tăng gấp ba (3) với chi phí vận hành hệ thống OPEX cho AItrify giảm còn một một phần ba (3).'
-  },
+      'AItrify được xây dựng trên nền tảng công nghệ hiện đại, triển khai toàn bộ trên hạ tầng Cloud Native:\n\n' +
+      '• AI & LLM: Các mô hình ngôn ngữ lớn (LLM), mô hình xử lý ảnh Image-to-Text, OCR, Text-to-Speech và các mô hình chuyên biệt theo từng lĩnh vực\n' +
+      '• RAG (Retrieval-Augmented Generation): Truy vấn tri thức chuyên sâu theo từng AI Agent với độ chính xác cao\n' +
+      '• Cloud Native: GCP, GCR, GCS và hạ tầng Edge Computing phủ toàn cầu\n' +
+      '• Database chuyên biệt: VectorizeDB (dữ liệu AI), D1 (relational), R2 (object storage)\n' +
+      '• Uptime 99.97% — dịch vụ liên tục 24/7\n\n' +
+      'Phát triển bởi Bee Systems Inc. — www.beeinc.vn'
   'careers': {
     title: 'Tuyển dụng',
     content:
@@ -162,7 +161,7 @@ const FOOTER_TOPICS: Record<string, { title: string; content: string }> = {
       'AItrify cũng cho phép đăng ký bằng tài khoản Gmail qua nút "Đăng ký với Gmail" trong quá trình đăng ký.'
   },
   'guide/purchase': {
-    title: 'Mua hàng với AItrify',
+    title: 'Báo giá & Liên hệ',
     content:
       'Về mua hàng hóa: sau khi bạn tìm được hàng hóa phù hợp trên www.aitrify.com qua sự trợ giúp của trợ lý AI (ANNA/LISA) thì bạn có thể liên hệ tới số hotline: 0823830506 hoặc gửi mail tới chairm@beeinc.vn. \n\n' + 
       'Số hotline: 0823830506 phục vụ cả ngày thứ Bảy, Chủ nhật (trừ các ngày nghỉ lễ theo quy định của Việt Nam), nếu quý khách gọi hotline: 0823830506 không thấy nhấc máy thì xin vui lòng gửi email phản ánh giúp tới địa chỉ chairm@beeinc.vn, chúng tôi sẽ xử lý ngay nhân viên trực hotline. \n\n' + 
