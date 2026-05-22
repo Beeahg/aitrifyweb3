@@ -83,6 +83,7 @@ const FOOTER_TOPICS: Record<string, { title: string; content: string }> = {
       'AItrify là nền tảng AI đa tác tử (Multi-Agent AI Platform) do Bee Systems Inc. phát triển — đưa Trí tuệ nhân tạo vào từng lĩnh vực chuyên sâu của đời sống và kinh doanh.\n\n' +
       'AItrify hiện triển khai 6 AI Agent chuyên biệt: ANNA (điện gia dụng), LISA (Golf & Golfer), GREEN (năng lượng xanh), LEGA (pháp lý), MOBI (viễn thông & IoT), AIFI (tài chính & tài sản số) — mỗi Agent được đào tạo từ dữ liệu chính thống, có trích dẫn nguyên văn và cập nhật liên tục.\n\n' +
       'Phát triển bởi Bee Systems Inc. — www.beeinc.vn'
+  },
   'vision': {
     title: 'Tầm nhìn & Sứ mệnh',
     content:
@@ -98,6 +99,7 @@ const FOOTER_TOPICS: Record<string, { title: string; content: string }> = {
       '• Database chuyên biệt: VectorizeDB (dữ liệu AI), D1 (relational), R2 (object storage)\n' +
       '• Uptime 99.97% — dịch vụ liên tục 24/7\n\n' +
       'Phát triển bởi Bee Systems Inc. — www.beeinc.vn'
+  },
   'careers': {
     title: 'Tuyển dụng',
     content:
