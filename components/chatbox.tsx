@@ -38,46 +38,40 @@ const FOOTER_TOPICS: Record<string, { title: string; content: string }> = {
   'features': {
     title: 'Tính năng',
     content:
-      'AItrify đang cập nhật từng ngày cho việc "nạp" kiến thức Chuyên sâu về hàng hóa phục vụ người dùng ngày một tốt hơn:\n' +
-      ' • Chat AI với kiến thức chuyên biệt ANNA cho Điều hòa gia dụng, LISA cho Golf và những người tập Golf, hỏi đáp tiếng Việt tự nhiên.\n' +
-      ' • Tìm kiếm thông tin sản phẩm Điều hòa gia dụng (bếp, máy xay sinh tố, nồi cơm... với giá Top Ưu đãi nhưng vẫn được hưởng dịch vụ chuẩn hãng.\n' +
-      ' • Tìm kiếm thông tin sản phẩm cho chơi thể thao Golf, công cụ dụng cụ, thiết bị hỗ trợ chơi Golf, tập Golf, thời trang, phục kiện cho Golf\n' +
-      ' • Dữ liệu tách biệt theo loại Sản phẩm hàng hóa và cá nhân hóa; không dùng để huấn luyện mô hình AI công khai (public).'
+      '• 6 AI Agent chuyên biệt: ANNA (gia dụng), LISA (golf), GREEN (năng lượng xanh), LEGA (pháp lý), MOBI (viễn thông), AIFI (tài chính) — mỗi Agent được đào tạo từ dữ liệu chính thống, có trích dẫn nguyên văn.\n' +
+      '• Hỏi đáp tiếng Việt tự nhiên, hiểu ngữ cảnh và nhu cầu thực tế của người dùng.\n' +
+      '• Cập nhật tri thức liên tục từ các nguồn chính thống, ghi rõ thời điểm cập nhật.'
   },
-  'integrations': {
+    'integrations': {
     title: 'Tích hợp',
     content:
-      'AItrify đang cập nhật từng ngày cho các tích hợp nhiều tính năng phục vụ người dùng ngày một tốt hơn:\n' +
-      ' • Kết nối các hệ thống ERP / Thanh toán / Vận chuyển/Kho chứa hàng, xuất hoá đơn điện tử để dần mang lại trải nghiệm tìm kiếm và mua hàng mới\n' +
-      ' • AItrify dần bổ sung tích hợp các cổng thanh toán, các hãng sản phẩm uy tín, các trung tâm dịch vụ khách hàng để mang lại không chỉ sản phẩm mà là Dịch vụ khách hàng chuẩn hãng.\n' +
-      ' • Tích hợp nhiều nguồn dữ liệu có kiểm chứng, có xác thực, dữ liệu cá nhân hóa được tổng hợp nhờ tích hợp dữ liệu khép kín\n' +
-      ' • Hỗ trợ đồng bộ các phần mềm của doanh nghiệp của đối tác nếu có nhu cầu như ERP/CRM, phần mềm kế toán doanh nghiệp; bộ SDK & API sẽ mở dần theo lộ trình.'
+      '• Kết nối hệ thống ERP, IoT, Blockchain và hạ tầng Cloud Native (GCP, GCR, GCS).\n' +
+      '• Tích hợp nguồn dữ liệu có kiểm chứng từ các tổ chức uy tín, có xác thực và dẫn chiếu.\n' +
+      '• Bộ SDK & API mở dần theo lộ trình cho doanh nghiệp muốn nhúng AI Agent vào hệ thống riêng.\n' +
+      '• Roadmap: kết nối cổng thanh toán, xuất hóa đơn điện tử, đồng bộ CRM/ERP đối tác.'
   },
-  'pricing': {
+    'pricing': {
     title: 'Chi phí & Gói dịch vụ',
     content:
-      'AItrify đang triển khai dần các các tùy chọn để người dùng thấy xứng đáng với chi phí bỏ ra:\n' +
-      ' • Giai đoạn đầu: miễn phí AItrify ANNA/LISA cho người dùng đăng ký/không đăng ký.\n' +
-      ' • Cung cấp Điều hòa gia dụng chỉ của hãng Nagakawa, một hãng uy tín lâu đời tại Việt nam với 23 năm kinh nghiệm.\n' +
-	    ' • Cung cấp các sản phẩm Golf mà AItrify đã thẩm định là Chính hãng và có hóa đơn, giấy tờ xuất xứ đầy đủ theo đúng pháp luật Việt Nam\n' +
-      ' • Thanh toán chuyển khoản/QR; hoá đơn điện tử đầy đủ.\n' +
-      ' • Chương trình khuyến mãi và chương trình ưu đãi theo từng thời điểm.'
+      'Xem báo giá đầy đủ 4 mô hình dịch vụ của Bee Systems tại:\n\n' +
+      '🔗 www.beeinc.vn/#pricing\n\n' +
+      'Bao gồm: Cloud Native Infrastructure, AI Agent & Chatbot, Phần cứng IoT/IIoT, Tích hợp toàn diện D&B.\n\n' +
+      'Liên hệ tư vấn: chairm@beeinc.vn'
   },
-  'brands': {
+    'brands': {
     title: 'Hãng sản xuất',
     content:
-      '• Chỉ nhận hàng CHÍNH HÃNG, có nguồn gốc xuất xứ & hoá đơn hợp lệ.\n' +
-      '• Đối tác/Hãng muốn hợp tác vui lòng liên hệ gửi mail tới: chairm@beeinc.vn.'
+      '• AItrify ANNA/LISA/GREEN chỉ hợp tác với các hãng cung cấp hàng CHÍNH HÃNG, có nguồn gốc xuất xứ và hóa đơn hợp lệ theo quy định pháp luật Việt Nam.\n' +
+      '• Hãng gia dụng, golf, xe điện hoặc đối tác muốn hợp tác với AItrify ANNA/LISA/GREEN vui lòng liên hệ: chairm@beeinc.vn — đội ngũ sẽ phản hồi sớm nhất.'
   },
-  'policies': {
+    'policies': {
     title: 'Chính sách',
     content:
-      '• Tổng quan: đổi trả theo chính sách từng thời điểm; bảo hành theo hãng.\n' +
-      '• Vận chuyển/khuyến mại có thể thay đổi theo chiến dịch.\n' +
-      '• Vui lòng xem thêm: Thỏa thuận EUA, Điều khoản dịch vụ, Chính sách bảo mật.'
+      '• Đổi trả và bảo hành theo chính sách từng hãng và từng thời điểm áp dụng.\n' +
+      '• Vận chuyển và khuyến mại có thể thay đổi theo từng chiến dịch cụ thể.\n' +
+      '• Xem thêm: Thỏa thuận người dùng (EUA), Điều khoản dịch vụ, Chính sách bảo mật.'
   },
-
-  'about': {
+    'about': {
     title: 'Về AItrify',
     content:
       'AItrify là nền tảng AI đa tác tử (Multi-Agent AI Platform) do Bee Systems Inc. phát triển — đưa Trí tuệ nhân tạo vào từng lĩnh vực chuyên sâu của đời sống và kinh doanh.\n\n' +
