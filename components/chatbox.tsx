@@ -118,37 +118,37 @@ const FOOTER_TOPICS: Record<string, { title: string; content: string }> = {
       'Chúng tôi chào đón các Hãng sản phẩm có thể cung cấp không chỉ hàng chính hãng tuân thủ theo Pháp luật Việt Nam mà còn đi kèm Dịch vụ sau bán hàng Tận tâm cho khách hàng, cho dù giá trị món hàng thấp hay cao.'
   },
   'eua': {
-    title: 'Thoả thuận EUA',
+    title: 'Thoả thuận người dùng (EUA)',
     content:
-      'Mọi người dùng tham gia hoạt động trên nền tảng thương mại điện tử AI.Commerce AItrify phải tuân theo pháp luật Việt Nam. ' +
-      'Mọi đối tác hay hàng hóa đăng trên AItrify đều phải là hàng hóa Chính hãng, có đầy đủ giấy tờ nguồn gốc xuất xứ, có hóa đơn đầu vào. ' +
-      'Mọi thông tin mà đối tác cung cấp để các trợ lý AI (ANNA/LISA) tư vấn cho người dùng đều phải xác thực, không gây lầm lẫn. ' +
-      'Các hàng hóa cung cấp trên AItrify sẽ phải có hóa đơn, giấy tờ nguồn gốc xuất xứ rõ ràng để AItrify tuân thủ nghĩa vụ thuế và chống hàng giả hàng nhái. ' +
-      'Người dùng được miễn phí hoặc hưởng phí dịch vụ ưu đãi tùy theo từng thời điểm AItrify công bố.'
+      '• Sử dụng AItrify đồng nghĩa với việc tuân thủ pháp luật Việt Nam và chấp nhận toàn bộ điều khoản của Bee Systems Inc.\n' +
+      '• Thông tin từ các AI Agent chỉ mang tính tham khảo, không thay thế tư vấn pháp lý, y tế hay tài chính chuyên nghiệp.\n' +
+      '• Dữ liệu người dùng được bảo mật theo Chính sách bảo mật của Bee Systems Inc.\n' +
+      '• Bee Systems Inc. bảo lưu quyền điều chỉnh, tạm ngưng hoặc cập nhật dịch vụ và sẽ thông báo đến người dùng.'
   },
   'terms': {
     title: 'Điều khoản dịch vụ',
     content:
-      'Người dùng khi đăng ký thông tin trên AItrify cần chấp nhận điều khoản sử dụng, bao gồm việc ủy quyền cho AItrify truy nhập và xử lý dữ liệu để cải thiện dịch vụ. ' +
-      'Giá cả và ưu đãi có thể thay đổi tùy theo thời điểm và chính sách của hãng/nhãn hàng; AItrify sẽ thông báo cho người dùng hoặc thể hiện trong kết quả tìm kiếm. ' +
-      'Các chính sách đổi trả, vận chuyển miễn phí hay khuyến mại đều được điều chỉnh tùy theo từng giai đoạn và sẽ được AItrify thông báo rõ ràng cho người dùng. ' +
-      'Bằng việc tiếp tục sử dụng dịch vụ, người dùng đồng ý tuân thủ toàn bộ điều khoản này.'
+      '• AItrify cung cấp thông tin tham khảo từ các nguồn chính thống, có trích dẫn và cập nhật liên tục.\n' +
+      '• Giá cả, ưu đãi và chính sách có thể thay đổi theo từng thời điểm — AItrify sẽ thể hiện rõ trong kết quả tư vấn.\n' +
+      '• Bee Systems Inc. bảo lưu quyền điều chỉnh hoặc tạm ngưng dịch vụ khi cần thiết.\n' +
+      '• Liên hệ: chairm@beeinc.vn để được hỗ trợ về điều khoản dịch vụ.'
   },
   'privacy': {
     title: 'Chính sách bảo mật',
     content:
-      'AItrify cam kết bảo vệ thông tin cá nhân và dữ liệu giao dịch của người dùng. Mọi dữ liệu thu thập, lưu trữ và xử lý đều tuân thủ pháp luật Việt Nam. ' +
-      'AItrify không sử dụng dữ liệu người dùng để huấn luyện các mô hình AI công khai. ' +
-      'Dữ liệu chỉ được chia sẻ với đối tác liên quan (thanh toán, vận chuyển) khi cần thiết cho giao dịch. ' +
-      'Người dùng đăng ký có quyền không đồng ý tại thời điểm đăng ký dịch vụ và dịch vụ sẽ được hủy ngay từ khi không đăng ký thành công' +
-      'Người dùng không đăng ký thì chấp nhận mọi Cookies mà chúng tôi lưu trong quá trình các bạn duyệt web tại trang AItrify của chúng tôi'
+      '• AItrify cam kết bảo vệ thông tin cá nhân theo quy định pháp luật Việt Nam về bảo vệ dữ liệu cá nhân.\n' +
+      '• Dữ liệu chỉ được sử dụng để cải thiện trải nghiệm dịch vụ, không chia sẻ cho bên thứ ba ngoài mục đích cung cấp dịch vụ.\n' +
+      '• Người dùng có quyền yêu cầu xem, chỉnh sửa hoặc xóa dữ liệu cá nhân bất kỳ lúc nào.\n' +
+      '• Liên hệ: chairm@beeinc.vn để thực hiện các quyền về dữ liệu cá nhân.'
   },
   'guide/getting-started': {
     title: 'Sử dụng AItrify',
     content:
-      'Bắt đầu: 1) Truy cập www.aitrify.com, 2) chọn trợ lý AI là ANNA hoặc LISA thông qua nhấn một trong hai nút ' + 
-      'nhãn "ANNA Điều hòa & gia dụng" hoặc nhãn "LISA Golf&Golfer", 3) Nhấn nút "Mua hàng tại AItrify" để được hướng dẫn về mua hàng hóa chính hàng trên AItrify. Gõ câu hỏi vào ô bên dưới rồi nhấn Enter hoặc nhấn nút "Gửi". ' +
-      'Hiện tại, AItrify đang miễn phí tìm kiếm hay trả lời cho dù bạn có đăng ký tài khoản hay không.'
+      'Bắt đầu sử dụng AItrify:\n\n' +
+      '1. Truy cập www.aitrify.com\n' +
+      '2. Chọn AI Agent phù hợp: ANNA (gia dụng), LISA (golf), GREEN (xe điện), LEGA (pháp lý), MOBI (viễn thông), AIFI (tài chính)\n' +
+      '3. Gõ câu hỏi tự nhiên và nhấn Gửi\n\n' +
+      'AItrify hoàn toàn miễn phí — không cần đăng ký tài khoản.'
   },
   'guide/signup': {
     title: 'Đăng ký AItrify',
@@ -160,11 +160,11 @@ const FOOTER_TOPICS: Record<string, { title: string; content: string }> = {
   'guide/purchase': {
     title: 'Báo giá & Liên hệ',
     content:
-      'Về mua hàng hóa: sau khi bạn tìm được hàng hóa phù hợp trên www.aitrify.com qua sự trợ giúp của trợ lý AI (ANNA/LISA) thì bạn có thể liên hệ tới số hotline: 0823830506 hoặc gửi mail tới chairm@beeinc.vn. \n\n' + 
-      'Số hotline: 0823830506 phục vụ cả ngày thứ Bảy, Chủ nhật (trừ các ngày nghỉ lễ theo quy định của Việt Nam), nếu quý khách gọi hotline: 0823830506 không thấy nhấc máy thì xin vui lòng gửi email phản ánh giúp tới địa chỉ chairm@beeinc.vn, chúng tôi sẽ xử lý ngay nhân viên trực hotline. \n\n' + 
-      'AItrify chấp nhận thanh toán chuyển khoản ngân hàng, thông qua QR code và sẽ dần bổ sung nhiều hình thức thanh toán thuận tiện hơn. \n\n' + 
-      'Khi thanh toán sẽ có hóa đơn tài chính xuất kèm cho quý khách. Một cách thanh toán áp dụng với mọi loại hàng hóa dịch vụ trên AItrify mà ANNA/LISA tư vấn cung cấp.\n\n' +
-      'Về phí dịch vụ: với phí AItrify, hiện tại trong thời gian đang miễn phí tuy nhiên có thể hệ thống sẽ hạn chế về lượt hỏi AItrify, hạn chế thông tin AItrify có thể cung cấp hoặc có yêu cầu đăng ký, mong bạn thông cảm nếu có bất cứ bất tiện nào.'
+      'Xem báo giá đầy đủ các dịch vụ và giải pháp công nghệ của Bee Systems tại:\n\n' +
+      'www.beeinc.vn/#pricing\n\n' +
+      'Để được tư vấn hoặc gửi yêu cầu hợp tác, liên hệ qua email:\n\n' +
+      'chairm@beeinc.vn\n\n' +
+      'Đội ngũ Bee Systems sẽ phản hồi sớm nhất có thể.'
   },
   'guide/search': {
     title: 'Tìm kiếm với AItrify',
@@ -180,12 +180,10 @@ const FOOTER_TOPICS: Record<string, { title: string; content: string }> = {
   'disclaimer': {
     title: 'Tuyên bố miễn trừ',
     content:
-      'AItrify được xây dựng trên cơ sở dữ liệu chính thống từ các hãng sản xuất và nhãn hàng. Tuy nhiên, các thông tin liên quan đến giá cả tại thời điểm mua hàng, mẫu mã, chương trình khuyến mại và các thông tin khác chưa được huấn luyện cập nhật trong hệ thống chỉ mang tính tham khảo.\n\n' +
-      'Quý khách vui lòng liên hệ theo hotline: 0823830506 hoặc email giúp tới địa chỉ chairm@beeinc.vn để nhận thông tin chính thống và chính xác nhất tại thời điểm quý khách liên hệ. Trong mọi trường hợp khác, công ty sở hữu AItrify được miễn trừ hoàn toàn trách nhiệm pháp lý đối với các thông tin không chính xác.\n\n' +
-      'AItrify được miễn trừ trách nhiệm pháp lý liên quan đến thông tin trong giấy tờ xuất xứ, hóa đơn và nghĩa vụ thuế do nhãn hàng cung cấp.\n\n' +
-      'Bằng việc nhập thông tin tìm kiếm, sử dụng và/hoặc đăng ký AItrify, người dùng đồng ý rằng AItrify được miễn trừ toàn bộ trách nhiệm pháp lý đối với các thông tin người dùng nhập vào cũng như thông tin phản hồi từ hệ thống. Người dùng đồng ý để AItrify lưu trữ thông tin nhập liệu và thông tin đăng ký tài khoản.\n\n' +
-      'Một số thủ tục cấp phép từ các cơ quan chức năng  trong đó có yêu cầu nội dung website www.aitrify.com phải lên nội dung để thẩm định, AItrify được miễn trừ trách nhiệm đối với các thông tin cũ dành cho mục đích này và cập nhật các thông tin tiếp theo theo kế hoạch của đơn vị chủ quản AItrify \n\n'+
-      'AItrify cũng được miễn trừ trách nhiệm trong các trường hợp bất khả kháng như thiên tai, sự cố kỹ thuật ngoài tầm kiểm soát, hoặc sự gián đoạn dịch vụ do nguyên nhân khách quan khác.'
+      'Thông tin từ các AI Agent dựa trên dữ liệu được đào tạo và có thể chưa phản ánh đầy đủ các thay đổi mới nhất.\n\n' +
+      'AItrify và Bee Systems Inc. không chịu trách nhiệm cho các quyết định được đưa ra dựa trên thông tin tham khảo từ hệ thống.\n\n' +
+      'Bee Systems Inc. được miễn trừ trách nhiệm trong các trường hợp bất khả kháng như sự cố kỹ thuật ngoài tầm kiểm soát.\n\n' +
+      'Để xác nhận thông tin chính xác nhất, vui lòng liên hệ: chairm@beeinc.vn'
   },
 };
 
