@@ -241,41 +241,43 @@ export default function Footer() {
             <div className="mb-3">
               <Logo />
             </div>
-            <div className="mt-4 flex flex-col items-end gap-2">
-              <p className="flex flex-wrap items-center justify-end gap-1.5 text-sm font-medium text-indigo-200/70">
-                <span className="whitespace-nowrap">Phát triển bởi</span>
-                <svg width="20" height="18" viewBox="0 0 40 35" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0">
+            <div className="mt-4 flex flex-col items-end gap-3">
+              {/* Phát triển bởi - one line */}
+              <p className="flex items-center gap-2 text-sm font-medium text-indigo-200/70 whitespace-nowrap">
+                Phát triển bởi
+                <svg width="20" height="18" viewBox="0 0 40 35" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <polygon points="20,0 27.8,4.5 27.8,13.5 20,18 12.2,13.5 12.2,4.5" fill="#EAB308"/>
                   <polygon points="13,14 20.8,18.5 20.8,27.5 13,32 5.2,27.5 5.2,18.5" fill="#EAB308" opacity="0.85"/>
                   <polygon points="27,14 34.8,18.5 34.8,27.5 27,32 19.2,27.5 19.2,18.5" fill="#EAB308" opacity="0.85"/>
                 </svg>
-                <span className="whitespace-nowrap font-semibold text-white">Bee Systems Inc.</span>
+                <span className="font-semibold text-white">Bee Systems Inc.</span>
               </p>
+              {/* beeinc.vn link */}
               <a
                 href="https://www.beeinc.vn"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,#a5b4fc,#c4b5fd,#e0e7ff,#818cf8,#a5b4fc)] bg-[length:200%_auto] bg-clip-text text-sm font-semibold text-transparent hover:opacity-80 transition-opacity"
+                className="animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,#a5b4fc,#c4b5fd,#e0e7ff,#818cf8,#a5b4fc)] bg-[length:200%_auto] bg-clip-text text-sm font-semibold text-transparent hover:opacity-80 transition-opacity whitespace-nowrap"
               >
                 www.beeinc.vn →
               </a>
-              <div className="mt-1 border-t border-white/10 pt-2 text-right">
+              {/* Trademark */}
+              <div className="w-full border-t border-white/10 pt-2 flex flex-col items-end gap-1">
                 <a
                   href="https://vietnamtrademark.net/aitrify-tm_4-2024-22427_pmhkvdtjy2k"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-end gap-1 text-xs text-amber-400/75 hover:text-amber-400 transition-colors"
+                  className="flex items-center gap-1 text-[11px] font-medium text-amber-400/80 hover:text-amber-400 transition-colors whitespace-nowrap"
                 >
-                  <span className="text-sm">™</span>
-                  <span>Nhãn hiệu Altrify của Bee Systems được bảo hộ</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
+                  <span>™</span>
+                  <span>Nhãn hiệu Altrify được bảo hộ</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-2.5 w-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                 </a>
-                <p className="mt-1 text-[11px] leading-relaxed text-white/30">
-                  Nhãn hiệu <span className="font-medium text-white/40">Altrify</span> đã được Cục Sở hữu trí tuệ Việt Nam cấp bằng bảo hộ. Mọi hành vi sử dụng khi chưa có sự đồng ý của Bee Systems Inc. là vi phạm quyền SHTT.
+                <p className="text-[10px] leading-relaxed text-white/25 text-right">
+                  Nhãn hiệu đã được Cục SHTT Việt Nam cấp bằng bảo hộ. Mọi hành vi sử dụng khi chưa có sự đồng ý của Bee Systems Inc. là vi phạm quyền SHTT.
                 </p>
               </div>
+            </div>
             </div>
           </div>
 
