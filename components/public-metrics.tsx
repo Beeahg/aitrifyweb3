@@ -121,8 +121,8 @@ function buildMetrics(data: LiveMetrics): MetricItem[] {
     },
     {
       id: 'zemmer_requests',
-      label: 'Zemmer Requests',
-      sublabel: 'Zemmer requests (last 30 days)',
+      label: 'Featured Client',
+      sublabel: 'Featured client requests (last 90 days)',
       countTo: data.zemmer_requests,
       format: (n) => n.toLocaleString('en-US'),
       suffix: '',
@@ -132,8 +132,8 @@ function buildMetrics(data: LiveMetrics): MetricItem[] {
     },
     {
       id: 'all_requests',
-      label: 'All HTTP/HTTPS Requests',
-      sublabel: 'All HTTP/HTTPS requests (last 30 days)',
+      label: 'Platform Traffic',
+      sublabel: 'Platform traffic (last 90 days)',
       countTo: data.zone_all_requests,
       format: (n) => n.toLocaleString('en-US'),
       suffix: '',

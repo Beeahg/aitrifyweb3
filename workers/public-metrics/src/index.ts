@@ -150,10 +150,10 @@ async function getGCPTotalRequests(gcpToken: string): Promise<number> {
 }
 
 
-// ── GCP Cloud Run: Zemmer BE request count (last 30 days) ────────────────────
+// ── GCP Cloud Run: Zemmer BE request count (last 90 days) ────────────────────
 async function getZemmerRequests(gcpToken: string): Promise<number> {
   const end = new Date();
-  const start = new Date(end.getTime() - 30 * 24 * 3600 * 1000);
+  const start = new Date(end.getTime() - 90 * 24 * 3600 * 1000);
 
   const params = new URLSearchParams({
     filter: 'metric.type="run.googleapis.com/request_count" AND resource.type="cloud_run_revision" AND resource.labels.service_name="zemmer-be"',
@@ -328,9 +328,9 @@ async function getUptimePercent(apiToken: string): Promise<number> {
 }
 
 
-// ── CF Zone Analytics: HTTP requests (last 30 days) ──────────────────────────
+// ── CF Zone Analytics: HTTP requests (last 90 days) ──────────────────────────
 async function getZoneHttpRequests(apiToken: string, zoneTag: string, hostname?: string): Promise<number> {
-  const start = new Date(Date.now() - 30 * 24 * 3600 * 1000);
+  const start = new Date(Date.now() - 90 * 24 * 3600 * 1000);
   const end = new Date();
   const startDate = start.toISOString().slice(0, 10);
   const endDate = end.toISOString().slice(0, 10);
